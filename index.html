@@ -8,6 +8,7 @@
        
       <!-- Bootstrap and custom styles -->
       <link href="css/bootstrap.min.css" rel="stylesheet">
+        <link href="css/bootstrap-social.css" rel="stylesheet">
       <link href="css/styles.css" rel="stylesheet">
        
       <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
@@ -19,15 +20,15 @@
    </head>
  <body data-spy="scroll" data-target=".navbar" data-offset="50">
        <!-- Navigation -->
-      <nav class="navbar navbar-default navbar-fixed-top">
+      <nav id="navigation" class="navbar navbar-default navbar-fixed-top">
          <div class="container">
             <div class="navbar-header">
-               <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+               <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#site-nav">
                <span class="icon-bar"></span>
                <span class="icon-bar"></span>
                <span class="icon-bar"></span>
                </button>
-               <a class="navbar-brand" href="#myPage">Hayden Griffin</a>
+               <a class="navbar-brand" href="#home">Hayden Griffin</a>
             </div>
             <div class="collapse navbar-collapse" id="myNavbar">
                <ul class="nav navbar-nav navbar-right">
@@ -39,11 +40,11 @@
             </div>
          </div>
       </nav>
-      <div class="jumbotron text-center">
+      <div class="jumbotron text-center" id="home">
          <h1>Hayden Griffin</h1>
          <img src="img/me_portrait.jpg" class="img-circle" alt="A picture of me in Thailand">
          <p>Welcome to my website</p>
-          <a href="#about"><span class="glyphicon glyphicon-jumpscroll glyphicon-chevron-down"></span></a>
+          <a href="#about" class="btn btn-default btn-circle" role="button" ><i class="glyphicon glyphicon-chevron-down"></i></a>
       </div>
       <div class="container-fluid about-container" id="about">
          <h2>Who am I?</h2>

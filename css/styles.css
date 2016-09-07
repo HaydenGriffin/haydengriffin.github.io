@@ -5,6 +5,15 @@
     height: 100vh;
 }
 
+.btn-circle {
+ width: 50px;
+  height: 50px;
+    padding-top: 15px;
+  font-size: 18px;
+  line-height: 1.33;
+  border-radius: 25px;
+}
+
 .container-fluid {
     padding: 60px 50px;
     height: 100vh;
