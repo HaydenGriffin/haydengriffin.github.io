@@ -40,55 +40,84 @@
             </div>
          </div>
       </nav>
+     
+     <!-- Homepage -->
       <div class="jumbotron text-center" id="home">
          <h1>Hayden Griffin</h1>
-         <img src="img/me_portrait.jpg" class="img-circle" alt="A picture of me in Thailand">
+         <img src="img/me_portrait.jpg" class="img-circle img-responsive center-block" alt="A picture of me in Thailand">
          <p>Welcome to my website</p>
-          <a href="#about" class="btn btn-default btn-circle" role="button" ><i class="glyphicon glyphicon-chevron-down"></i></a>
+             <span class="fa-stack fa-2x">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-chevron-down fa-stack-1x text-primary"></i>
+                            </span>
       </div>
+     
+     <!-- About page -->
       <div class="container-fluid about-container" id="about">
          <h2>Who am I?</h2>
          <div class="row">
-            <div class="col-sm-8">My name is Hayden Griffin</div>
-            <div class="col-sm-4">
+            <div class="col-lg-8">My name is Hayden Griffin</div>
+            <div class="col-lg-4">
                <div class="panel panel-default">
-                   <div class="panel-body"><p><i class="fa fa-user"></i>Hayden Griffin</p></div>
+                   <div class="panel-body"><p><i class="fa fa-user fa-lg fa-fw"></i>&nbsp; Hayden Griffin</p></div>
                </div>
                  <div class="panel panel-default">
-                   <div class="panel-body"><p><i class="fa fa-envelope"></i>haydenjamesgriffin@gmail.com</p></div>
+                   <div class="panel-body"><p><i class="fa fa-envelope fa-lg fa-fw"></i>&nbsp; haydenjamesgriffin@gmail.com</p></div>
                </div>
                   <div class="panel panel-default">
-                   <div class="panel-body"><p><i class="fa fa-map-marker"></i>Guildford, United Kingdom</p></div>
+                   <div class="panel-body"><p><i class="fa fa-map-marker fa-lg fa-fw"></i>&nbsp; Guildford, United Kingdom</p></div>
                </div>
             </div>
          </div>
       </div>
       <div class="container-fluid bg-grey" id="skills">
          <h2>Technical Skills</h2>
-      </div>
-      <div class="container-fluid" id="portfolio">
-         <h2>What I've created</h2>
-         <div class="row text-center">
-            <div class="col-sm-4">
-               <div class="thumbnail">
-                  <p><strong>Project 1</strong></p>
-                  <p>Lorem ipsum dolor sit amet</p>
-               </div>
+     </div>
+  <section id="portfolio" class="portfolio">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-10 col-lg-offset-1 text-center">
+                    <h2>My Projects</h2>
+                    <hr class="small">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="portfolio-item">
+                                <a href="#">
+                                    <img class="img-portfolio img-responsive" src="img/portfolio-1.jpg">
+                                </a>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="portfolio-item">
+                                <a href="#">
+                                    <img class="img-portfolio img-responsive" src="img/portfolio-2.jpg">
+                                </a>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="portfolio-item">
+                                <a href="#">
+                                    <img class="img-portfolio img-responsive" src="img/portfolio-3.jpg">
+                                </a>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="portfolio-item">
+                                <a href="#">
+                                    <img class="img-portfolio img-responsive" src="img/portfolio-4.jpg">
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- /.row (nested) -->
+                    <a href="#" class="btn btn-dark">View More Items</a>
+                </div>
+                <!-- /.col-lg-10 -->
             </div>
-            <div class="col-sm-4">
-               <div class="thumbnail">
-                  <p><strong>Project 2</strong></p>
-                  <p>Picture of project 2</p>
-               </div>
-            </div>
-            <div class="col-sm-4">
-               <div class="thumbnail">
-                  <p><strong>Project 3</strong></p>
-                  <p>Picture of project 3</p>
-               </div>
-            </div>
-         </div>
-      </div>
+            <!-- /.row -->
+        </div>
+        <!-- /.container -->
+    </section>
       <div class="container-fluid bg-grey" id="contact">
          <h2>Contact Me</h2>
       </div>
