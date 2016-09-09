@@ -1,6 +1,6 @@
 .homepage {
 	height: 100vh; /* Full PAge */
-	padding-top: 50px; /* If you're making other pages, make sure there is 50px of padding to make sure the navbar doesn't overlap content! */
+	padding-top: 50px;
 	padding-bottom: 50px;
 	color: #f8f8f8;
 	background: url(../img/pattern.jpg) no-repeat center center;
@@ -29,6 +29,17 @@
 	font-weight: 300;
     padding-bottom: 80px;
 }
+
+@media (max-width: 980px) {
+    h1-home{
+     font-size: 0.75em;    
+     padding-bottom:5px;
+    }
+    h3-home{
+        font-size: 0.75em;
+        padding-bottom:20px;
+    }
+  }
 
 .fa-github:hover {color: rgb(12,38,53);}
 
