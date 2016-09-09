@@ -32,11 +32,11 @@
 
 @media (max-width: 980px) {
     .h1-home{
-     font-size: 0.75em;    
+     font-size: 60px;    
      padding-bottom:5px;
     }
     .h3-home{
-        font-size: 0.75em;
+        font-size: 18px;
         padding-bottom:20px;
     }
   }
