@@ -1,18 +1,47 @@
-.jumbotron { 
-    background-color: #1abc9c; /* Orange */
-    color: #ffffff;
-    padding: 100px 25px;
-    height: 100vh;
+.homepage {
+	height: 100vh; /* Full PAge */
+	padding-top: 50px; /* If you're making other pages, make sure there is 50px of padding to make sure the navbar doesn't overlap content! */
+	padding-bottom: 50px;
+	color: #f8f8f8;
+	background: url(../img/pattern.jpg) no-repeat center center;
+	background-size: cover;
+	text-align: center;
 }
 
-.btn-circle {
- width: 50px;
-  height: 50px;
-    padding-top: 15px;
-  font-size: 18px;
-  line-height: 1.33;
-  border-radius: 25px;
+.homepage-text{
+    position: absolute;
+    top: 25%;}
+
+.homepage-social{
+    position: absolute;
+    bottom: 45%;
 }
+
+.homepage-button{
+    position: absolute;
+    bottom: 8%;}
+
+.h1-home{
+	font-size: 80px;
+	font-family: open sans;
+	font-weight: 600;
+}
+
+.h3-home{
+	font-size: 25px;
+	font-family: raleway;
+	font-weight: 300;
+}
+
+.fa-github:hover {color: rgb(12,38,53);}
+
+.fa-facebook:hover {color: rgb(59,89,152);}
+
+.fa-instagram:hover {color: rgb(222,209,193);}
+
+.fa-youtube:hover {color: rgb(179,18,23);}
+
+.fa-stack:hover .fa-circle { color: white;}
 
 .container-fluid {
     padding: 60px 50px;
@@ -22,17 +51,4 @@
 .bg-grey {
     background-color: #f6f6f6;
     
-}
-
-.glyphicon-about {
-    font-size: 25px;
-    padding-right: 10px;
-}
-
-.glyphicon-jumpscroll {
-    font-size: 30px;
-}
-
-.thumbnail {
-      padding: 200px 25px;
 }
