@@ -1,5 +1,5 @@
 .homepage {
-	height: 100vh; /* Full PAge */
+	height: 100vh;
 	padding-top: 50px;
 	padding-bottom: 50px;
 	color: #f8f8f8;
@@ -16,16 +16,21 @@
     position: absolute;
     bottom: 8%;}
 
+p {
+    font-family: 'Raleway';
+    font-size: 18px;
+}
+
 .h1-home{
 	font-size: 80px;
-	font-family: open sans;
+	font-family: 'Open Sans';
 	font-weight: 600;
     padding-bottom: 10px;
 }
 
 .h3-home{
 	font-size: 25px;
-	font-family: raleway;
+	font-family: 'Raleway';
 	font-weight: 300;
     padding-bottom: 80px;
 }
