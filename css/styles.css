@@ -18,22 +18,33 @@
 
 p {
     font-family: 'Raleway';
-    font-size: 18px;
-    font-weight:500;
+    font-size: 25px;
+    font-weight:400;
+    line-height: 40px;
 }
 
 .h1-home{
-	font-size: 80px;
+	font-size: 90px;
 	font-family: 'Open Sans';
 	font-weight: 600;
     padding-bottom: 10px;
 }
 
 .h3-home{
-	font-size: 25px;
+	font-size: 35px;
 	font-family: 'Raleway';
 	font-weight: 300;
     padding-bottom: 80px;
+}
+
+.about{
+    padding-top: 50px;
+}
+
+.section-heading{
+    font-size: 60px;
+	font-family: 'Raleway';
+	font-weight: 300;
 }
 
 @media (max-width: 980px) {
