@@ -1,6 +1,6 @@
 .container-about{
-    background-color: #f6f6f6;
     padding-top: 50px;
+    background-color: #f6f6f6;
 }
 
 p {
@@ -77,15 +77,17 @@ p {
 }
 
 .about-information-box {
+    margin-top: 10px;
     background-color: white;
-    padding-top: 20px;
-    padding-bottom 20px;
-    border-radius: 5px;
+    height: 60px;
+    line-height: 60px;
+    vertical-align: middle;
+    border-radius: 8px;
+    padding-left:8px;
 }
 
 .container-fluid {
     padding: 60px 50px;
-    height: 100vh;
 }
 
 .bg-grey {
