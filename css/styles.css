@@ -80,8 +80,9 @@ p {
     margin-top: 10px;
     background-color: white;
     height: 60px;
-    line-height: 60px;
-    vertical-align: middle;
+    padding-top: 8px;
+    display:flex;
+    align-items: center;
     border-radius: 8px;
     padding-left:8px;
 }
