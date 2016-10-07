@@ -26,7 +26,7 @@
          <div class="col-xs-12 text-center homepage-content">
             <h1 class="homepage-name">Hayden Griffin</h1>
             <h1 class="homepage-typed">
-            Stuff here will be typed and deleted</h3>
+            <span class="element"></span></h3>
             <!-- Social buttons -->
             <a href="https://github.com/HaydenGriffin"><i class="fa fa-4x fa-fw fa-github"></i></a>
             <a href="https://facebook.com/hayden.griffin.5"><i class="fa fa-4x fa-fw fa-facebook"></i></a>
@@ -182,5 +182,14 @@
       <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
       <!-- Include all compiled plugins (below), or include individual files as needed -->
       <script src="js/bootstrap.min.js"></script>
+    <script src="js/typed.js"></script>
+    <script>
+    $(function(){
+        $(".element").typed({
+            strings: ["First sentence.", "Second sentence."],
+            typeSpeed: 0
+        });
+    });
+</script>
    </body>
 </html>
