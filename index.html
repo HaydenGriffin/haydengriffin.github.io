@@ -1,41 +1,3 @@
-<?php
-    if (isset($_POST["submit"])) {
-        $name= $_POST['name'];
-        $email= $_POST['email'];
-        $subject= $_POST['subject'];
-        $reason= $_POST['reason'];
-        $message= $_POST['message'];
-
-        $from= 'Website Contact Form';
-        $to= 'haydenjamesgriffin@gmail.com';
-        $body= "From: $name\n Email Address: $email\n Message: $message";
-
-        if (!$_POST['name']) {
-            $errorName = "Please enter a name";
-        }
-
-        if (!$_POST['email'] || !filter_var($_POST['email'], FILTER_VALIDATE_EMAIL)) {
-            $errorEmail = "Please enter a valid email address";
-        }
-        
-        if (!$_POST['subject']) {
-            $errorSubject = "Please enter a subject";
-        }
-        
-        if (!$_POST['message']) {
-            $errorMessage = "Please enter a message";
-        }
-        
-        if (!$errorName && !$errorEmail && !$errorSubject && !$errorMessage) {
-            if (mail ($to, $subject, $body, $from)) {
-		$result='<div class="alert alert-success">Thank You! I will be in touch</div>';
-	} else {
-		$result='<div class="alert alert-danger">Sorry there was an error sending your message. Please try again later.</div>';
-	}
-}
-}
-?>
-
 <!DOCTYPE html>
 <html lang="en">
    <head>
@@ -177,29 +139,22 @@
                <form class="form-horizontal">
                   <div class="form-group">
                      <div class="col-md-6 col-md-offset-3">
-                        <input type="text" class="form-control" id="name" placeholder="Name"
-                               value="<?php echo htmlspecialchars($_POST['name']); ?>">
-                         <?php echo "<p class='text-danger'>$errorName</p>";?>
+                        <input type="text" class="form-control" id="name" placeholder="Name">
                      </div>
                   </div>
                   <div class="form-group">
                      <div class="col-md-6 col-md-offset-3">
-                        <input type="email" class="form-control" id="email" placeholder="Email Address"
-                               value="<?php echo htmlspecialchars($_POST['email']); ?>">
-                         <?php echo "<p class='text-danger'>$errorEmail</p>";?>
+                        <input type="email" class="form-control" id="email" placeholder="Email Address"/>
                      </div>
                   </div>
                   <div class="form-group">
                      <div class="col-md-6 col-md-offset-3"> 
-                        <input type="text" class="form-control" id="subject" placeholder="Subject"
-                               value="<?php echo htmlspecialchars($_POST['subject']); ?>">
-                         <?php echo "<p class='text-danger'>$errorSubject</p>";?>
+                        <input type="text" class="form-control" id="subject" placeholder="Subject"/>
                      </div>
                   </div>
                    <div class="form-group">
                        <div class="col-md-6 col-md-offset-3">
-                   <select class="form-control" id="reason" placeholder="Reason for contact"
-                           value="<?php echo htmlspecialchars($_POST['reason']); ?>">
+                   <select class="form-control" id="reason" placeholder="Reason for contact"/>
                        <option>General contact</option>
                        <option>Application Idea</option>
                        <option>Placement Opportunity</option>
@@ -210,9 +165,7 @@
                        </div>
                   <div class="form-group">
                      <div class="col-md-6 col-md-offset-3">
-                        <textarea class="form-control" rows="4" name="message" placeholder="Message"
-                                  value="<?php echo htmlspecialchars($_POST['message']); ?>"></textarea>
-                         <?php echo "<p class='text-danger'>$errorMessage</p>";?>
+                        <textarea class="form-control" rows="4" name="message" placeholder="Message"</textarea>
                      </div>
                   </div>
                   <div class="form-group">
@@ -220,10 +173,6 @@
                         <button type="submit" class="btn btn-primary">Submit</button>
                      </div>
                   </div>
-                   <div class="form-group">
-                   <div class="col-md-4 col-md-offset-4">
-                       <?php echo $result; ?>
-                       </div>
                    </div>
                </form>
             </div>
