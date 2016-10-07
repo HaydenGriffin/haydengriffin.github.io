@@ -106,11 +106,11 @@ border: 0;
 
 
 @media (max-width: 980px) {
-    .h1-home{
+    .homepage-name{
      font-size: 60px;    
      padding-bottom:5px;
     }
-    .h3-home{
+    .homepage-typed{
         font-size: 18px;
         padding-bottom:20px;
     }
