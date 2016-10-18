@@ -57,6 +57,12 @@ border: 0;
 }
 
 
+footer {
+    text-align: center;
+    background-color: #B2EBF2;
+    padding: 10px;
+}
+
 @media (max-width: 767px) {
     p {
         font-size: 1.25em;
@@ -98,7 +104,7 @@ border: 0;
 .homepage-button{
     position: absolute;
     bottom: 8%;
-    font-size: 1.3em;
+    font-size: 1.15em;
 }
 
 h1.homepage-name{
@@ -116,20 +122,75 @@ h1.homepage-typed{
 }
 
 #social-links li {
-    font-size:4em;
+    font-size:3.5em;
     display:inline;
     margin-right: 40px;
+    transition: all .2s ease-in-out;
 }
 
-.fa-github:hover {color: rgb(12,38,53);}
+#social-links a {
+   color: #ffffff;
+    
+}
 
-.fa-facebook:hover {color: rgb(59,89,152);}
+.fa-github {
+  -webkit-transition: all 0.15s ease-in-out;
+  -moz-transition: all 0.15s ease-in-out;
+  -o-transition: all 0.15s ease-in-out;
+  transition: all 0.15s ease-in-out;
+}
+.fa-github:hover {color: rgb(12,38,53);
+    -webkit-transform: scale(1.2);
+    -moz-transform: scale(1.2);
+    -ms-transform: scale(1.2);
+    -o-transform: scale(1.2);
+    transform: scale(1.2);
+}
 
-.fa-instagram:hover {color: rgb(155,105,84);}
+.fa-facebook {
+  -webkit-transition: all 0.15s ease-in-out;
+  -moz-transition: all 0.15s ease-in-out;
+  -o-transition: all 0.15s ease-in-out;
+  transition: all 0.15s ease-in-out;
+}
+.fa-facebook:hover {color: rgb(59,89,152);
+      -webkit-transform: scale(1.2);
+    -moz-transform: scale(1.2);
+    -ms-transform: scale(1.2);
+    -o-transform: scale(1.2);
+    transform: scale(1.2);
+}
 
-.fa-youtube:hover {color: rgb(179,18,23);}
+.fa-instagram {
+  -webkit-transition: all 0.15s ease-in-out;
+  -moz-transition: all 0.15s ease-in-out;
+  -o-transition: all 0.15s ease-in-out;
+  transition: all 0.15s ease-in-out;
+}
+.fa-instagram:hover {color: rgb(155,105,84);
+ -webkit-transform: scale(1.2);
+    -moz-transform: scale(1.2);
+    -ms-transform: scale(1.2);
+    -o-transform: scale(1.2);
+    transform: scale(1.2);
+}
 
-.fa-stack:hover .fa-circle { color: white;}
+.fa-linkedin {
+  -webkit-transition: all 0.15s ease-in-out;
+  -moz-transition: all 0.15s ease-in-out;
+  -o-transition: all 0.15s ease-in-out;
+  transition: all 0.15s ease-in-out;
+}
+.fa-linkedin:hover {color: rgb(0,119,181);
+    -webkit-transform: scale(1.2);
+    -moz-transform: scale(1.2);
+    -ms-transform: scale(1.2);
+    -o-transform: scale(1.2);
+    transform: scale(1.2);
+}
+
+.fa-stack:hover .fa-circle { color: white;
+}
 
 
 @media (max-width: 767px) {
@@ -145,11 +206,11 @@ h1.homepage-name {
         padding-bottom: 50px;
     }
     #social-links li {
-        font-size: 3.5em;
+        font-size: 3.2em;
         margin-right: 30px;
     }
     .homepage-button{
-    font-size: 1.2em;
+    font-size: 1.05em;
     }
 }
 
@@ -166,11 +227,11 @@ h1.homepage-name {
         padding-bottom: 50px;
     }
     #social-links li {
-        font-size: 3em;
+        font-size: 2.9em;
         margin-right: 25px;
     }
     .homepage-button{
-    font-size: 1em;
+    font-size: 0.95em;
 }
 }
 
@@ -224,7 +285,7 @@ p.about-text {
 }
 
 .table-skills {
-    background: rgba(0, 0, 0, 0.05); 
+    background: #B2EBF2; 
     border-radius: 2px;
   
 }
@@ -255,13 +316,13 @@ h2.skills-heading {
 
 .education-lable-date {
     padding-top: 7px;
-    background-color: #69c3d0;
+    background-color: #00BCD4;
     border-radius: 2px;
     
 }
 
 .education-lable-status {
-    background-color: #3193aa;
+    background-color: #B2EBF2;
     padding-top:7px;
     padding-bottom:1px;
     border-bottom-left-radius: 2px;
@@ -292,15 +353,18 @@ h3.education-subheading {
 .education-grid {
     margin-top: 15px;
     margin-bottom: 30px;
-   background-color: white; 
-      border-radius: 10px;
+    background-color: white; 
+    border-radius: 10px;
+    color: #00BCD4;
+    border-style: solid;
+    border-width: 1px;
 }
 
 .education-grid-header {
-    background-color: #69c3d0;
+    background-color: #00BCD4;
     font-family: 'Raleway';
     color: #4a4a4a;
-   padding:10px;
+    padding:10px;
     border-top-left-radius: 5px;
     border-top-right-radius: 5px;
 }
