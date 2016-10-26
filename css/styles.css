@@ -46,6 +46,9 @@ h1.section-heading{
     padding: 60px;
 }
 
+img {
+    width: 300px;
+}
 
 hr {
 border: 0;
