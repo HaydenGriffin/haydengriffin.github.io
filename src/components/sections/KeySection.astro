@@ -1,0 +1,156 @@
+---
+import { tools } from "../../data/profile";
+import ClassSymbol from "../ClassSymbol.astro";
+---
+
+<section class="sheet-section key" id="key" aria-labelledby="key-title">
+  <div class="key-signs">
+    <h2 class="key-title" id="key-title">Key to the sheet</h2>
+    <dl class="signs">
+      <div>
+        <dt><ClassSymbol of="settlement" /><span class="sign-settlement">Smart Escrow</span></dt>
+        <dd>Products, platforms and employers. The bigger the lettering, the bigger the place.</dd>
+      </div>
+      <div>
+        <dt><ClassSymbol of="water" /><span class="sign-water">Payments bridge</span></dt>
+        <dd>Money in motion: payment rails and the services that move funds.</dd>
+      </div>
+      <div>
+        <dt><ClassSymbol of="area" /><span class="sign-area">Local voice</span></dt>
+        <dd>Areas of work rather than single products.</dd>
+      </div>
+      <div>
+        <dt><ClassSymbol of="antiquity" /><span class="sign-antiquity">Fivium</span></dt>
+        <dd>Antiquities: everything before 2020.</dd>
+      </div>
+      <div>
+        <dt><ClassSymbol of="route" /><span>Career route</span></dt>
+        <dd>The path from university to now.</dd>
+      </div>
+      <div>
+        <dt><span class="sign-link">Rights of way</span></dt>
+        <dd>Green dashed underlines are links you can follow.</dd>
+      </div>
+      <div>
+        <dt>
+          <svg class="contour-sample" viewBox="0 0 24 24" aria-hidden="true"><path d="M2 16c5-6 9-8 20-6M2 21c6-5 11-6 20-5" /></svg>
+          <span>Contours</span>
+        </dt>
+        <dd>Terrain generated at build time, with 10 m intervals. It's there for the scenery.</dd>
+      </div>
+    </dl>
+  </div>
+
+  <div class="key-tools">
+    <h2 class="key-title">Tools in regular use</h2>
+    <dl class="tools">
+      {
+        tools.map((row) => (
+          <div>
+            <dt>{row.group}</dt>
+            <dd>{row.items.join(", ")}</dd>
+          </div>
+        ))
+      }
+    </dl>
+  </div>
+</section>
+
+<style>
+  .key {
+    display: grid;
+    grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
+    gap: var(--space-6);
+  }
+
+  .key-title {
+    padding-bottom: var(--space-2);
+    border-bottom: 2px solid var(--ink);
+    font-family: var(--face-letter);
+    font-weight: 800;
+    font-size: var(--step-2);
+  }
+
+  .signs,
+  .tools {
+    display: grid;
+  }
+
+  .signs > div,
+  .tools > div {
+    display: grid;
+    grid-template-columns: 13rem minmax(0, 1fr);
+    gap: var(--space-3);
+    padding-block: var(--space-2);
+    border-bottom: 1px solid color-mix(in srgb, var(--ink) 18%, transparent);
+  }
+
+  .tools > div {
+    grid-template-columns: 7rem minmax(0, 1fr);
+  }
+
+  dt {
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+    font-weight: 600;
+  }
+
+  dd {
+    color: var(--ink-soft);
+  }
+
+  .sign-settlement {
+    font-family: var(--face-letter);
+    font-weight: 700;
+    font-size: var(--step-1);
+  }
+
+  .sign-water {
+    font-style: italic;
+    font-weight: 500;
+    color: var(--water-ink);
+  }
+
+  .sign-area {
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.18em;
+    font-size: var(--step--1);
+  }
+
+  .sign-antiquity {
+    font-family: var(--face-antiquity);
+    font-weight: 400;
+    font-size: var(--step-1);
+  }
+
+  .sign-link {
+    margin-left: calc(1.5rem + var(--space-2));
+    text-decoration: underline dashed var(--path) 2px;
+    text-underline-offset: 0.22em;
+  }
+
+  .contour-sample {
+    width: 1.5rem;
+    height: 1.5rem;
+    fill: none;
+    stroke: var(--contour-index);
+    stroke-width: 1.6;
+  }
+
+  @media (max-width: 1000px) {
+    .key {
+      grid-template-columns: 1fr;
+      gap: var(--space-5);
+    }
+  }
+
+  @media (max-width: 560px) {
+    .signs > div,
+    .tools > div {
+      grid-template-columns: 1fr;
+      gap: var(--space-1);
+    }
+  }
+</style>

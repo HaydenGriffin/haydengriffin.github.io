@@ -1,0 +1,63 @@
+---
+import type { FeatureClass } from "../data/types";
+
+/** A name lettered in its OS feature class, the same way it appears on the sheet. */
+interface Props {
+  of: FeatureClass;
+  as?: "h2" | "h3" | "span";
+  size?: "entry" | "section";
+}
+
+const { of, as: Tag = "h3", size = "entry" } = Astro.props;
+---
+
+<Tag class:list={["name", `name-${of}`, `name-${size}`]}><slot /></Tag>
+
+<style>
+  .name {
+    color: var(--ink);
+    line-height: 1.05;
+  }
+
+  .name-entry {
+    font-size: var(--step-2);
+  }
+
+  .name-section {
+    font-size: var(--step-3);
+  }
+
+  .name-settlement {
+    font-family: var(--face-letter);
+    font-weight: 700;
+  }
+
+  .name-section.name-settlement {
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.02em;
+  }
+
+  .name-water {
+    font-style: italic;
+    font-weight: 500;
+    color: var(--water-ink);
+  }
+
+  .name-area {
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.2em;
+    font-size: var(--step-1);
+  }
+
+  .name-section.name-area {
+    font-size: var(--step-3);
+    letter-spacing: 0.24em;
+  }
+
+  .name-antiquity {
+    font-family: var(--face-antiquity);
+    font-weight: 400;
+  }
+</style>

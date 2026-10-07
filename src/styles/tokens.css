@@ -1,0 +1,51 @@
+:root {
+  /* Map paper and keyline */
+  --paper: #f6f7f2;
+  --paper-deep: #eceee6;
+  --ink: #1b1d1a;
+  --ink-soft: #464943;
+
+  /* Cover */
+  --cover: #e5601a;
+  --cover-ink: #1b1d1a;
+
+  /* Colour plates */
+  --grid: #2a8fd0;
+  --grid-ink: #17679f;
+  --water: #cfe6f3;
+  --water-line: #2a8fd0;
+  --water-ink: #17679f;
+  --contour: #d19463;
+  --contour-index: #b4692f;
+  --contour-ink: #8a4a1c;
+  --wood: #d4e8bf;
+  --wood-line: #77ab5c;
+  --wood-ink: #33601f;
+  --road-b: #f2a73b;
+  --road-minor: #ffe36b;
+  --path: #27803a;
+
+  /* Type */
+  --face-text: "Fira Sans", "Segoe UI", sans-serif;
+  --face-letter: "Fira Sans Extra Condensed", "Fira Sans", sans-serif;
+  --face-antiquity: "UnifrakturMaguntia", "Fira Sans", serif;
+
+  --step--1: 0.875rem;
+  --step-0: 1.0625rem;
+  --step-1: 1.3125rem;
+  --step-2: 1.75rem;
+  --step-3: clamp(2.25rem, 1.6rem + 2.4vw, 3.5rem);
+  --step-4: clamp(3.5rem, 2rem + 5.2vw, 6rem);
+
+  /* Space */
+  --space-1: 0.375rem;
+  --space-2: 0.75rem;
+  --space-3: 1.25rem;
+  --space-4: 2rem;
+  --space-5: 3.5rem;
+  --space-6: 6rem;
+  --gutter: clamp(1.25rem, 4vw, 3.5rem);
+  --square: 8rem;
+
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+}

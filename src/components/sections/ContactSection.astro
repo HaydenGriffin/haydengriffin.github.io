@@ -1,0 +1,85 @@
+---
+import { profile } from "../../data/profile";
+import CopyEmail from "../CopyEmail.astro";
+---
+
+<footer class="contact" id="contact" aria-labelledby="contact-title">
+  <div class="contact-inner">
+    <h2 class="contact-title" id="contact-title">Get in touch</h2>
+    <p class="contact-lede">Email is the quickest way to reach me, whether it's about payments, escrow, engineering leadership or a strange home-automation idea.</p>
+    <CopyEmail email={profile.email} />
+    <ul class="contact-links">
+      <li><a href={profile.github} rel="me noopener">GitHub</a></li>
+      <li><a href={profile.linkedin} rel="me noopener">LinkedIn</a></li>
+      <li>{profile.location}</li>
+    </ul>
+  </div>
+  <div class="imprint">
+    <p>Sheet revised {profile.revised}. Built with Astro. The terrain is generated at build time.</p>
+    <p>Not an Ordnance Survey product. © {new Date().getFullYear()} Hayden Griffin. <a href="https://github.com/HaydenGriffin/haydengriffin.github.io" rel="noopener">Source</a></p>
+  </div>
+</footer>
+
+<style>
+  .contact {
+    margin-top: var(--space-6);
+    background: var(--cover);
+  }
+
+  .contact-inner {
+    display: grid;
+    gap: var(--space-3);
+    justify-items: start;
+    max-width: 82rem;
+    margin-inline: auto;
+    padding: var(--space-6) var(--gutter) var(--space-5);
+  }
+
+  .contact-title {
+    font-family: var(--face-letter);
+    font-weight: 800;
+    font-size: var(--step-4);
+    line-height: 0.9;
+    color: #fff;
+  }
+
+  .contact-lede {
+    max-width: 44ch;
+    font-size: var(--step-1);
+    line-height: 1.4;
+  }
+
+  .contact-links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-2) var(--space-4);
+    font-weight: 600;
+  }
+
+  .contact-links a {
+    text-decoration-color: var(--ink);
+    text-decoration-style: solid;
+    text-decoration-thickness: 1.5px;
+  }
+
+  .contact-links a:hover {
+    text-decoration-thickness: 3px;
+  }
+
+  .imprint {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: var(--space-2) var(--space-4);
+    max-width: 82rem;
+    margin-inline: auto;
+    padding: var(--space-3) var(--gutter) var(--space-4);
+    border-top: 1.5px solid var(--ink);
+    font-size: var(--step--1);
+  }
+
+  .imprint a {
+    text-decoration-color: var(--ink);
+    text-decoration-style: solid;
+  }
+</style>

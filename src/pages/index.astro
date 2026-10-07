@@ -1,0 +1,24 @@
+---
+import Spread from "../components/Spread.astro";
+import ContactSection from "../components/sections/ContactSection.astro";
+import GazetteerSection from "../components/sections/GazetteerSection.astro";
+import HouseSection from "../components/sections/HouseSection.astro";
+import KeySection from "../components/sections/KeySection.astro";
+import RouteSection from "../components/sections/RouteSection.astro";
+import WorkSection from "../components/sections/WorkSection.astro";
+import { profile } from "../data/profile";
+import Sheet from "../layouts/Sheet.astro";
+---
+
+<Sheet title={`${profile.name}, ${profile.role}`} description={profile.intro}>
+  <a class="skip-link" href="#main">Skip to the work</a>
+  <Spread />
+  <main class="sheet" id="main">
+    <WorkSection />
+    <RouteSection />
+    <HouseSection />
+    <KeySection />
+    <GazetteerSection />
+  </main>
+  <ContactSection />
+</Sheet>

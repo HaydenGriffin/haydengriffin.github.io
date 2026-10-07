@@ -1,0 +1,50 @@
+---
+import { work } from "../../data/work";
+import Entry from "../Entry.astro";
+import FeatureName from "../FeatureName.astro";
+import MapInset from "../map/MapInset.astro";
+---
+
+<section class="sheet-section work" id="paymidas-work" aria-labelledby="work-title">
+  <div class="section-head">
+    <FeatureName of="settlement" as="h2" size="section"><span id="work-title">PayMidas</span></FeatureName>
+    <p class="section-lede">
+      I'm CTO at <a href="https://paymidas.eu" rel="noopener">PayMidas</a>, an EU payments infrastructure company. I run engineering for the group and write most of the code. Everything on the coast of the sheet was built there. Client code is private, but I'm happy to walk anyone through it.
+    </p>
+  </div>
+  <div class="layout">
+    <MapInset class="work-inset" from={{ x: 10.35, y: 4.2 }} to={{ x: 19.8, y: 11.9 }} caption="Inset: the PayMidas coast at twice the scale" />
+    <div class="entries">
+      {work.map((feature) => <Entry feature={feature} />)}
+    </div>
+  </div>
+</section>
+
+<style>
+  .layout {
+    display: grid;
+    grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
+    gap: var(--space-5);
+    align-items: start;
+  }
+
+  .layout :global(.work-inset) {
+    position: sticky;
+    top: var(--space-4);
+  }
+
+  .entries {
+    display: grid;
+    row-gap: var(--space-5);
+  }
+
+  @media (max-width: 900px) {
+    .layout {
+      grid-template-columns: 1fr;
+    }
+
+    .layout :global(.work-inset) {
+      position: static;
+    }
+  }
+</style>

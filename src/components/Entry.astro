@@ -1,0 +1,105 @@
+---
+import type { Feature } from "../data/types";
+import { gridRef } from "../lib/grid";
+import ClassSymbol from "./ClassSymbol.astro";
+import FeatureName from "./FeatureName.astro";
+
+interface Props {
+  feature: Feature;
+}
+
+const { feature } = Astro.props;
+---
+
+<article id={feature.id} class="entry">
+  <header class="entry-head">
+    <ClassSymbol of={feature.class} />
+    <FeatureName of={feature.class}>{feature.name}</FeatureName>
+  </header>
+  <p class="entry-meta">
+    <span class="entry-ref">{gridRef(feature.position)}</span>
+    <span>{feature.years}</span>
+    {feature.role && <span>{feature.role}</span>}
+  </p>
+  <p class="entry-summary">{feature.summary}</p>
+  <div class="entry-back">
+    {feature.details.map((paragraph) => <p>{paragraph}</p>)}
+    <p class="entry-stack"><span class="visually-hidden">Built with: </span>{feature.stack.join(" · ")}</p>
+    {
+      feature.links && (
+        <p class="entry-links">
+          {feature.links.map((link) => (
+            <a href={link.href} rel="noopener">
+              {link.label}
+            </a>
+          ))}
+        </p>
+      )
+    }
+  </div>
+</article>
+
+<style>
+  .entry {
+    scroll-margin-top: var(--space-5);
+    max-width: 44rem;
+  }
+
+  .entry-head {
+    display: flex;
+    gap: var(--space-2);
+    align-items: center;
+  }
+
+  .entry-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.25rem var(--space-3);
+    margin-top: var(--space-1);
+    padding-left: calc(1.5rem + var(--space-2));
+    font-size: var(--step--1);
+    color: var(--ink-soft);
+  }
+
+  .entry-ref {
+    color: var(--grid-ink);
+    font-weight: 600;
+    letter-spacing: 0.04em;
+  }
+
+  .entry-summary {
+    margin-top: var(--space-3);
+    font-size: var(--step-1);
+    line-height: 1.4;
+    max-width: 34ch;
+  }
+
+  .entry-back {
+    display: grid;
+    gap: var(--space-2);
+    margin-top: var(--space-3);
+    padding-top: var(--space-3);
+    border-top: 1px solid color-mix(in srgb, var(--ink) 22%, transparent);
+    max-width: 62ch;
+    color: var(--ink-soft);
+  }
+
+  .entry-stack {
+    margin-top: var(--space-1);
+    font-size: var(--step--1);
+    color: var(--contour-ink);
+    font-weight: 500;
+  }
+
+  .entry-links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-3);
+    font-weight: 600;
+    color: var(--ink);
+  }
+
+  .entry:target .entry-head :global(.name) {
+    color: var(--cover);
+  }
+</style>

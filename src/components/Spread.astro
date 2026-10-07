@@ -1,0 +1,321 @@
+---
+import { profile } from "../data/profile";
+import ClassSymbol from "./ClassSymbol.astro";
+import CopyEmail from "./CopyEmail.astro";
+import OverviewMap from "./map/OverviewMap.astro";
+
+const nav = [
+  { href: "#paymidas-work", label: "PayMidas" },
+  { href: "#route", label: "Route" },
+  { href: "#the-house", label: "The House" },
+  { href: "#gazetteer", label: "Gazetteer" },
+  { href: "#contact", label: "Contact" },
+];
+---
+
+<header class="spread" id="top">
+  <section class="cover" aria-labelledby="name">
+    <div class="cover-main">
+      <h1 class="cover-name" id="name">Hayden <span>Griffin</span></h1>
+      <p class="cover-role">{profile.role}</p>
+      <p class="cover-intro">{profile.intro}</p>
+      <p class="cover-quick"><a href={`mailto:${profile.email}`}>{profile.email}</a></p>
+      <ul class="cover-places" aria-label="On this sheet">
+        {profile.places.map((place) => <li>{place}</li>)}
+      </ul>
+    </div>
+    <div class="cover-foot">
+      <CopyEmail email={profile.email} />
+      <p class="cover-links">
+        <a href={profile.github} rel="me noopener">GitHub</a>
+        <a href={profile.linkedin} rel="me noopener">LinkedIn</a>
+      </p>
+      <div class="cover-badge">
+        <span class="cover-badge-square" aria-hidden="true">HG</span>
+        <p>
+          Sheet revised {profile.revised}<br />
+          {profile.location}
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <div class="map-panel">
+    <div class="map-strip">
+      <p class="map-title">Selected work, 2015 – 2026</p>
+      <nav aria-label="Sections">
+        <ul class="map-nav">
+          {nav.map((item) => <li><a href={item.href}>{item.label}</a></li>)}
+        </ul>
+      </nav>
+    </div>
+    <OverviewMap />
+    <ul class="map-key" aria-label="Map key">
+      <li><ClassSymbol of="settlement" /><span class="key-settlement">Products and employers</span></li>
+      <li><ClassSymbol of="water" /><span class="key-water">Payments</span></li>
+      <li><ClassSymbol of="area" /><span class="key-area">Areas of work</span></li>
+      <li><ClassSymbol of="antiquity" /><span class="key-antiquity">Before 2020</span></li>
+      <li><ClassSymbol of="route" /><span>Career route</span></li>
+    </ul>
+  </div>
+</header>
+
+<style>
+  .spread {
+    display: grid;
+    grid-template-columns: minmax(21rem, 33fr) 67fr;
+    min-height: 100svh;
+  }
+
+  .cover {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: var(--space-5);
+    padding: var(--space-4) var(--space-4) var(--space-4) var(--gutter);
+    background: var(--cover);
+    color: var(--cover-ink);
+  }
+
+  .cover-name {
+    font-family: var(--face-letter);
+    font-weight: 800;
+    font-size: var(--step-4);
+    line-height: 0.86;
+    letter-spacing: -0.01em;
+    color: #fff;
+  }
+
+  .cover-name span {
+    display: block;
+  }
+
+  .cover-role {
+    margin-top: var(--space-3);
+    font-family: var(--face-letter);
+    font-weight: 700;
+    font-size: var(--step-2);
+    line-height: 1.1;
+  }
+
+  .cover-intro {
+    margin-top: var(--space-3);
+    max-width: 36ch;
+    font-size: var(--step-0);
+    line-height: 1.5;
+  }
+
+  .cover-quick {
+    display: none;
+    margin-top: var(--space-3);
+    font-weight: 600;
+  }
+
+  .cover-quick a {
+    text-decoration-color: var(--cover-ink);
+    text-decoration-style: solid;
+    text-decoration-thickness: 1.5px;
+  }
+
+  .cover-places {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.1rem 0;
+    margin-top: var(--space-4);
+    font-family: var(--face-letter);
+    font-weight: 700;
+    font-size: var(--step-1);
+    color: #fff;
+  }
+
+  .cover-places li:not(:last-child)::after {
+    content: "·";
+    margin-inline: 0.5ch;
+    color: var(--cover-ink);
+  }
+
+  .cover-foot {
+    display: grid;
+    gap: var(--space-3);
+  }
+
+  .cover-links {
+    display: flex;
+    gap: var(--space-3);
+    font-weight: 600;
+  }
+
+  .cover-links a {
+    text-decoration-color: var(--cover-ink);
+    text-decoration-style: solid;
+    text-decoration-thickness: 1.5px;
+  }
+
+  .cover-links a:hover {
+    text-decoration-thickness: 3px;
+  }
+
+  .cover-badge {
+    display: flex;
+    align-items: center;
+    gap: var(--space-3);
+    justify-self: start;
+    padding: var(--space-2) var(--space-3) var(--space-2) var(--space-2);
+    background: #fff;
+    font-size: var(--step--1);
+    line-height: 1.35;
+  }
+
+  .cover-badge-square {
+    padding: 0.1rem 0.45rem;
+    background: var(--ink);
+    color: #fff;
+    font-family: var(--face-letter);
+    font-weight: 800;
+    font-size: var(--step-2);
+    line-height: 1;
+  }
+
+  .map-panel {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: var(--space-3);
+    min-width: 0;
+    padding: var(--space-4) var(--gutter);
+  }
+
+  .map-strip {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: var(--space-2) var(--space-4);
+    padding-bottom: var(--space-2);
+    border-bottom: 2px solid var(--ink);
+  }
+
+  .map-title {
+    font-family: var(--face-letter);
+    font-weight: 700;
+    font-size: var(--step-1);
+  }
+
+  .map-nav {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-1) var(--space-3);
+    font-size: var(--step--1);
+    font-weight: 600;
+  }
+
+  .map-key {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-2) var(--space-4);
+    padding-top: var(--space-2);
+    border-top: 1px solid color-mix(in srgb, var(--ink) 30%, transparent);
+    font-size: var(--step--1);
+  }
+
+  .map-key li {
+    display: flex;
+    align-items: center;
+    gap: var(--space-1);
+  }
+
+  .key-water {
+    color: var(--water-ink);
+    font-style: italic;
+    font-weight: 500;
+  }
+
+  .key-area {
+    text-transform: uppercase;
+    letter-spacing: 0.16em;
+    font-size: 0.75rem;
+    font-weight: 500;
+  }
+
+  .key-antiquity {
+    font-family: var(--face-antiquity);
+    font-size: 1.05rem;
+  }
+
+  .key-settlement {
+    font-family: var(--face-letter);
+    font-weight: 700;
+    font-size: 1rem;
+  }
+
+  /* Single column: the cover splits around the map so the sheet shows on the first screen. */
+  @media (max-width: 1100px) {
+    .spread {
+      grid-template-columns: 1fr;
+      min-height: 0;
+    }
+
+    .cover {
+      display: contents;
+    }
+
+    .cover-main,
+    .cover-foot {
+      padding: var(--space-4) var(--gutter);
+      background: var(--cover);
+    }
+
+    .cover-main {
+      order: 1;
+      padding-bottom: var(--space-4);
+    }
+
+    .map-panel {
+      order: 2;
+    }
+
+    .cover-foot {
+      order: 3;
+    }
+
+    .cover-name {
+      font-size: clamp(3.5rem, 21vw, 6rem);
+    }
+  }
+
+  /* On phones the map leads its panel; the sheet title and nav follow it. */
+  @media (max-width: 760px) {
+    .map-panel {
+      padding-inline: 0;
+      padding-top: var(--space-3);
+    }
+
+    .map-strip {
+      order: 3;
+      border-bottom: 0;
+      border-top: 2px solid var(--ink);
+      padding-top: var(--space-2);
+    }
+
+    .map-key {
+      order: 2;
+    }
+
+    .cover-places {
+      display: none;
+    }
+
+    .cover-quick {
+      display: block;
+    }
+
+    .map-strip,
+    .map-key {
+      margin-inline: var(--gutter);
+    }
+
+    .map-panel :global(.readout) {
+      padding-inline: var(--gutter);
+    }
+  }
+</style>

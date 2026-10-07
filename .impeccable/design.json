@@ -1,0 +1,588 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-10-07T15:12:42+00:00",
+  "title": "Design System: Hayden Griffin",
+  "extensions": {
+    "colorMeta": {
+      "paper": {
+        "role": "neutral",
+        "displayName": "Map Paper",
+        "canonical": "#f6f7f2",
+        "oklch": "oklch(97.4% 0.007 115.7)",
+        "tonalRamp": [
+          "oklch(15.0% 0.007 115.7)",
+          "oklch(26.0% 0.007 115.7)",
+          "oklch(37.0% 0.007 115.7)",
+          "oklch(48.0% 0.007 115.7)",
+          "oklch(59.0% 0.007 115.7)",
+          "oklch(70.0% 0.007 115.7)",
+          "oklch(82.0% 0.007 115.7)",
+          "oklch(95.0% 0.007 115.7)"
+        ]
+      },
+      "paper-deep": {
+        "role": "neutral",
+        "displayName": "Paper Fold",
+        "canonical": "#eceee6",
+        "oklch": "oklch(94.5% 0.011 118.0)",
+        "tonalRamp": [
+          "oklch(15.0% 0.011 118.0)",
+          "oklch(26.0% 0.011 118.0)",
+          "oklch(37.0% 0.011 118.0)",
+          "oklch(48.0% 0.011 118.0)",
+          "oklch(59.0% 0.011 118.0)",
+          "oklch(70.0% 0.011 118.0)",
+          "oklch(82.0% 0.011 118.0)",
+          "oklch(95.0% 0.011 118.0)"
+        ]
+      },
+      "ink": {
+        "role": "neutral",
+        "displayName": "Keyline Ink",
+        "canonical": "#1b1d1a",
+        "oklch": "oklch(22.7% 0.006 135.0)",
+        "tonalRamp": [
+          "oklch(15.0% 0.006 135.0)",
+          "oklch(26.0% 0.006 135.0)",
+          "oklch(37.0% 0.006 135.0)",
+          "oklch(48.0% 0.006 135.0)",
+          "oklch(59.0% 0.006 135.0)",
+          "oklch(70.0% 0.006 135.0)",
+          "oklch(82.0% 0.006 135.0)",
+          "oklch(95.0% 0.006 135.0)"
+        ]
+      },
+      "ink-soft": {
+        "role": "neutral",
+        "displayName": "Soft Ink",
+        "canonical": "#464943",
+        "oklch": "oklch(40.1% 0.011 128.8)",
+        "tonalRamp": [
+          "oklch(15.0% 0.011 128.8)",
+          "oklch(26.0% 0.011 128.8)",
+          "oklch(37.0% 0.011 128.8)",
+          "oklch(48.0% 0.011 128.8)",
+          "oklch(59.0% 0.011 128.8)",
+          "oklch(70.0% 0.011 128.8)",
+          "oklch(82.0% 0.011 128.8)",
+          "oklch(95.0% 0.011 128.8)"
+        ]
+      },
+      "cover": {
+        "role": "primary",
+        "displayName": "Explorer Cover Orange",
+        "canonical": "#e5601a",
+        "oklch": "oklch(64.9% 0.181 43.2)",
+        "tonalRamp": [
+          "oklch(15.0% 0.12 43.2)",
+          "oklch(26.0% 0.14 43.2)",
+          "oklch(37.0% 0.16 43.2)",
+          "oklch(48.0% 0.18 43.2)",
+          "oklch(59.0% 0.181 43.2)",
+          "oklch(70.0% 0.181 43.2)",
+          "oklch(82.0% 0.161 43.2)",
+          "oklch(95.0% 0.138 43.2)"
+        ]
+      },
+      "cover-ink": {
+        "role": "primary",
+        "displayName": "Cover Ink",
+        "canonical": "#1b1d1a",
+        "oklch": "oklch(22.7% 0.006 135.0)",
+        "tonalRamp": [
+          "oklch(15.0% 0.006 135.0)",
+          "oklch(26.0% 0.006 135.0)",
+          "oklch(37.0% 0.006 135.0)",
+          "oklch(48.0% 0.006 135.0)",
+          "oklch(59.0% 0.006 135.0)",
+          "oklch(70.0% 0.006 135.0)",
+          "oklch(82.0% 0.006 135.0)",
+          "oklch(95.0% 0.006 135.0)"
+        ]
+      },
+      "grid": {
+        "role": "secondary",
+        "displayName": "Kilometre Grid Blue",
+        "canonical": "#2a8fd0",
+        "oklch": "oklch(62.4% 0.133 242.4)",
+        "tonalRamp": [
+          "oklch(15.0% 0.093 242.4)",
+          "oklch(26.0% 0.108 242.4)",
+          "oklch(37.0% 0.122 242.4)",
+          "oklch(48.0% 0.133 242.4)",
+          "oklch(59.0% 0.133 242.4)",
+          "oklch(70.0% 0.133 242.4)",
+          "oklch(82.0% 0.123 242.4)",
+          "oklch(95.0% 0.106 242.4)"
+        ]
+      },
+      "grid-ink": {
+        "role": "secondary",
+        "displayName": "Grid Figure Blue",
+        "canonical": "#17679f",
+        "oklch": "oklch(49.7% 0.115 245.3)",
+        "tonalRamp": [
+          "oklch(15.0% 0.083 245.3)",
+          "oklch(26.0% 0.096 245.3)",
+          "oklch(37.0% 0.109 245.3)",
+          "oklch(48.0% 0.115 245.3)",
+          "oklch(59.0% 0.115 245.3)",
+          "oklch(70.0% 0.115 245.3)",
+          "oklch(82.0% 0.11 245.3)",
+          "oklch(95.0% 0.095 245.3)"
+        ]
+      },
+      "water": {
+        "role": "tertiary",
+        "displayName": "Sea Tint",
+        "canonical": "#cfe6f3",
+        "oklch": "oklch(91.2% 0.03 232.4)",
+        "tonalRamp": [
+          "oklch(15.0% 0.03 232.4)",
+          "oklch(26.0% 0.03 232.4)",
+          "oklch(37.0% 0.03 232.4)",
+          "oklch(48.0% 0.03 232.4)",
+          "oklch(59.0% 0.03 232.4)",
+          "oklch(70.0% 0.03 232.4)",
+          "oklch(82.0% 0.03 232.4)",
+          "oklch(95.0% 0.03 232.4)"
+        ]
+      },
+      "water-line": {
+        "role": "tertiary",
+        "displayName": "Water Line",
+        "canonical": "#2a8fd0",
+        "oklch": "oklch(62.4% 0.133 242.4)",
+        "tonalRamp": [
+          "oklch(15.0% 0.093 242.4)",
+          "oklch(26.0% 0.108 242.4)",
+          "oklch(37.0% 0.122 242.4)",
+          "oklch(48.0% 0.133 242.4)",
+          "oklch(59.0% 0.133 242.4)",
+          "oklch(70.0% 0.133 242.4)",
+          "oklch(82.0% 0.123 242.4)",
+          "oklch(95.0% 0.106 242.4)"
+        ]
+      },
+      "water-ink": {
+        "role": "tertiary",
+        "displayName": "Water Lettering",
+        "canonical": "#17679f",
+        "oklch": "oklch(49.7% 0.115 245.3)",
+        "tonalRamp": [
+          "oklch(15.0% 0.083 245.3)",
+          "oklch(26.0% 0.096 245.3)",
+          "oklch(37.0% 0.109 245.3)",
+          "oklch(48.0% 0.115 245.3)",
+          "oklch(59.0% 0.115 245.3)",
+          "oklch(70.0% 0.115 245.3)",
+          "oklch(82.0% 0.11 245.3)",
+          "oklch(95.0% 0.095 245.3)"
+        ]
+      },
+      "contour": {
+        "role": "tertiary",
+        "displayName": "Contour Brown",
+        "canonical": "#d19463",
+        "oklch": "oklch(71.5% 0.098 59.1)",
+        "tonalRamp": [
+          "oklch(15.0% 0.074 59.1)",
+          "oklch(26.0% 0.085 59.1)",
+          "oklch(37.0% 0.096 59.1)",
+          "oklch(48.0% 0.098 59.1)",
+          "oklch(59.0% 0.098 59.1)",
+          "oklch(70.0% 0.098 59.1)",
+          "oklch(82.0% 0.097 59.1)",
+          "oklch(95.0% 0.084 59.1)"
+        ]
+      },
+      "contour-index": {
+        "role": "tertiary",
+        "displayName": "Index Contour",
+        "canonical": "#b4692f",
+        "oklch": "oklch(59.4% 0.12 55.2)",
+        "tonalRamp": [
+          "oklch(15.0% 0.086 55.2)",
+          "oklch(26.0% 0.099 55.2)",
+          "oklch(37.0% 0.112 55.2)",
+          "oklch(48.0% 0.12 55.2)",
+          "oklch(59.0% 0.12 55.2)",
+          "oklch(70.0% 0.12 55.2)",
+          "oklch(82.0% 0.113 55.2)",
+          "oklch(95.0% 0.098 55.2)"
+        ]
+      },
+      "contour-ink": {
+        "role": "tertiary",
+        "displayName": "Contour Figures",
+        "canonical": "#8a4a1c",
+        "oklch": "oklch(47.9% 0.104 52.6)",
+        "tonalRamp": [
+          "oklch(15.0% 0.077 52.6)",
+          "oklch(26.0% 0.089 52.6)",
+          "oklch(37.0% 0.1 52.6)",
+          "oklch(48.0% 0.104 52.6)",
+          "oklch(59.0% 0.104 52.6)",
+          "oklch(70.0% 0.104 52.6)",
+          "oklch(82.0% 0.101 52.6)",
+          "oklch(95.0% 0.088 52.6)"
+        ]
+      },
+      "wood": {
+        "role": "tertiary",
+        "displayName": "Woodland Fill",
+        "canonical": "#d4e8bf",
+        "oklch": "oklch(90.5% 0.059 128.7)",
+        "tonalRamp": [
+          "oklch(15.0% 0.052 128.7)",
+          "oklch(26.0% 0.059 128.7)",
+          "oklch(37.0% 0.059 128.7)",
+          "oklch(48.0% 0.059 128.7)",
+          "oklch(59.0% 0.059 128.7)",
+          "oklch(70.0% 0.059 128.7)",
+          "oklch(82.0% 0.059 128.7)",
+          "oklch(95.0% 0.058 128.7)"
+        ]
+      },
+      "wood-line": {
+        "role": "tertiary",
+        "displayName": "Woodland Edge",
+        "canonical": "#77ab5c",
+        "oklch": "oklch(68.6% 0.122 135.7)",
+        "tonalRamp": [
+          "oklch(15.0% 0.087 135.7)",
+          "oklch(26.0% 0.101 135.7)",
+          "oklch(37.0% 0.114 135.7)",
+          "oklch(48.0% 0.122 135.7)",
+          "oklch(59.0% 0.122 135.7)",
+          "oklch(70.0% 0.122 135.7)",
+          "oklch(82.0% 0.115 135.7)",
+          "oklch(95.0% 0.1 135.7)"
+        ]
+      },
+      "wood-ink": {
+        "role": "tertiary",
+        "displayName": "Woodland Lettering",
+        "canonical": "#33601f",
+        "oklch": "oklch(44.1% 0.108 137.4)",
+        "tonalRamp": [
+          "oklch(15.0% 0.079 137.4)",
+          "oklch(26.0% 0.091 137.4)",
+          "oklch(37.0% 0.103 137.4)",
+          "oklch(48.0% 0.108 137.4)",
+          "oklch(59.0% 0.108 137.4)",
+          "oklch(70.0% 0.108 137.4)",
+          "oklch(82.0% 0.104 137.4)",
+          "oklch(95.0% 0.09 137.4)"
+        ]
+      },
+      "road-b": {
+        "role": "tertiary",
+        "displayName": "B-Road Orange",
+        "canonical": "#f2a73b",
+        "oklch": "oklch(78.3% 0.147 71.8)",
+        "tonalRamp": [
+          "oklch(15.0% 0.101 71.8)",
+          "oklch(26.0% 0.117 71.8)",
+          "oklch(37.0% 0.133 71.8)",
+          "oklch(48.0% 0.147 71.8)",
+          "oklch(59.0% 0.147 71.8)",
+          "oklch(70.0% 0.147 71.8)",
+          "oklch(82.0% 0.135 71.8)",
+          "oklch(95.0% 0.116 71.8)"
+        ]
+      },
+      "road-minor": {
+        "role": "tertiary",
+        "displayName": "Minor Road Yellow",
+        "canonical": "#ffe36b",
+        "oklch": "oklch(91.6% 0.142 96.3)",
+        "tonalRamp": [
+          "oklch(15.0% 0.098 96.3)",
+          "oklch(26.0% 0.114 96.3)",
+          "oklch(37.0% 0.129 96.3)",
+          "oklch(48.0% 0.142 96.3)",
+          "oklch(59.0% 0.142 96.3)",
+          "oklch(70.0% 0.142 96.3)",
+          "oklch(82.0% 0.131 96.3)",
+          "oklch(95.0% 0.112 96.3)"
+        ]
+      },
+      "path": {
+        "role": "secondary",
+        "displayName": "Right-of-Way Green",
+        "canonical": "#27803a",
+        "oklch": "oklch(53.1% 0.134 147.2)",
+        "tonalRamp": [
+          "oklch(15.0% 0.094 147.2)",
+          "oklch(26.0% 0.109 147.2)",
+          "oklch(37.0% 0.123 147.2)",
+          "oklch(48.0% 0.134 147.2)",
+          "oklch(59.0% 0.134 147.2)",
+          "oklch(70.0% 0.134 147.2)",
+          "oklch(82.0% 0.125 147.2)",
+          "oklch(95.0% 0.107 147.2)"
+        ]
+      },
+      "white": {
+        "role": "neutral",
+        "displayName": "White",
+        "canonical": "#ffffff",
+        "oklch": "oklch(100.0% 0.0 89.9)",
+        "tonalRamp": [
+          "oklch(15.0% 0.0 89.9)",
+          "oklch(26.0% 0.0 89.9)",
+          "oklch(37.0% 0.0 89.9)",
+          "oklch(48.0% 0.0 89.9)",
+          "oklch(59.0% 0.0 89.9)",
+          "oklch(70.0% 0.0 89.9)",
+          "oklch(82.0% 0.0 89.9)",
+          "oklch(95.0% 0.0 89.9)"
+        ]
+      }
+    },
+    "typographyMeta": {
+      "display": {
+        "displayName": "Display",
+        "purpose": "Cover name and contact title, white on cover orange."
+      },
+      "headline-settlement": {
+        "displayName": "Headline Settlement",
+        "purpose": "Section name for a settlement-class feature (PayMidas): condensed 800 uppercase."
+      },
+      "headline-area": {
+        "displayName": "Headline Area",
+        "purpose": "Section name for an area-class feature (The House): spaced capitals."
+      },
+      "title-settlement": {
+        "displayName": "Title Settlement",
+        "purpose": "Entry names for products and employers; cover role, Key and Gazetteer headings."
+      },
+      "title-water": {
+        "displayName": "Title Water",
+        "purpose": "Entry names for payments features, italic in water-ink."
+      },
+      "title-antiquity": {
+        "displayName": "Title Antiquity",
+        "purpose": "Entry names for pre-2020 work only (blackletter)."
+      },
+      "lede": {
+        "displayName": "Lede",
+        "purpose": "Section ledes and entry summaries: the front of a feature."
+      },
+      "body": {
+        "displayName": "Body",
+        "purpose": "Entry backs, route highlights, definitions; tabular figures on."
+      },
+      "label-ref": {
+        "displayName": "Label Ref",
+        "purpose": "Grid references, nav, key, captions, meta lines."
+      }
+    },
+    "shadows": [],
+    "motion": [
+      {
+        "name": "ease-out",
+        "value": "cubic-bezier(0.16, 1, 0.3, 1)",
+        "purpose": "The only easing: link underlines, label hover, copy button, crosshair, plate registration."
+      },
+      {
+        "name": "state-change",
+        "value": "160ms",
+        "purpose": "Link underline, feature label fill and copy button background transitions."
+      },
+      {
+        "name": "crosshair",
+        "value": "200ms",
+        "purpose": "Crosshair fade on the overview map."
+      },
+      {
+        "name": "plate-register",
+        "value": "register 1100ms ease-out both",
+        "purpose": "Each map plate fades in from a small offset and settles. Skipped under prefers-reduced-motion or without JS."
+      },
+      {
+        "name": "plate-order",
+        "value": "margin 0ms, grid 80ms (-10px,6px), water 260ms (12px,-6px), contours 440ms (-6px,-12px), fills 620ms (10px,10px), keyline 800ms (-12px,4px), lettering 1000ms (6px,-9px)",
+        "purpose": "Print-in order and registration offsets of the overview plates."
+      }
+    ],
+    "breakpoints": [
+      {
+        "name": "spread-split",
+        "value": "1100px",
+        "purpose": "At or below: the cover splits around the map (name, role, intro; map; contact)."
+      },
+      {
+        "name": "key-stack",
+        "value": "1000px",
+        "purpose": "Key section becomes one column."
+      },
+      {
+        "name": "section-stack",
+        "value": "900px",
+        "purpose": "Section heads, PayMidas layout and House entries become one column; inset stops sticking."
+      },
+      {
+        "name": "map-leads",
+        "value": "760px",
+        "purpose": "Map leads its panel full-bleed, key then title strip follow; overview fixed at 820px and scrolls sideways; route years move above the body; cover places hidden."
+      },
+      {
+        "name": "compact",
+        "value": "560px",
+        "purpose": "space-6 drops to 4rem; key rows stack."
+      }
+    ],
+    "contrast": [
+      {
+        "pair": "white on cover",
+        "ratio": "3.49:1",
+        "rule": "Large text only: display (800) and 1.3125rem bold place names."
+      },
+      {
+        "pair": "ink on cover",
+        "ratio": "4.87:1",
+        "rule": "All regular-size text on orange."
+      }
+    ]
+  },
+  "components": [
+    {
+      "name": "Email and Copy",
+      "kind": "button",
+      "refersTo": "email-address",
+      "description": "Square ink email block joined to a bordered Copy button; the cover's and contact's primary action.",
+      "html": "<div class=\"ds-email\"><a class=\"ds-email-address\" href=\"#\">haydenjamesgriffin@gmail.com</a><button class=\"ds-email-copy\" type=\"button\">Copy</button></div>",
+      "css": ":host{--paper:#f6f7f2;--paper-deep:#eceee6;--ink:#1b1d1a;--ink-soft:#464943;--cover:#e5601a;--grid:#2a8fd0;--grid-ink:#17679f;--water:#cfe6f3;--water-ink:#17679f;--wood:#d4e8bf;--wood-line:#77ab5c;--wood-ink:#33601f;--contour-index:#b4692f;--contour-ink:#8a4a1c;--path:#27803a;--face-text:'Fira Sans','Segoe UI',sans-serif;--face-letter:'Fira Sans Extra Condensed','Fira Sans',sans-serif;--face-antiquity:'UnifrakturMaguntia','Fira Sans',serif;--ease-out:cubic-bezier(0.16,1,0.3,1);} .ds-email{display:flex;align-items:stretch;font-family:var(--face-text);padding:24px;background:var(--cover);} .ds-email-address{padding:0.6rem 0.9rem;background:var(--ink);color:#fff;font-weight:600;text-decoration:none;} .ds-email-address:hover{background:#000;} .ds-email-copy{min-width:4.75rem;padding:0.6rem 0.9rem;border:2px solid var(--ink);background:transparent;color:var(--ink);font:inherit;font-weight:600;cursor:pointer;transition:background-color 160ms var(--ease-out);} .ds-email-copy:hover{background:color-mix(in srgb,#fff 30%,transparent);} .ds-email-copy:active{background:var(--ink);color:#fff;} .ds-email a:focus-visible,.ds-email-copy:focus-visible{outline:3px solid var(--ink);outline-offset:3px;border-radius:2px;}"
+    },
+    {
+      "name": "Right of Way Link",
+      "kind": "nav",
+      "refersTo": "path",
+      "description": "Links on paper: green dashed underline that goes solid on hover; the title strip nav uses them.",
+      "html": "<nav class=\"ds-strip\"><span class=\"ds-strip-title\">Selected work, 2015 – 2026</span><ul><li><a href=\"#\">PayMidas</a></li><li><a href=\"#\">Route</a></li><li><a href=\"#\">The House</a></li><li><a href=\"#\">Gazetteer</a></li><li><a href=\"#\">Contact</a></li></ul></nav>",
+      "css": ":host{--paper:#f6f7f2;--paper-deep:#eceee6;--ink:#1b1d1a;--ink-soft:#464943;--cover:#e5601a;--grid:#2a8fd0;--grid-ink:#17679f;--water:#cfe6f3;--water-ink:#17679f;--wood:#d4e8bf;--wood-line:#77ab5c;--wood-ink:#33601f;--contour-index:#b4692f;--contour-ink:#8a4a1c;--path:#27803a;--face-text:'Fira Sans','Segoe UI',sans-serif;--face-letter:'Fira Sans Extra Condensed','Fira Sans',sans-serif;--face-antiquity:'UnifrakturMaguntia','Fira Sans',serif;--ease-out:cubic-bezier(0.16,1,0.3,1);} .ds-strip{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:baseline;gap:0.75rem 2rem;padding:0 0 0.75rem;border-bottom:2px solid var(--ink);background:var(--paper);color:var(--ink);font-family:var(--face-text);} .ds-strip-title{font-family:var(--face-letter);font-weight:700;font-size:1.3125rem;} .ds-strip ul{display:flex;gap:0.375rem 1.25rem;margin:0;padding:0;list-style:none;font-size:0.875rem;font-weight:600;} .ds-strip a{color:inherit;text-decoration:underline dashed var(--path);text-decoration-thickness:2px;text-underline-offset:0.22em;transition:text-decoration-color 160ms var(--ease-out);} .ds-strip a:hover{text-decoration-style:solid;} .ds-strip a:focus-visible{outline:3px solid var(--cover);outline-offset:3px;border-radius:2px;}"
+    },
+    {
+      "name": "Cover Link",
+      "kind": "nav",
+      "refersTo": "cover",
+      "description": "Links on cover orange: solid ink underline, thicker on hover, because green dashes do not read on orange.",
+      "html": "<p class=\"ds-cover-links\"><a href=\"#\">GitHub</a><a href=\"#\">LinkedIn</a></p>",
+      "css": ":host{--paper:#f6f7f2;--paper-deep:#eceee6;--ink:#1b1d1a;--ink-soft:#464943;--cover:#e5601a;--grid:#2a8fd0;--grid-ink:#17679f;--water:#cfe6f3;--water-ink:#17679f;--wood:#d4e8bf;--wood-line:#77ab5c;--wood-ink:#33601f;--contour-index:#b4692f;--contour-ink:#8a4a1c;--path:#27803a;--face-text:'Fira Sans','Segoe UI',sans-serif;--face-letter:'Fira Sans Extra Condensed','Fira Sans',sans-serif;--face-antiquity:'UnifrakturMaguntia','Fira Sans',serif;--ease-out:cubic-bezier(0.16,1,0.3,1);} .ds-cover-links{display:flex;gap:1.25rem;margin:0;padding:24px;background:var(--cover);color:var(--ink);font-family:var(--face-text);font-weight:600;} .ds-cover-links a{color:inherit;text-decoration:underline solid var(--ink);text-decoration-thickness:1.5px;text-underline-offset:0.22em;} .ds-cover-links a:hover{text-decoration-thickness:3px;} .ds-cover-links a:focus-visible{outline:3px solid var(--ink);outline-offset:3px;border-radius:2px;}"
+    },
+    {
+      "name": "Feature Classes",
+      "kind": "chip",
+      "refersTo": "title-settlement",
+      "description": "The four OS lettering classes as used in the key: settlement, water, area, antiquity.",
+      "html": "<ul class=\"ds-key\"><li class=\"ds-settlement\">Products and employers</li><li class=\"ds-water\">Payments</li><li class=\"ds-area\">Areas of work</li><li class=\"ds-antiquity\">Before 2020</li></ul>",
+      "css": ":host{--paper:#f6f7f2;--paper-deep:#eceee6;--ink:#1b1d1a;--ink-soft:#464943;--cover:#e5601a;--grid:#2a8fd0;--grid-ink:#17679f;--water:#cfe6f3;--water-ink:#17679f;--wood:#d4e8bf;--wood-line:#77ab5c;--wood-ink:#33601f;--contour-index:#b4692f;--contour-ink:#8a4a1c;--path:#27803a;--face-text:'Fira Sans','Segoe UI',sans-serif;--face-letter:'Fira Sans Extra Condensed','Fira Sans',sans-serif;--face-antiquity:'UnifrakturMaguntia','Fira Sans',serif;--ease-out:cubic-bezier(0.16,1,0.3,1);} .ds-key{display:flex;flex-wrap:wrap;gap:0.75rem 2rem;margin:0;padding:12px 0;list-style:none;border-top:1px solid color-mix(in srgb,var(--ink) 30%,transparent);background:var(--paper);color:var(--ink);font-family:var(--face-text);font-size:0.875rem;align-items:baseline;} .ds-settlement{font-family:var(--face-letter);font-weight:700;font-size:1rem;} .ds-water{color:var(--water-ink);font-style:italic;font-weight:500;} .ds-area{text-transform:uppercase;letter-spacing:0.16em;font-size:0.75rem;font-weight:500;} .ds-antiquity{font-family:var(--face-antiquity);font-size:1.05rem;}"
+    },
+    {
+      "name": "Entry",
+      "kind": "card",
+      "refersTo": "lede",
+      "description": "A plotted feature with a front (symbol, name in class, grid ref, summary) and a back (details, stack, links). No card chrome.",
+      "html": "<article class=\"ds-entry\"><header class=\"ds-entry-head\"><svg viewBox=\"0 0 24 24\" width=\"24\" height=\"24\" aria-hidden=\"true\"><g fill=\"currentColor\"><rect x=\"3\" y=\"10\" width=\"7\" height=\"5\" transform=\"rotate(-8 6.5 12.5)\"/><rect x=\"12\" y=\"6\" width=\"8\" height=\"6\" transform=\"rotate(-8 16 9)\"/><rect x=\"11\" y=\"15\" width=\"6\" height=\"5\" transform=\"rotate(-8 14 17.5)\"/></g></svg><h3>Smart Escrow</h3></header><p class=\"ds-entry-meta\"><span class=\"ds-ref\">HG 523 856</span><span>2026 – now</span></p><p class=\"ds-entry-summary\">Escrow for regulated EU payments, built end to end.</p><div class=\"ds-entry-back\"><p>Details of what was built go on the back, in soft ink.</p><p class=\"ds-entry-stack\">TypeScript · Postgres</p></div></article>",
+      "css": ":host{--paper:#f6f7f2;--paper-deep:#eceee6;--ink:#1b1d1a;--ink-soft:#464943;--cover:#e5601a;--grid:#2a8fd0;--grid-ink:#17679f;--water:#cfe6f3;--water-ink:#17679f;--wood:#d4e8bf;--wood-line:#77ab5c;--wood-ink:#33601f;--contour-index:#b4692f;--contour-ink:#8a4a1c;--path:#27803a;--face-text:'Fira Sans','Segoe UI',sans-serif;--face-letter:'Fira Sans Extra Condensed','Fira Sans',sans-serif;--face-antiquity:'UnifrakturMaguntia','Fira Sans',serif;--ease-out:cubic-bezier(0.16,1,0.3,1);} .ds-entry{max-width:44rem;padding:24px;background:var(--paper);color:var(--ink);font-family:var(--face-text);font-variant-numeric:tabular-nums;} .ds-entry-head{display:flex;gap:0.75rem;align-items:center;} .ds-entry-head h3{margin:0;font-family:var(--face-letter);font-weight:700;font-size:1.75rem;line-height:1.05;transition:color 160ms var(--ease-out);} .ds-entry:hover .ds-entry-head h3{color:var(--cover);} .ds-entry-meta{display:flex;gap:0.25rem 1.25rem;margin:0.375rem 0 0;padding-left:calc(1.5rem + 0.75rem);font-size:0.875rem;color:var(--ink-soft);} .ds-ref{color:var(--grid-ink);font-weight:600;letter-spacing:0.04em;} .ds-entry-summary{margin:1.25rem 0 0;font-size:1.3125rem;line-height:1.4;max-width:34ch;} .ds-entry-back{display:grid;gap:0.75rem;margin-top:1.25rem;padding-top:1.25rem;border-top:1px solid color-mix(in srgb,var(--ink) 22%,transparent);color:var(--ink-soft);max-width:62ch;} .ds-entry-back p{margin:0;} .ds-entry-stack{font-size:0.875rem;color:var(--contour-ink);font-weight:500;}"
+    },
+    {
+      "name": "Sheet Badge",
+      "kind": "custom",
+      "refersTo": "sheet-badge",
+      "description": "White panel on the cover with the ink HG square, revision date and location.",
+      "html": "<div class=\"ds-wrap\"><div class=\"ds-badge\"><span class=\"ds-badge-sq\">HG</span><p>Sheet revised October 2026<br>Bournemouth, UK</p></div></div>",
+      "css": ":host{--paper:#f6f7f2;--paper-deep:#eceee6;--ink:#1b1d1a;--ink-soft:#464943;--cover:#e5601a;--grid:#2a8fd0;--grid-ink:#17679f;--water:#cfe6f3;--water-ink:#17679f;--wood:#d4e8bf;--wood-line:#77ab5c;--wood-ink:#33601f;--contour-index:#b4692f;--contour-ink:#8a4a1c;--path:#27803a;--face-text:'Fira Sans','Segoe UI',sans-serif;--face-letter:'Fira Sans Extra Condensed','Fira Sans',sans-serif;--face-antiquity:'UnifrakturMaguntia','Fira Sans',serif;--ease-out:cubic-bezier(0.16,1,0.3,1);} .ds-wrap{padding:24px;background:var(--cover);} .ds-badge{display:inline-flex;align-items:center;gap:1.25rem;padding:0.75rem 1.25rem 0.75rem 0.75rem;background:#fff;color:var(--ink);font-family:var(--face-text);font-size:0.875rem;line-height:1.35;} .ds-badge p{margin:0;} .ds-badge-sq{padding:0.1rem 0.45rem;background:var(--ink);color:#fff;font-family:var(--face-letter);font-weight:800;font-size:1.75rem;line-height:1;}"
+    },
+    {
+      "name": "Route Stop",
+      "kind": "custom",
+      "refersTo": "route-waypoint",
+      "description": "Career stop on the dashed green footpath: years, waypoint ring, organisation in its class, grid ref.",
+      "html": "<div class=\"ds-route\"><div class=\"ds-stop\"><p class=\"ds-years\">2021 – 2026</p><span class=\"ds-mark\"></span><div><h3>Jumptech</h3><p class=\"ds-title\">Senior Software Engineer</p><span class=\"ds-ref\">HG 486 870</span></div></div><div class=\"ds-stop\"><p class=\"ds-years\">2017 – 2018</p><span class=\"ds-mark ds-open\"></span><div><h3 class=\"ds-old\">Fivium</h3><p class=\"ds-title\">Trainee Applications Developer</p><span class=\"ds-ref\">HG 448 909</span></div></div></div>",
+      "css": ":host{--paper:#f6f7f2;--paper-deep:#eceee6;--ink:#1b1d1a;--ink-soft:#464943;--cover:#e5601a;--grid:#2a8fd0;--grid-ink:#17679f;--water:#cfe6f3;--water-ink:#17679f;--wood:#d4e8bf;--wood-line:#77ab5c;--wood-ink:#33601f;--contour-index:#b4692f;--contour-ink:#8a4a1c;--path:#27803a;--face-text:'Fira Sans','Segoe UI',sans-serif;--face-letter:'Fira Sans Extra Condensed','Fira Sans',sans-serif;--face-antiquity:'UnifrakturMaguntia','Fira Sans',serif;--ease-out:cubic-bezier(0.16,1,0.3,1);} .ds-route{position:relative;display:grid;gap:2rem;padding:24px;background:var(--paper);color:var(--ink);font-family:var(--face-text);font-variant-numeric:tabular-nums;} .ds-route::before{content:'';position:absolute;top:30px;bottom:30px;left:calc(24px + 7rem + 1.25rem + 0.6rem - 1.25px);border-left:2.5px dashed var(--path);} .ds-stop{display:grid;grid-template-columns:7rem 1.2rem 1fr;column-gap:1.25rem;} .ds-years{margin:0;padding-top:0.35rem;text-align:right;font-weight:600;color:var(--ink-soft);} .ds-mark{position:relative;z-index:1;width:1.2rem;height:1.2rem;margin-top:0.45rem;border:2.5px solid var(--path);border-radius:50%;background:var(--path);box-sizing:border-box;} .ds-mark.ds-open{background:var(--paper);} .ds-stop h3{margin:0;font-family:var(--face-letter);font-weight:700;font-size:1.75rem;line-height:1.05;} .ds-stop h3.ds-old{font-family:var(--face-antiquity);font-weight:400;} .ds-title{margin:0.375rem 0 0;font-weight:600;} .ds-ref{display:block;margin-top:0.15rem;font-size:0.875rem;font-weight:600;letter-spacing:0.04em;color:var(--grid-ink);}"
+    },
+    {
+      "name": "Inset Frame",
+      "kind": "custom",
+      "refersTo": "paper",
+      "description": "Map frame for insets: 2px ink border with a thin outline 5px outside, on paper, with an 'Inset:' caption.",
+      "html": "<figure class=\"ds-inset\"><svg viewBox=\"0 0 200 120\" aria-hidden=\"true\"><rect width=\"200\" height=\"120\" fill=\"#cfe6f3\"/><path d=\"M0 0H200V60Q150 90 100 70T0 95Z\" fill=\"#f6f7f2\" stroke=\"#2a8fd0\" stroke-width=\"1.4\"/><path d=\"M20 30Q60 10 90 35T160 30\" fill=\"none\" stroke=\"#d19463\" stroke-width=\"0.7\"/><path d=\"M10 60L60 50L110 62\" fill=\"none\" stroke=\"#27803a\" stroke-width=\"2.2\" stroke-dasharray=\"7 5\"/><g stroke=\"#2a8fd0\" stroke-width=\"0.8\" opacity=\"0.55\"><path d=\"M50 0V120M100 0V120M150 0V120M0 40H200M0 80H200\"/></g></svg><figcaption>Inset: the PayMidas coast at twice the scale</figcaption></figure>",
+      "css": ":host{--paper:#f6f7f2;--paper-deep:#eceee6;--ink:#1b1d1a;--ink-soft:#464943;--cover:#e5601a;--grid:#2a8fd0;--grid-ink:#17679f;--water:#cfe6f3;--water-ink:#17679f;--wood:#d4e8bf;--wood-line:#77ab5c;--wood-ink:#33601f;--contour-index:#b4692f;--contour-ink:#8a4a1c;--path:#27803a;--face-text:'Fira Sans','Segoe UI',sans-serif;--face-letter:'Fira Sans Extra Condensed','Fira Sans',sans-serif;--face-antiquity:'UnifrakturMaguntia','Fira Sans',serif;--ease-out:cubic-bezier(0.16,1,0.3,1);} .ds-inset{margin:0;padding:24px;background:var(--paper);font-family:var(--face-text);} .ds-inset svg{display:block;width:100%;height:auto;border:2px solid var(--ink);outline:0.6px solid var(--ink);outline-offset:5px;background:var(--paper);} .ds-inset figcaption{margin-top:0.75rem;font-size:0.875rem;color:var(--ink-soft);}"
+    }
+  ],
+  "narrative": {
+    "northStar": "The Explorer Sheet",
+    "overview": "The site is a folded Ordnance Survey Explorer map of one person's work. White map paper carries a blue kilometre grid; a generated overview sheet (invented terrain, seeded at build time, not survey data) plots every product, employer and home build as a named feature with a six-figure grid reference. The orange cover panel is the fold-out cover of the sheet. Everything after it is the map's other side: inset enlargements, a career route drawn as a public footpath, the woodland of home builds, a key, and a gazetteer.\n\nThe map is the navigation, not decoration. Features on the sheet link to their entries; grid references in entries and the gazetteer point back to squares on the sheet; the key explains the lettering classes used everywhere. Type does the cartographic work: the class a name is lettered in tells you what kind of thing it is before you read it. Colour fills whole regions (the orange cover band, the green woodland band, the orange contact panel) rather than scattering accents. Corners are square, depth is printed rather than lit, and the only motion is the sheet registering its colour plates on arrival.",
+    "keyCharacteristics": [
+      "Map paper with a blue 8rem grid behind all body content.",
+      "Names lettered in four OS feature classes: settlement, water, area, antiquity.",
+      "Grid references in tabular figures, blue, letterspaced.",
+      "Links are rights of way: green dashed underlines.",
+      "Inset maps reuse the overview's artwork at a larger scale.",
+      "Colour owns regions: cover orange, woodland green, water blue.",
+      "Square corners, keylines and double neatlines; no shadows."
+    ],
+    "rules": [
+      {
+        "name": "The Colour Owns Regions Rule",
+        "body": "A colour that appears as a background fills a whole region edge to edge (cover, woodland band, contact). It is never a small badge, pill or highlight sprinkled through paper content.",
+        "section": "colors"
+      },
+      {
+        "name": "The Plate Duty Rule",
+        "body": "Each map colour keeps its cartographic meaning: blue is grid and water, brown is relief, green is woodland and rights of way, orange-yellow is roads. Don't borrow a plate colour for an unrelated UI role.",
+        "section": "colors"
+      },
+      {
+        "name": "The Large-White-On-Orange Rule",
+        "body": "White on cover orange measures about 3.5:1, so it is allowed only for large text: the cover name and contact title (display, 800) and the cover place names (1.3125rem, 700). All regular-size text on orange is ink (about 4.9:1).",
+        "section": "colors"
+      },
+      {
+        "name": "The Lettering Class Rule",
+        "body": "A feature's name is always set in its class, wherever it appears. Choosing a style for a new name means choosing what kind of feature it is.",
+        "section": "typography"
+      },
+      {
+        "name": "The Antiquity Only Rule",
+        "body": "Blackletter is used for pre-2020 work and nowhere else: not for headings, flourishes or emphasis.",
+        "section": "typography"
+      },
+      {
+        "name": "The Tabular Reference Rule",
+        "body": "Grid references are \"HG\" plus two three-figure groups, in tabular figures, grid-ink, 600, 0.04em tracking.",
+        "section": "typography"
+      },
+      {
+        "name": "The Printed Depth Rule",
+        "body": "Nothing floats. Separation is a keyline, a rule, a fill or a halo, never a shadow or blur.",
+        "section": "elevation"
+      },
+      {
+        "name": "The Registration Rule",
+        "body": "On load (with JS and no reduced-motion preference) the overview prints itself plate by plate. Each plate fades in from a small offset, as if slightly out of register, and settles over 1100ms on ease-out (cubic-bezier(0.16, 1, 0.3, 1)). Print order: margin (0ms), grid (80ms), water (260ms), contours (440ms), fills (620ms), keyline (800ms), lettering (1000ms). New sheet artwork joins one of these plates; it does not get its own entrance animation.",
+        "section": "elevation"
+      }
+    ],
+    "dos": [
+      "Do letter every feature name in its class (settlement, water, area, antiquity) everywhere it appears, and pair it with its class symbol.",
+      "Do give every plotted feature a grid reference in tabular grid-ink type, and make sheet, entry and gazetteer point at each other.",
+      "Do fill whole regions with colour (cover orange, woodland band) edge to edge; keep paper content on map paper with the 8rem grid.",
+      "Do underline links with green dashes (2px, 0.22em offset) that go solid on hover; use a solid ink underline on orange.",
+      "Do keep white text on cover orange to large sizes only (display or 1.3125rem bold and up); use ink for everything else on orange.",
+      "Do reuse the overview artwork for any new inset via `<use href=\"#sheet-art\">` and a viewBox, framed with the 2px border and offset outline.",
+      "Do add new sheet artwork to an existing plate so it prints in order; honour prefers-reduced-motion."
+    ],
+    "donts": [
+      "Don't use blackletter for anything but pre-2020 work.",
+      "Don't add box-shadows, blurs, rounded cards or floating panels; depth is keylines, fills and halos.",
+      "Don't use orange as a small accent on paper (badges, pills, highlighted words); it appears on paper only as focus and hover/target state.",
+      "Don't give a map plate colour an unrelated UI job.",
+      "Don't set regular-size white text on cover orange.",
+      "Don't draw a second copy of the map for an inset or a decorative backdrop."
+    ]
+  }
+}

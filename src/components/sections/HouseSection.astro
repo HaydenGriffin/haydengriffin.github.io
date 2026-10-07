@@ -1,0 +1,113 @@
+---
+import { home } from "../../data/home";
+import { woodlandEdge } from "../../lib/terrain";
+import Entry from "../Entry.astro";
+import FeatureName from "../FeatureName.astro";
+import MapInset from "../map/MapInset.astro";
+
+const top = woodlandEdge(23);
+const bottom = woodlandEdge(57);
+---
+
+<section class="house" id="the-house" aria-labelledby="house-title">
+  <svg class="edge edge-top" viewBox="0 0 1000 48" preserveAspectRatio="none" aria-hidden="true"><path d={top}></path></svg>
+  <div class="sheet-section">
+    <div class="section-head">
+      <FeatureName of="area" as="h2" size="section"><span id="house-title">The House</span></FeatureName>
+      <p class="section-lede">
+        At home I run Home Assistant on a Proxmox homelab and build the software around it: integrations, a local voice pipeline, an LLM agent with guardrails, and native apps for the phone and the TV. None of it is a product, but all of it runs the house.
+      </p>
+    </div>
+    <MapInset class="house-inset" from={{ x: 0.2, y: 6.5 }} to={{ x: 10.2, y: 12.4 }} caption="Inset: the House and its woodland" />
+    <div class="entries">
+      {home.map((feature) => <Entry feature={feature} />)}
+    </div>
+  </div>
+  <svg class="edge edge-bottom" viewBox="0 0 1000 48" preserveAspectRatio="none" aria-hidden="true"><path d={bottom}></path></svg>
+</section>
+
+<style>
+  .house {
+    position: relative;
+    margin-block: var(--space-6);
+    background: var(--wood);
+  }
+
+  .edge {
+    position: absolute;
+    left: 0;
+    width: 100%;
+    height: 3rem;
+    fill: var(--wood);
+  }
+
+  .edge-top {
+    bottom: 100%;
+  }
+
+  .edge-bottom {
+    top: 100%;
+    transform: scaleY(-1);
+  }
+
+  .house :global(.name-area) {
+    color: var(--wood-ink);
+  }
+
+  .house :global(.symbol-area),
+  .house :global(.symbol-settlement) {
+    color: var(--wood-ink);
+  }
+
+  .house :global(.entry-back) {
+    border-top-color: color-mix(in srgb, var(--wood-ink) 35%, transparent);
+    color: #2d3a26;
+  }
+
+  .house :global(.inset figcaption) {
+    color: #2d3a26;
+  }
+
+  .house :global(.entry-meta) {
+    color: #3a4733;
+  }
+
+  .house :global(.entry-ref) {
+    color: #135d91;
+  }
+
+  .house :global(.entry-stack) {
+    color: #6c3a14;
+  }
+
+  .house :global(.house-inset) {
+    margin-bottom: var(--space-6);
+  }
+
+  .entries {
+    display: grid;
+    grid-template-columns: repeat(12, minmax(0, 1fr));
+    column-gap: var(--space-4);
+    row-gap: var(--space-6);
+  }
+
+  .house :global(.entry) {
+    grid-column: span 6;
+  }
+
+  .house :global(.entry:nth-child(odd)) {
+    grid-column: 1 / span 6;
+  }
+
+  .house :global(.entry:nth-child(even)) {
+    grid-column: 7 / span 6;
+    margin-top: var(--space-6);
+  }
+
+  @media (max-width: 900px) {
+    .house :global(.entry:nth-child(n)) {
+      grid-column: 1 / -1;
+      margin-top: 0;
+    }
+  }
+</style>

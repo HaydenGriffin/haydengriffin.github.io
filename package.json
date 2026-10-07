@@ -1,0 +1,23 @@
+{
+  "name": "haydengriffin.github.io",
+  "type": "module",
+  "private": true,
+  "scripts": {
+    "dev": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "check": "astro check"
+  },
+  "dependencies": {
+    "@fontsource/fira-sans": "^5.3.0",
+    "@fontsource/fira-sans-extra-condensed": "^5.3.0",
+    "@fontsource/unifrakturmaguntia": "^5.3.0",
+    "astro": "^7.3.6",
+    "d3-contour": "^4.0.2"
+  },
+  "devDependencies": {
+    "@astrojs/check": "^0.9.10",
+    "@types/d3-contour": "^3.0.6",
+    "typescript": "^6.0.3"
+  }
+}

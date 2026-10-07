@@ -1,0 +1,70 @@
+---
+import type { FeatureClass } from "../data/types";
+
+interface Props {
+  of: FeatureClass | "route";
+}
+
+const { of } = Astro.props;
+---
+
+<svg class:list={["symbol", `symbol-${of}`]} viewBox="0 0 24 24" width="24" height="24" aria-hidden="true">
+  {
+    of === "settlement" && (
+      <g fill="currentColor">
+        <rect x="3" y="10" width="7" height="5" transform="rotate(-8 6.5 12.5)" />
+        <rect x="12" y="6" width="8" height="6" transform="rotate(-8 16 9)" />
+        <rect x="11" y="15" width="6" height="5" transform="rotate(-8 14 17.5)" />
+      </g>
+    )
+  }
+  {
+    of === "water" && (
+      <g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round">
+        <path d="M3 9q3-3 6 0t6 0 6 0" />
+        <path d="M3 15q3-3 6 0t6 0 6 0" />
+      </g>
+    )
+  }
+  {
+    of === "area" && (
+      <g fill="none" stroke="currentColor" stroke-width="1.6">
+        <path d="M4 15C3 9 9 4 15 5s7 6 5 10-8 5-11 4-4-2-5-4Z" stroke-dasharray="2.5 2.5" />
+      </g>
+    )
+  }
+  {
+    of === "antiquity" && (
+      <g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="square">
+        <path d="M12 4v16M6 9h12" />
+        <path d="M9 4h6M9 20h6" />
+      </g>
+    )
+  }
+  {
+    of === "route" && (
+      <g>
+        <path d="M2 12h20" fill="none" stroke="var(--path)" stroke-width="2.4" stroke-dasharray="5 3.5" />
+        <circle cx="12" cy="12" r="4" fill="var(--paper)" stroke="var(--path)" stroke-width="2.2" />
+      </g>
+    )
+  }
+</svg>
+
+<style>
+  .symbol {
+    flex: none;
+    width: 1.5rem;
+    height: 1.5rem;
+  }
+
+  .symbol-settlement,
+  .symbol-area,
+  .symbol-antiquity {
+    color: var(--ink);
+  }
+
+  .symbol-water {
+    color: var(--water-line);
+  }
+</style>
