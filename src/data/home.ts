@@ -9,6 +9,12 @@ export const home: Project[] = [
     demo: "https://haydengriffin.github.io/house-webos/app/index.html?demo",
   },
   {
+    name: "Lamplight",
+    repo: "lamplight",
+    summary: "A design system for Home Assistant wall tablets, and six cards built on it, from weather to timers.",
+    clip: { name: "lamplight", alt: "Tapping through the Lamplight timers and help cards on a demo home", shape: "wide" },
+  },
+  {
     name: "Food Diary",
     repo: "ha-food-diary",
     summary: "A calorie and macro diary that runs in Home Assistant, with a native SwiftUI iPhone app and Apple Health sync.",

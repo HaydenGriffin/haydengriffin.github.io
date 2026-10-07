@@ -11,10 +11,12 @@ interface Props {
 const { project } = Astro.props;
 const repo = project.repo ? await getRepo(project.repo) : undefined;
 
+const demoLink = project.demo ?? repo?.homepage;
 const links: Link[] = [
   ...(repo ? [{ label: "How it works", href: `/projects/${project.repo}/` }] : []),
   ...(project.links ?? []),
   ...(repo ? [{ label: "GitHub", href: repo.url }] : []),
+  ...(demoLink ? [{ label: "Live demo", href: demoLink }] : []),
 ];
 const primary = repo ? { label: "GitHub", href: repo.url } : project.links?.[0];
 const facts = [repo?.language, repo?.pushedAt && `updated ${updatedAgo(repo.pushedAt)}`, project.stack?.join(", ")].filter(Boolean).join(" · ");

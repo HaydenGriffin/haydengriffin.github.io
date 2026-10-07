@@ -31,7 +31,7 @@ const facts = [repo.language, repo.pushedAt && `updated ${updatedAgo(repo.pushed
       <p class="summary">{project.summary}</p>
       <p class="links">
         <a href={repo.url}>GitHub</a>
-        {project.demo && <a href={project.demo}>Live demo</a>}
+        {(project.demo ?? repo.homepage) && <a href={project.demo ?? repo.homepage}>Live demo</a>}
         {facts && <span class="muted">{facts}</span>}
       </p>
     </header>
