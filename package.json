@@ -7,7 +7,7 @@
     "build": "astro build",
     "preview": "astro preview",
     "check": "astro check",
-    "cv": "astro build && node scripts/build-cv.mjs && astro build"
+    "cv": "BUILD_CV=1 astro build && node scripts/build-cv.mjs && astro build"
   },
   "dependencies": {
     "@fontsource-variable/geist": "^5.3.0",

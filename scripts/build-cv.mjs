@@ -1,5 +1,5 @@
-// Renders the built /cv page to public/hayden-griffin-cv.pdf. Run via `pnpm cv`.
-import { readFile } from "node:fs/promises";
+// Renders the /cv page (built only when BUILD_CV is set) to cv/hayden-griffin-cv.pdf. Run via `pnpm cv`.
+import { mkdir, readFile } from "node:fs/promises";
 import { createServer } from "node:http";
 import { extname, join, normalize } from "node:path";
 import { chromium } from "playwright";
@@ -26,9 +26,10 @@ try {
   const page = await browser.newPage();
   await page.emulateMedia({ colorScheme: "light" });
   await page.goto(`http://127.0.0.1:${port}/cv/`, { waitUntil: "networkidle" });
-  await page.pdf({ path: "public/hayden-griffin-cv.pdf", format: "A4", preferCSSPageSize: true, printBackground: true });
+  await mkdir("cv", { recursive: true });
+  await page.pdf({ path: "cv/hayden-griffin-cv.pdf", format: "A4", preferCSSPageSize: true, printBackground: true });
   await browser.close();
-  console.log("Wrote public/hayden-griffin-cv.pdf");
+  console.log("Wrote cv/hayden-griffin-cv.pdf");
 } finally {
   server.close();
 }

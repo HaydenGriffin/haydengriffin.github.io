@@ -4,6 +4,11 @@ import { profile } from "../data/profile";
 import { work } from "../data/work";
 import Base from "../layouts/Base.astro";
 
+/** Only built for `pnpm cv`, which turns it into a PDF; the public site has no CV page. */
+export function getStaticPaths() {
+  return process.env.BUILD_CV ? [{ params: { cv: "cv" } }] : [];
+}
+
 const [current, ...earlier] = experience.filter((role) => !role.organisation.startsWith("University"));
 const education = experience.find((role) => role.organisation.startsWith("University"))!;
 ---
