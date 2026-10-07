@@ -1,0 +1,213 @@
+---
+import ProjectMedia from "../../components/ProjectMedia.astro";
+import { home } from "../../data/home";
+import { profile } from "../../data/profile";
+import type { Project } from "../../data/types";
+import { work } from "../../data/work";
+import Base from "../../layouts/Base.astro";
+import { getRepo, updatedAgo } from "../../lib/github";
+import { getReadmeHtml } from "../../lib/readme";
+
+export function getStaticPaths() {
+  return [...work, ...home].filter((project) => project.repo).map((project) => ({ params: { repo: project.repo! }, props: { project } }));
+}
+
+interface Props {
+  project: Project;
+}
+
+const { project } = Astro.props;
+const repo = await getRepo(project.repo!);
+const readme = await getReadmeHtml(project.repo!);
+const facts = [repo.language, repo.pushedAt && `updated ${updatedAgo(repo.pushedAt)}`].filter(Boolean).join(" · ");
+---
+
+<Base title={`${project.name} · ${profile.name}`} description={project.summary}>
+  <main class="page">
+    <a class="home" href="/">{profile.name}</a>
+
+    <header class="head">
+      <h1 style={`view-transition-name: project-${project.repo}`}>{project.name}</h1>
+      <p class="summary">{project.summary}</p>
+      <p class="links">
+        <a href={repo.url}>GitHub</a>
+        {project.demo && <a href={project.demo}>Live demo</a>}
+        {facts && <span class="muted">{facts}</span>}
+      </p>
+    </header>
+
+    <ProjectMedia project={project} repo={repo} />
+
+    {
+      readme ? (
+        <article class="readme" set:html={readme} />
+      ) : (
+        <p class="muted">
+          The write-up lives in the <a href={repo.url}>README on GitHub</a>.
+        </p>
+      )
+    }
+
+    <footer class="footer muted">
+      <a href="/">Back to {profile.name}</a>
+    </footer>
+  </main>
+</Base>
+
+<style>
+  .page {
+    display: grid;
+    gap: 2rem;
+    max-width: 44rem;
+    margin: 0 auto;
+    padding: clamp(3rem, 10vh, 6rem) 1.5rem 3rem;
+  }
+
+  .home {
+    justify-self: start;
+    color: var(--muted);
+    text-decoration: none;
+  }
+
+  .home:hover {
+    color: var(--fg);
+  }
+
+  h1 {
+    font-size: 1.75rem;
+    font-weight: 600;
+    line-height: 1.2;
+    letter-spacing: -0.01em;
+  }
+
+  .summary {
+    margin-top: 0.5rem;
+    font-size: 1.125rem;
+    color: var(--muted);
+  }
+
+  .links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.25rem 1.25rem;
+    margin-top: 1rem;
+  }
+
+  .readme {
+    font-size: 1rem;
+    line-height: 1.7;
+  }
+
+  .readme :global(> * + *) {
+    margin-top: 1rem;
+  }
+
+  .readme :global(h2) {
+    margin-top: 2.75rem;
+    font-size: 1.25rem;
+    font-weight: 600;
+  }
+
+  .readme :global(h3) {
+    margin-top: 2rem;
+    font-size: 1.0625rem;
+    font-weight: 600;
+  }
+
+  .readme :global(ul),
+  .readme :global(ol) {
+    padding-left: 1.25rem;
+    list-style: disc;
+  }
+
+  .readme :global(ol) {
+    list-style: decimal;
+  }
+
+  .readme :global(li + li) {
+    margin-top: 0.4rem;
+  }
+
+  .readme :global(li::marker) {
+    color: var(--muted);
+  }
+
+  .readme :global(img) {
+    max-width: 100%;
+    height: auto;
+    border-radius: 10px;
+  }
+
+  .readme :global(p > a > img),
+  .readme :global(p > img) {
+    display: block;
+    border: 1px solid var(--rule);
+  }
+
+  .readme :global(code) {
+    padding: 0.1em 0.35em;
+    border-radius: 4px;
+    background: var(--hover);
+    font-family: ui-monospace, "SF Mono", Menlo, monospace;
+    font-size: 0.875em;
+  }
+
+  .readme :global(pre) {
+    overflow-x: auto;
+    padding: 1rem;
+    border: 1px solid var(--rule);
+    border-radius: 10px;
+    background: var(--hover);
+    line-height: 1.5;
+  }
+
+  .readme :global(pre code) {
+    padding: 0;
+    background: none;
+  }
+
+  .readme :global(.highlight) {
+    margin-top: 1rem;
+  }
+
+  .readme :global(table) {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.9375rem;
+  }
+
+  .readme :global(th),
+  .readme :global(td) {
+    padding: 0.4rem 0.6rem 0.4rem 0;
+    border-bottom: 1px solid var(--rule);
+    text-align: left;
+    vertical-align: top;
+  }
+
+  .readme :global(blockquote) {
+    margin-left: 0;
+    padding-left: 1rem;
+    border-left: 2px solid var(--rule);
+    color: var(--muted);
+  }
+
+  .readme :global(.markdown-alert) {
+    padding: 0.75rem 1rem;
+    border: 1px solid var(--rule);
+    border-radius: 10px;
+  }
+
+  .readme :global(.markdown-alert-title) {
+    font-weight: 600;
+  }
+
+  .readme :global(.markdown-alert svg),
+  .readme :global(.octicon) {
+    display: none;
+  }
+
+  .footer {
+    margin-top: 2rem;
+    font-size: 0.9375rem;
+  }
+</style>

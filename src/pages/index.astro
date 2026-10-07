@@ -48,6 +48,11 @@ import Base from "../layouts/Base.astro";
                     <li>{line}</li>
                   ))}
                 </ul>
+                {role.href && (
+                  <p class="links">
+                    <a href={role.href}>{new URL(role.href).hostname.replace(/^www\./, "")}</a>
+                  </p>
+                )}
               </Row>
             ) : (
               <Row title={role.organisation} href={role.href} aside={role.years} summary={role.note ? `${role.title} · ${role.note}` : role.title} />

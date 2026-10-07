@@ -1,0 +1,163 @@
+---
+import { Image } from "astro:assets";
+import type { Project } from "../data/types";
+import type { RepoInfo } from "../lib/github";
+import ClipVideo from "./ClipVideo.astro";
+import Shots from "./Shots.astro";
+
+/** The best thing to look at for a project: a live demo you can try, a clip, screenshots, or the repo's hero image. */
+interface Props {
+  project: Project;
+  repo?: RepoInfo;
+}
+
+const { project, repo } = Astro.props;
+---
+
+{
+  project.demo ? (
+    <div class="demo" data-demo={project.demo} data-title={`${project.name} demo`}>
+      <div class="stage" data-stage>
+        {project.clip ? <ClipVideo clip={project.clip} /> : repo?.hero && <img class="still" src={repo.hero} alt="" />}
+      </div>
+      <p class="demo-bar">
+        <button type="button" class="try" data-try>
+          Try it here
+        </button>
+        <span class="hint" data-hint>
+          Made-up data. Press an arrow key to start, Enter to choose, Esc to go back.
+        </span>
+        <a class="full" href={project.demo}>
+          Open full screen
+        </a>
+      </p>
+    </div>
+  ) : project.clip ? (
+    <div class="media"><ClipVideo clip={project.clip} /></div>
+  ) : project.media ? (
+    <Shots media={project.media} />
+  ) : (
+    repo?.hero && (
+      <Image class="hero" src={repo.hero} alt={`${project.name}, from its README`} inferSize widths={[640, 1280]} sizes="(max-width: 640px) 100vw, 560px" loading="lazy" />
+    )
+  )
+}
+
+<style>
+  .media,
+  .demo,
+  .hero {
+    margin-top: 1rem;
+  }
+
+  .hero,
+  .still {
+    display: block;
+    width: 100%;
+    height: auto;
+    border: 1px solid var(--rule);
+    border-radius: 10px;
+  }
+
+  .stage {
+    position: relative;
+    aspect-ratio: 16 / 9;
+    overflow: hidden;
+    border-radius: 10px;
+  }
+
+  .stage :global(.clip) {
+    height: 100%;
+  }
+
+  .stage :global(iframe) {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 1920px;
+    height: 1080px;
+    border: 0;
+    transform-origin: 0 0;
+  }
+
+  .stage.live {
+    outline: 1px solid var(--rule);
+    background: #111;
+  }
+
+  .demo-bar {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: 0.35rem 1rem;
+    margin-top: 0.6rem;
+    font-size: 0.9375rem;
+  }
+
+  .try {
+    padding: 0.2rem 0.75rem;
+    border: 1px solid var(--rule);
+    border-radius: 999px;
+    background: transparent;
+    font-weight: 500;
+    transition: border-color 150ms var(--ease);
+  }
+
+  .try:hover {
+    border-color: var(--muted);
+  }
+
+  .hint {
+    color: var(--muted);
+  }
+
+  .hint:not(.shown) {
+    display: none;
+  }
+
+  .full {
+    margin-left: auto;
+    color: var(--muted);
+  }
+
+  /* The demo needs a keyboard, so phones and tablets get the full-screen link instead. */
+  @media (hover: none) {
+    .try {
+      display: none;
+    }
+
+    .full {
+      margin-left: 0;
+    }
+  }
+</style>
+
+<script>
+  document.querySelectorAll<HTMLElement>("[data-demo]").forEach((demo) => {
+    const stage = demo.querySelector<HTMLElement>("[data-stage]")!;
+    const button = demo.querySelector<HTMLButtonElement>("[data-try]")!;
+    const hint = demo.querySelector<HTMLElement>("[data-hint]")!;
+    let frame: HTMLIFrameElement | undefined;
+
+    const fit = () => {
+      if (frame) frame.style.transform = `scale(${stage.clientWidth / 1920})`;
+    };
+    new ResizeObserver(fit).observe(stage);
+
+    button.addEventListener("click", () => {
+      if (frame) {
+        frame.focus();
+        return;
+      }
+      frame = document.createElement("iframe");
+      frame.src = demo.dataset.demo!;
+      frame.title = demo.dataset.title ?? "Demo";
+      frame.addEventListener("load", () => frame!.focus());
+      stage.replaceChildren(frame);
+      stage.classList.add("live");
+      hint.classList.add("shown");
+      button.textContent = "Focus the demo";
+      fit();
+    });
+  });
+</script>

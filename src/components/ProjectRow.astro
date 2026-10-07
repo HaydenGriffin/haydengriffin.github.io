@@ -1,9 +1,8 @@
 ---
-import { Image } from "astro:assets";
 import type { Link, Project } from "../data/types";
 import { getRepo, updatedAgo } from "../lib/github";
+import ProjectMedia from "./ProjectMedia.astro";
 import Row from "./Row.astro";
-import Shots from "./Shots.astro";
 
 interface Props {
   project: Project;
@@ -13,24 +12,22 @@ const { project } = Astro.props;
 const repo = project.repo ? await getRepo(project.repo) : undefined;
 
 const links: Link[] = [
+  ...(repo ? [{ label: "How it works", href: `/projects/${project.repo}/` }] : []),
   ...(project.links ?? []),
   ...(repo ? [{ label: "GitHub", href: repo.url }] : []),
-  ...(repo?.homepage ? [{ label: "Live demo", href: repo.homepage }] : []),
 ];
-const primary = repo?.homepage ? { label: "Demo", href: repo.homepage } : repo ? { label: "GitHub", href: repo.url } : links[0];
-const facts = [repo?.language, repo?.pushedAt && `updated ${updatedAgo(repo.pushedAt)}`].filter(Boolean).join(" · ");
-const hasMore = Boolean(project.details || project.stack || project.media || repo?.hero || links.length);
+const primary = repo ? { label: "GitHub", href: repo.url } : project.links?.[0];
+const facts = [repo?.language, repo?.pushedAt && `updated ${updatedAgo(repo.pushedAt)}`, project.stack?.join(", ")].filter(Boolean).join(" · ");
+const hasMore = Boolean(project.details || facts || project.media || project.clip || project.demo || repo?.hero || links.length);
+const transitionName = project.repo ? `project-${project.repo}` : undefined;
 ---
 
 {
   hasMore ? (
-    <Row title={project.name} summary={project.summary} aside={primary?.label} asideHref={primary?.href}>
+    <Row title={project.name} summary={project.summary} aside={primary?.label} asideHref={primary?.href} transitionName={transitionName}>
       {project.details && <p>{project.details}</p>}
-      {project.media && <Shots media={project.media} />}
-      {repo?.hero && (
-        <Image class="hero" src={repo.hero} alt={`${project.name}, from its README`} inferSize widths={[640, 1280]} sizes="(max-width: 640px) 100vw, 560px" loading="lazy" />
-      )}
-      {(facts || project.stack) && <p class="facts">{[facts, project.stack?.join(", ")].filter(Boolean).join(" · ")}</p>}
+      <ProjectMedia project={project} repo={repo} />
+      {facts && <p class="facts">{facts}</p>}
       {links.length > 0 && (
         <p class="links">
           {links.map((link) => (
@@ -45,14 +42,6 @@ const hasMore = Boolean(project.details || project.stack || project.media || rep
 }
 
 <style>
-  .hero {
-    width: 100%;
-    height: auto;
-    margin-top: 1rem;
-    border: 1px solid var(--rule);
-    border-radius: 10px;
-  }
-
   .facts {
     margin-top: 0.75rem;
     font-size: 0.9375rem;

@@ -10,9 +10,12 @@ interface Props {
   /** Makes the aside a link, e.g. to the project's site or repo. */
   asideHref?: string;
   summary?: string;
+  /** Pairs the title with the same title on a project page, so navigating between them animates. */
+  transitionName?: string;
 }
 
-const { title, href, aside, asideHref, summary } = Astro.props;
+const { title, href, aside, asideHref, summary, transitionName } = Astro.props;
+const titleStyle = transitionName ? `view-transition-name: ${transitionName}` : undefined;
 const expandable = Astro.slots.has("default");
 const Tag = expandable ? "details" : "div";
 const Head = expandable ? "summary" : "div";
@@ -22,7 +25,15 @@ const Head = expandable ? "summary" : "div";
   <Tag class="item">
     <Head class="head">
       <span class="line">
-        {href ? <a class="title" href={href}>{title}</a> : <span class="title">{title}</span>}
+        {href ? (
+          <a class="title" href={href} style={titleStyle}>
+            {title}
+          </a>
+        ) : (
+          <span class="title" style={titleStyle}>
+            {title}
+          </span>
+        )}
         {aside && (asideHref ? <a class="aside" href={asideHref}>{aside}</a> : <span class="aside">{aside}</span>)}
       </span>
       {summary && <span class="summary">{summary}</span>}

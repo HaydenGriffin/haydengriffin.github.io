@@ -95,3 +95,14 @@ button {
 .muted {
   color: var(--muted);
 }
+
+/* Cross-page transitions: a project's title moves between its row and its page. */
+@view-transition {
+  navigation: auto;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  @view-transition {
+    navigation: none;
+  }
+}

@@ -5,6 +5,8 @@ export const home: Project[] = [
     name: "House for webOS",
     repo: "house-webos",
     summary: "A Home Assistant panel for my LG TV, made for the remote, with a weekly recap of the house.",
+    clip: { name: "tv", alt: "Using House for webOS with a remote: switching lights, starting movie time, then the weekly recap", shape: "wide" },
+    demo: "https://haydengriffin.github.io/house-webos/app/index.html?demo",
   },
   {
     name: "Food Diary",

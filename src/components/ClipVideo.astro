@@ -1,0 +1,53 @@
+---
+import type { Clip } from "../data/types";
+
+interface Props {
+  clip: Clip;
+}
+
+const { clip } = Astro.props;
+---
+
+<video class:list={["clip", clip.shape]} muted loop playsinline preload="none" poster={`/clips/${clip.name}-poster.jpg`} aria-label={clip.alt} data-clip>
+  <source src={`/clips/${clip.name}.webm`} type="video/webm" />
+  <source src={`/clips/${clip.name}.mp4`} type="video/mp4" />
+</video>
+
+<style>
+  .clip {
+    display: block;
+    width: 100%;
+    height: auto;
+    border: 1px solid var(--rule);
+    border-radius: 10px;
+    background: var(--hover);
+  }
+
+  .clip.phone {
+    max-width: 260px;
+    border-radius: 22px;
+  }
+</style>
+
+<script>
+  // Clips play while they can be seen (and their row is open), and never on their own for reduced motion.
+  const still = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+  document.querySelectorAll<HTMLVideoElement>("video[data-clip]").forEach((video) => {
+    if (still) {
+      video.controls = true;
+      return;
+    }
+    const row = video.closest("details");
+    let visible = false;
+    const update = () => {
+      if (visible && (!row || row.open)) video.play().catch(() => {});
+      else video.pause();
+    };
+    new IntersectionObserver(([entry]) => {
+      visible = entry!.isIntersecting;
+      update();
+    }).observe(video);
+    row?.addEventListener("toggle", update);
+  });
+</script>

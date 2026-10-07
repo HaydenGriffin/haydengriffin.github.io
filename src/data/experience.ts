@@ -11,6 +11,7 @@ export const experience: Role[] = [
     years: "2021 – 2026",
     title: "Senior Software Engineer",
     organisation: "Jumptech",
+    href: "https://jumptech.eco",
     note: "Software Engineer until 2024",
     highlights: [
       "Built an AI image-analysis pipeline: a YOLO classifier on SageMaker and LangGraph agents on ECS.",
@@ -34,12 +35,14 @@ export const experience: Role[] = [
     years: "2019 – 2020",
     title: "Graduate Software Engineer",
     organisation: "Ratio",
+    href: "https://ratio.co.uk",
     highlights: ["An access-control service in Go on Lambda and DynamoDB, plus Node and Go APIs for internal reporting."],
   },
   {
     years: "2017 – 2018",
     title: "Trainee Applications Developer",
     organisation: "Fivium",
+    href: "https://www.fivium.co.uk",
     note: "Placement year",
   },
   {
