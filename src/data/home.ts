@@ -18,6 +18,7 @@ export const home: Project[] = [
     name: "Food Diary",
     repo: "ha-food-diary",
     summary: "A calorie and macro diary that runs in Home Assistant, with a native SwiftUI iPhone app and Apple Health sync.",
+    clip: { name: "food", alt: "Logging two eggs on toast to dinner in the Food iPhone app, then seeing it on the Today screen", shape: "phone" },
   },
   {
     name: "Mira Mode",
