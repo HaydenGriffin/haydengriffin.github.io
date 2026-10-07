@@ -58,7 +58,10 @@ import Base from "../layouts/Base.astro";
     </Section>
 
     <Section id="home" title="At home">
-      <p class="lead">I run Home Assistant on a small Proxmox server and write software for it.</p>
+      <p class="lead">
+        This is my hobby. I run a small homelab with Home Assistant, and I build integrations, apps and local AI tools that solve everyday
+        problems around the house.
+      </p>
       <List>
         {home.map((project) => <ProjectRow project={project} />)}
       </List>
