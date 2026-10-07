@@ -1,11 +1,20 @@
-import foodToday from "../assets/work/food-today.png";
-import foodWeek from "../assets/work/food-week.png";
 import type { Project } from "./types";
 
 export const home: Project[] = [
   {
-    name: "Home Assistant integrations",
-    summary: "Python integrations for a food diary, an electric shower over Bluetooth, and room-based heating.",
+    name: "House for webOS",
+    repo: "house-webos",
+    summary: "A Home Assistant panel for my LG TV, made for the remote, with a weekly recap of the house.",
+  },
+  {
+    name: "Food Diary",
+    repo: "ha-food-diary",
+    summary: "A calorie and macro diary that runs in Home Assistant, with a native SwiftUI iPhone app and Apple Health sync.",
+  },
+  {
+    name: "Mira Mode",
+    repo: "ha-mira-mode",
+    summary: "A Home Assistant integration that controls a Mira Mode digital shower over Bluetooth LE.",
   },
   {
     name: "Local voice control",
@@ -14,17 +23,5 @@ export const home: Project[] = [
   {
     name: "Ask the house",
     summary: "An LLM agent that can read and control the house. Every action it proposes is checked before it runs.",
-  },
-  {
-    name: "Food",
-    summary: "A SwiftUI iPhone app for the food diary, with widgets and HealthKit.",
-    media: [
-      { src: foodToday, alt: "The Food app's Today screen with calories and macros left", shape: "phone" },
-      { src: foodWeek, alt: "The Food app's weekly review", shape: "phone" },
-    ],
-  },
-  {
-    name: "TV app",
-    summary: "A webOS app for a rooted LG TV that controls the house.",
   },
 ];

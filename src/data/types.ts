@@ -14,6 +14,8 @@ export interface Media {
 
 export interface Project {
   name: string;
+  /** A public repo under github.com/HaydenGriffin. Its links, language, last update and hero image are pulled in at build time. */
+  repo?: string;
   summary: string;
   details?: string;
   stack?: string[];

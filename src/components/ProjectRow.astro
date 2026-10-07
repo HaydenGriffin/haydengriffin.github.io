@@ -1,5 +1,7 @@
 ---
-import type { Project } from "../data/types";
+import { Image } from "astro:assets";
+import type { Link, Project } from "../data/types";
+import { getRepo, updatedAgo } from "../lib/github";
 import Row from "./Row.astro";
 import Shots from "./Shots.astro";
 
@@ -8,18 +10,30 @@ interface Props {
 }
 
 const { project } = Astro.props;
-const hasMore = Boolean(project.details || project.stack || project.links || project.media);
+const repo = project.repo ? await getRepo(project.repo) : undefined;
+
+const links: Link[] = [
+  ...(project.links ?? []),
+  ...(repo ? [{ label: "GitHub", href: repo.url }] : []),
+  ...(repo?.homepage ? [{ label: "Live demo", href: repo.homepage }] : []),
+];
+const primary = repo?.homepage ? { label: "Demo", href: repo.homepage } : repo ? { label: "GitHub", href: repo.url } : links[0];
+const facts = [repo?.language, repo?.pushedAt && `updated ${updatedAgo(repo.pushedAt)}`].filter(Boolean).join(" · ");
+const hasMore = Boolean(project.details || project.stack || project.media || repo?.hero || links.length);
 ---
 
 {
   hasMore ? (
-    <Row title={project.name} summary={project.summary}>
+    <Row title={project.name} summary={project.summary} aside={primary?.label} asideHref={primary?.href}>
       {project.details && <p>{project.details}</p>}
       {project.media && <Shots media={project.media} />}
-      {project.stack && <p class="stack">{project.stack.join(", ")}</p>}
-      {project.links && (
+      {repo?.hero && (
+        <Image class="hero" src={repo.hero} alt={`${project.name}, from its README`} inferSize widths={[640, 1280]} sizes="(max-width: 640px) 100vw, 560px" loading="lazy" />
+      )}
+      {(facts || project.stack) && <p class="facts">{[facts, project.stack?.join(", ")].filter(Boolean).join(" · ")}</p>}
+      {links.length > 0 && (
         <p class="links">
-          {project.links.map((link) => (
+          {links.map((link) => (
             <a href={link.href}>{link.label}</a>
           ))}
         </p>
@@ -31,7 +45,15 @@ const hasMore = Boolean(project.details || project.stack || project.links || pro
 }
 
 <style>
-  .stack {
+  .hero {
+    width: 100%;
+    height: auto;
+    margin-top: 1rem;
+    border: 1px solid var(--rule);
+    border-radius: 10px;
+  }
+
+  .facts {
     margin-top: 0.75rem;
     font-size: 0.9375rem;
     color: var(--muted);
