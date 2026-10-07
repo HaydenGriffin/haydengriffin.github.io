@@ -39,6 +39,9 @@ He runs the whole engineering stack of a regulated EU payments business (escrow,
 
 ## Brand Commitments
 
+- Visual direction (user's standing preference, 7 Oct 2026): clean and minimal, in the vein of paco.me, emilkowal.ski and leerob.com. Text-led, quiet neutrals, light and dark. No themed concepts or gimmicks, no loud colour, nothing busy. The user rejected an Ordnance Survey map concept as "ai slop and cringe".
+- Copy: plain, short and factual, in the first person. No puns, clever lines or marketing tone.
+
 - Name: Hayden Griffin. Email: haydenjamesgriffin@gmail.com. GitHub: HaydenGriffin. LinkedIn: linkedin.com/in/hayden-griffin-65b66612b.
 - No phone number on the site.
 
@@ -46,7 +49,7 @@ He runs the whole engineering stack of a regulated EU payments business (escrow,
 
 - CV (June 2026) supplies the role history and Jumptech achievements.
 - PayMidas repositories supply project facts (Smart Escrow: ~3,000 commits, ~99% his, v5.x, TanStack Start + Hono on Cloudflare Workers + Neon Postgres).
-- Photos: only a 2019 headshot exists, in git history; no current photo.
+- Photo: src/assets/hayden.jpg, cropped from the user's DSC02216.jpg with metadata stripped.
 - No testimonials, metrics dashboards, or press exist. Do not invent outcomes, numbers, or quotes.
 
 ## Product Principles

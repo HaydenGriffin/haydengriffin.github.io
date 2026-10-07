@@ -1,0 +1,50 @@
+---
+import { Image } from "astro:assets";
+import type { Media } from "../data/types";
+
+interface Props {
+  media: Media[];
+}
+
+const { media } = Astro.props;
+const phones = media.every((item) => item.shape === "phone");
+---
+
+<div class:list={["shots", { phones }]}>
+  {
+    media.map((item) => (
+      <Image
+        src={item.src}
+        alt={item.alt}
+        widths={phones ? [240, 480] : [640, 1280]}
+        sizes={phones ? "(max-width: 640px) 45vw, 200px" : "(max-width: 640px) 100vw, 560px"}
+        loading="lazy"
+        class:list={["shot", item.shape]}
+      />
+    ))
+  }
+</div>
+
+<style>
+  .shots {
+    display: grid;
+    gap: 0.75rem;
+    margin-top: 1rem;
+  }
+
+  .shots.phones {
+    grid-template-columns: repeat(auto-fill, minmax(0, 200px));
+  }
+
+  .shot {
+    width: 100%;
+    height: auto;
+    border: 1px solid var(--rule);
+    border-radius: 10px;
+    background: var(--hover);
+  }
+
+  .shot.phone {
+    border-radius: 18px;
+  }
+</style>

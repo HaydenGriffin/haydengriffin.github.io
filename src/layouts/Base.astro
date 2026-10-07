@@ -1,17 +1,6 @@
 ---
-import "@fontsource/fira-sans/latin-400.css";
-import "@fontsource/fira-sans/latin-400-italic.css";
-import "@fontsource/fira-sans/latin-500.css";
-import "@fontsource/fira-sans/latin-500-italic.css";
-import "@fontsource/fira-sans/latin-600.css";
-import "@fontsource/fira-sans/latin-700.css";
-import "@fontsource/fira-sans-extra-condensed/latin-500.css";
-import "@fontsource/fira-sans-extra-condensed/latin-700.css";
-import "@fontsource/fira-sans-extra-condensed/latin-800.css";
-import "@fontsource/unifrakturmaguntia/latin-400.css";
-import "../styles/tokens.css";
-import "../styles/base.css";
-import "../styles/sections.css";
+import "@fontsource-variable/geist";
+import "../styles/global.css";
 
 interface Props {
   title: string;
@@ -31,14 +20,14 @@ const canonical = new URL(Astro.url.pathname, Astro.site);
     <meta name="description" content={description} />
     <link rel="canonical" href={canonical} />
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
-    <meta name="theme-color" content="#E5601A" />
+    <meta name="theme-color" content="#fdfdfc" media="(prefers-color-scheme: light)" />
+    <meta name="theme-color" content="#121211" media="(prefers-color-scheme: dark)" />
     <meta property="og:type" content="website" />
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
     <meta property="og:url" content={canonical} />
     <meta property="og:image" content={new URL("/og.png", Astro.site)} />
     <meta name="twitter:card" content="summary_large_image" />
-    <script is:inline>document.documentElement.classList.add("js");</script>
   </head>
   <body>
     <slot />

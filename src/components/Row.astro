@@ -1,0 +1,127 @@
+---
+/**
+ * One line in a list: a title with optional supporting text on the right and below.
+ * When there is more to say, the row opens to show it.
+ */
+interface Props {
+  title: string;
+  href?: string;
+  aside?: string;
+  summary?: string;
+}
+
+const { title, href, aside, summary } = Astro.props;
+const expandable = Astro.slots.has("default");
+const Tag = expandable ? "details" : "div";
+const Head = expandable ? "summary" : "div";
+---
+
+<li class="row">
+  <Tag class="item">
+    <Head class="head">
+      <span class="line">
+        {href ? <a class="title" href={href}>{title}</a> : <span class="title">{title}</span>}
+        {aside && <span class="aside">{aside}</span>}
+      </span>
+      {summary && <span class="summary">{summary}</span>}
+    </Head>
+    {
+      expandable && (
+        <div class="more">
+          <slot />
+        </div>
+      )
+    }
+  </Tag>
+</li>
+
+<style>
+  .item {
+    border-radius: 8px;
+  }
+
+  .head {
+    display: block;
+    padding: 0.5rem 0.75rem;
+    margin-inline: -0.75rem;
+    border-radius: 8px;
+    list-style: none;
+  }
+
+  summary.head {
+    cursor: pointer;
+    transition: background-color 150ms var(--ease);
+  }
+
+  summary.head::-webkit-details-marker {
+    display: none;
+  }
+
+  summary.head:hover {
+    background: var(--hover);
+  }
+
+  .line {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 1rem;
+  }
+
+  .title {
+    font-weight: 500;
+  }
+
+  summary .title::after {
+    content: "";
+    display: inline-block;
+    width: 0.4em;
+    height: 0.4em;
+    margin-left: 0.55em;
+    border-right: 1.5px solid var(--muted);
+    border-bottom: 1.5px solid var(--muted);
+    transform: translateY(-0.2em) rotate(45deg);
+    transition: transform 250ms var(--ease);
+  }
+
+  details[open] .title::after {
+    transform: translateY(0.05em) rotate(225deg);
+  }
+
+  .aside {
+    flex: none;
+    color: var(--muted);
+    font-size: 0.9375rem;
+  }
+
+  .summary {
+    display: block;
+    color: var(--muted);
+  }
+
+  .more {
+    padding: 0.25rem 0 1rem;
+    color: var(--fg);
+  }
+
+  .item::details-content {
+    height: 0;
+    overflow: clip;
+    opacity: 0;
+    transition:
+      height 300ms var(--ease),
+      opacity 300ms var(--ease),
+      content-visibility 300ms allow-discrete;
+  }
+
+  .item[open]::details-content {
+    height: auto;
+    opacity: 1;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .item::details-content {
+      transition: none;
+    }
+  }
+</style>

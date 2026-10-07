@@ -6,18 +6,17 @@
     "dev": "astro dev",
     "build": "astro build",
     "preview": "astro preview",
-    "check": "astro check"
+    "check": "astro check",
+    "cv": "astro build && node scripts/build-cv.mjs && astro build"
   },
   "dependencies": {
-    "@fontsource/fira-sans": "^5.3.0",
-    "@fontsource/fira-sans-extra-condensed": "^5.3.0",
-    "@fontsource/unifrakturmaguntia": "^5.3.0",
+    "@fontsource-variable/geist": "^5.3.0",
     "astro": "^7.3.6",
-    "d3-contour": "^4.0.2"
+    "sharp": "^0.35.5"
   },
   "devDependencies": {
     "@astrojs/check": "^0.9.10",
-    "@types/d3-contour": "^3.0.6",
+    "playwright": "^1.63.0",
     "typescript": "^6.0.3"
   }
 }

@@ -1,43 +1,31 @@
-/**
- * Map feature classes follow Ordnance Survey lettering conventions:
- * settlements are upright condensed, water is blue italic, areas are
- * letterspaced caps, and antiquities (pre-2020 work) are blackletter.
- */
-export type FeatureClass = "settlement" | "water" | "area" | "antiquity";
+import type { ImageMetadata } from "astro";
 
 export interface Link {
   label: string;
   href: string;
 }
 
-/** A point on the sheet, in grid units (one unit = one grid square). */
-export interface Position {
-  x: number;
-  y: number;
+export interface Media {
+  src: ImageMetadata;
+  alt: string;
+  /** "wide" for desktop screenshots, "phone" for tall phone screens shown side by side. */
+  shape: "wide" | "phone";
 }
 
-export interface Feature {
-  id: string;
+export interface Project {
   name: string;
-  class: FeatureClass;
-  position: Position;
-  /** One line, as it would sit on the map. */
   summary: string;
-  /** The back of the entry: what it is and what Hayden did. */
-  details: string[];
-  years: string;
-  role?: string;
-  stack: string[];
+  details?: string;
+  stack?: string[];
   links?: Link[];
+  media?: Media[];
 }
 
-export interface RouteStop {
-  id: string;
+export interface Role {
   years: string;
   title: string;
   organisation: string;
-  where: string;
-  class: FeatureClass;
-  position: Position;
-  highlights: string[];
+  href?: string;
+  note?: string;
+  highlights?: string[];
 }

@@ -1,0 +1,22 @@
+---
+/** A list of rows. On pointer devices, hovering one row quietens the rest. */
+---
+
+<ul class="list"><slot /></ul>
+
+<style>
+  .list {
+    display: grid;
+    gap: 0.25rem;
+  }
+
+  @media (hover: hover) {
+    .list :global(.row) {
+      transition: opacity 200ms var(--ease);
+    }
+
+    .list:has(:global(.row:hover)) :global(.row:not(:hover)) {
+      opacity: 0.55;
+    }
+  }
+</style>

@@ -1,0 +1,46 @@
+---
+import type { Project } from "../data/types";
+import Row from "./Row.astro";
+import Shots from "./Shots.astro";
+
+interface Props {
+  project: Project;
+}
+
+const { project } = Astro.props;
+const hasMore = Boolean(project.details || project.stack || project.links || project.media);
+---
+
+{
+  hasMore ? (
+    <Row title={project.name} summary={project.summary}>
+      {project.details && <p>{project.details}</p>}
+      {project.media && <Shots media={project.media} />}
+      {project.stack && <p class="stack">{project.stack.join(", ")}</p>}
+      {project.links && (
+        <p class="links">
+          {project.links.map((link) => (
+            <a href={link.href}>{link.label}</a>
+          ))}
+        </p>
+      )}
+    </Row>
+  ) : (
+    <Row title={project.name} summary={project.summary} />
+  )
+}
+
+<style>
+  .stack {
+    margin-top: 0.75rem;
+    font-size: 0.9375rem;
+    color: var(--muted);
+  }
+
+  .links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.25rem 1.25rem;
+    margin-top: 0.5rem;
+  }
+</style>

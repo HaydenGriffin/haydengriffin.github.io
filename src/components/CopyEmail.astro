@@ -1,87 +1,57 @@
 ---
 interface Props {
   email: string;
-  tone?: "cover" | "paper";
 }
 
-const { email, tone = "cover" } = Astro.props;
+const { email } = Astro.props;
 ---
 
-<div class:list={["email", `email-${tone}`]} data-copy-email>
-  <a class="email-address" href={`mailto:${email}`}>{email}</a>
-  <button class="email-copy" type="button" data-copy={email} hidden>
-    <span data-copy-label>Copy</span>
-  </button>
-</div>
+<span class="email" data-copy-email>
+  <a href={`mailto:${email}`}>{email}</a>
+  <button type="button" class="copy" data-copy={email} hidden>Copy</button>
+</span>
 
 <style>
   .email {
-    display: flex;
-    flex-wrap: nowrap;
-    align-items: stretch;
-    justify-self: start;
-    max-width: 100%;
+    display: inline-flex;
+    align-items: baseline;
+    gap: 0.5rem;
+    flex-wrap: wrap;
   }
 
-  .email-address {
-    min-width: 0;
-    padding: 0.6rem 0.9rem;
-    font-size: clamp(0.875rem, 0.8rem + 0.3vw, 1rem);
-    background: var(--ink);
-    color: #fff;
-    font-weight: 600;
-    text-decoration: none;
-    overflow-wrap: anywhere;
-  }
-
-  .email-address:hover {
-    background: #000;
-  }
-
-  .email-copy {
-    flex: none;
-    min-width: 4.75rem;
-    padding: 0.6rem 0.9rem;
-    border: 2px solid var(--ink);
+  .copy {
+    padding: 0.05rem 0.5rem;
+    border: 1px solid var(--rule);
+    border-radius: 999px;
     background: transparent;
-    font-weight: 600;
-    transition: background-color 160ms var(--ease-out);
+    color: var(--muted);
+    font-size: 0.8125rem;
+    transition:
+      color 150ms var(--ease),
+      border-color 150ms var(--ease);
   }
 
-  .email-cover .email-copy:hover {
-    background: color-mix(in srgb, #fff 30%, transparent);
-  }
-
-  .email-paper .email-copy:hover {
-    background: var(--paper-deep);
-  }
-
-  .email-copy[data-copied] {
-    background: var(--ink);
-    color: #fff;
+  .copy:hover {
+    color: var(--fg);
+    border-color: var(--muted);
   }
 </style>
 
 <script>
   document.querySelectorAll<HTMLElement>("[data-copy-email]").forEach((root) => {
     const button = root.querySelector<HTMLButtonElement>("[data-copy]");
-    const label = root.querySelector<HTMLElement>("[data-copy-label]");
-    if (!button || !label || !navigator.clipboard) return;
+    if (!button || !navigator.clipboard) return;
     button.hidden = false;
     let timer: number | undefined;
     button.addEventListener("click", async () => {
       try {
         await navigator.clipboard.writeText(button.dataset.copy ?? "");
-        label.textContent = "Copied";
-        button.dataset.copied = "";
+        button.textContent = "Copied";
       } catch {
-        label.textContent = "Couldn’t copy";
+        button.textContent = "Couldn't copy";
       }
       window.clearTimeout(timer);
-      timer = window.setTimeout(() => {
-        label.textContent = "Copy";
-        delete button.dataset.copied;
-      }, 2200);
+      timer = window.setTimeout(() => (button.textContent = "Copy"), 1800);
     });
   });
 </script>

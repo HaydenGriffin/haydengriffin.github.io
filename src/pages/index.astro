@@ -1,24 +1,217 @@
 ---
-import Spread from "../components/Spread.astro";
-import ContactSection from "../components/sections/ContactSection.astro";
-import GazetteerSection from "../components/sections/GazetteerSection.astro";
-import HouseSection from "../components/sections/HouseSection.astro";
-import KeySection from "../components/sections/KeySection.astro";
-import RouteSection from "../components/sections/RouteSection.astro";
-import WorkSection from "../components/sections/WorkSection.astro";
+import { Image } from "astro:assets";
+import photo from "../assets/hayden.jpg";
+import CopyEmail from "../components/CopyEmail.astro";
+import List from "../components/List.astro";
+import ProjectRow from "../components/ProjectRow.astro";
+import Row from "../components/Row.astro";
+import Section from "../components/Section.astro";
+import { experience } from "../data/experience";
+import { home } from "../data/home";
 import { profile } from "../data/profile";
-import Sheet from "../layouts/Sheet.astro";
+import { work } from "../data/work";
+import Base from "../layouts/Base.astro";
 ---
 
-<Sheet title={`${profile.name}, ${profile.role}`} description={profile.intro}>
-  <a class="skip-link" href="#main">Skip to the work</a>
-  <Spread />
-  <main class="sheet" id="main">
-    <WorkSection />
-    <RouteSection />
-    <HouseSection />
-    <KeySection />
-    <GazetteerSection />
+<Base title={`${profile.name} · ${profile.role}`} description={profile.description}>
+  <main class="page">
+    <header class="intro">
+      <Image class="photo" src={photo} alt="Hayden Griffin" widths={[64, 128]} sizes="64px" loading="eager" />
+      <div class="who">
+        <h1 class="name">{profile.name}</h1>
+        <p class="muted">{profile.role}</p>
+      </div>
+      <div class="bio">
+        <p>
+          I lead engineering at <a href="https://paymidas.eu">PayMidas</a>, a payments company in Europe, and write a lot of the code. Mostly TypeScript, mostly
+          fintech: escrow, payment APIs, onboarding and compliance.
+        </p>
+        <p>Before PayMidas I was a senior engineer at Jumptech, and before that I worked on IoT and fintech products.</p>
+      </div>
+    </header>
+
+    <Section id="work" title="At PayMidas">
+      <List>
+        {work.map((project) => <ProjectRow project={project} />)}
+      </List>
+      <p class="note muted">Most of this code is private. Happy to walk through it.</p>
+    </Section>
+
+    <Section id="experience" title="Experience">
+      <List>
+        {
+          experience.map((role) =>
+            role.highlights ? (
+              <Row title={role.organisation} aside={role.years} summary={role.note ? `${role.title} · ${role.note}` : role.title}>
+                <ul class="highlights">
+                  {role.highlights.map((line) => (
+                    <li>{line}</li>
+                  ))}
+                </ul>
+              </Row>
+            ) : (
+              <Row title={role.organisation} href={role.href} aside={role.years} summary={role.note ? `${role.title} · ${role.note}` : role.title} />
+            ),
+          )
+        }
+      </List>
+    </Section>
+
+    <Section id="home" title="At home">
+      <p class="lead">I run Home Assistant on a small Proxmox server and write software for it.</p>
+      <List>
+        {home.map((project) => <ProjectRow project={project} />)}
+      </List>
+    </Section>
+
+    <Section id="contact" title="Contact">
+      <div class="contact">
+        <p><CopyEmail email={profile.email} /></p>
+        <p class="links">
+          <a href={profile.github} rel="me">GitHub</a>
+          <a href={profile.linkedin} rel="me">LinkedIn</a>
+          <a href="/hayden-griffin-cv.pdf">CV (PDF)</a>
+        </p>
+        <p class="muted">{profile.location}</p>
+      </div>
+    </Section>
+
+    <footer class="footer muted">
+      <p>© {new Date().getFullYear()} Hayden Griffin</p>
+    </footer>
   </main>
-  <ContactSection />
-</Sheet>
+</Base>
+
+<style>
+  .page {
+    display: grid;
+    gap: 4.5rem;
+    max-width: 46rem;
+    margin: 0 auto;
+    padding: clamp(4rem, 14vh, 8rem) 1.5rem 3rem;
+  }
+
+  .intro {
+    display: grid;
+    grid-template-columns: 8rem minmax(0, 1fr);
+    column-gap: 2rem;
+    align-items: center;
+  }
+
+  .photo {
+    justify-self: end;
+    width: 64px;
+    height: 64px;
+    border-radius: 50%;
+    object-fit: cover;
+  }
+
+  .name {
+    font-size: 1.125rem;
+    font-weight: 550;
+    line-height: 1.4;
+  }
+
+  .bio {
+    grid-column: 2;
+    display: grid;
+    gap: 1rem;
+    margin-top: 1.75rem;
+    max-width: 34rem;
+    font-size: 1.125rem;
+    line-height: 1.6;
+  }
+
+  .lead {
+    padding-block: 0.5rem;
+    margin-bottom: 0.25rem;
+  }
+
+  .note {
+    margin-top: 1rem;
+    font-size: 0.9375rem;
+  }
+
+  .links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.25rem 1.25rem;
+    margin-top: 0.5rem;
+  }
+
+  .highlights {
+    display: grid;
+    gap: 0.4rem;
+    padding-left: 1rem;
+    list-style: disc;
+  }
+
+  .highlights li::marker {
+    color: var(--muted);
+  }
+
+  .contact {
+    display: grid;
+    gap: 0.25rem;
+    padding-block: 0.5rem;
+  }
+
+  .contact .links {
+    margin-top: 0;
+  }
+
+  .footer {
+    padding-left: 10rem;
+    font-size: 0.875rem;
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .page > * {
+      animation: enter 700ms var(--ease) both;
+    }
+
+    .page > :nth-child(2) {
+      animation-delay: 80ms;
+    }
+
+    .page > :nth-child(3) {
+      animation-delay: 160ms;
+    }
+
+    .page > :nth-child(n + 4) {
+      animation-delay: 240ms;
+    }
+  }
+
+  @keyframes enter {
+    from {
+      opacity: 0;
+      transform: translateY(6px);
+      filter: blur(2px);
+    }
+  }
+
+  @media (max-width: 640px) {
+    .page {
+      gap: 3.5rem;
+    }
+
+    .intro {
+      grid-template-columns: 56px minmax(0, 1fr);
+      column-gap: 1rem;
+    }
+
+    .photo {
+      width: 56px;
+      height: 56px;
+    }
+
+    .bio {
+      grid-column: 1 / -1;
+    }
+
+    .footer {
+      padding-left: 0;
+    }
+  }
+</style>
