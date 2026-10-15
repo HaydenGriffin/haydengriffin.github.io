@@ -9,6 +9,12 @@ export const home: Project[] = [
     demo: "https://haydengriffin.github.io/house-webos/app/index.html?demo",
   },
   {
+    name: "Afterglow",
+    repo: "afterglow",
+    summary: "A Music Assistant player for LG TVs: the artwork, word-by-word lyrics and the queue from the remote, with MilkDrop visuals drawn in time with the speakers.",
+    demo: "https://haydengriffin.github.io/afterglow/",
+  },
+  {
     name: "Lamplight",
     repo: "lamplight",
     summary: "A design system for Home Assistant wall tablets, and six cards built on it, from weather to timers. Its core is a small ES module other cards can build on.",
