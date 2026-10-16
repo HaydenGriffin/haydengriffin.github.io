@@ -5,7 +5,7 @@ import type { RepoInfo } from "../lib/github";
 import ClipVideo from "./ClipVideo.astro";
 import Shots from "./Shots.astro";
 
-/** The best thing to look at for a project: a live demo you can try, a clip, screenshots, or the repo's hero image. */
+/** The best thing to look at for a project: a live demo you can try, a clip, screenshots, or its hero image. */
 interface Props {
   project: Project;
   repo?: RepoInfo;
@@ -18,7 +18,13 @@ const { project, repo } = Astro.props;
   project.demo ? (
     <div class="demo" data-demo={project.demo} data-title={`${project.name} demo`}>
       <div class="stage" data-stage>
-        {project.clip ? <ClipVideo clip={project.clip} /> : repo?.hero && <img class="still" src={repo.hero} alt="" />}
+        {project.clip ? (
+          <ClipVideo clip={project.clip} />
+        ) : project.hero ? (
+          <Image class="still" src={project.hero.src} alt="" widths={[640, 1280]} sizes="(max-width: 640px) 100vw, 640px" />
+        ) : (
+          repo?.hero && <img class="still" src={repo.hero} alt="" />
+        )}
       </div>
       <p class="demo-bar">
         <button type="button" class="try" data-try>
@@ -36,6 +42,8 @@ const { project, repo } = Astro.props;
     <div class="media"><ClipVideo clip={project.clip} /></div>
   ) : project.media ? (
     <Shots media={project.media} />
+  ) : project.hero ? (
+    <Image class="hero" src={project.hero.src} alt={project.hero.alt} widths={[640, 1280]} sizes="(max-width: 640px) 100vw, 640px" loading="lazy" />
   ) : (
     repo?.hero && (
       <Image class="hero" src={repo.hero} alt={`${project.name}, from its README`} inferSize widths={[640, 1280]} sizes="(max-width: 640px) 100vw, 560px" loading="lazy" />

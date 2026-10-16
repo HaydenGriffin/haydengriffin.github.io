@@ -5,5 +5,6 @@ export const profile = {
   email: "haydenjamesgriffin@gmail.com",
   github: "https://github.com/HaydenGriffin",
   linkedin: "https://www.linkedin.com/in/hayden-griffin-65b66612b",
+  support: "https://buymeacoffee.com/haydengriffin",
   description: "Hayden Griffin is CTO at PayMidas, a European payments company, and a full-stack TypeScript engineer.",
 } as const;

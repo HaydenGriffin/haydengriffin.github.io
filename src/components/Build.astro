@@ -1,0 +1,113 @@
+---
+/**
+ * A public project shown in full: its hero image, its latest release, what it is, and where to go next.
+ * The image and title open the project page; the try-it demo and clips live there.
+ */
+import { Image } from "astro:assets";
+import type { Link, Project } from "../data/types";
+import { getRepo } from "../lib/github";
+
+interface Props {
+  /** A project with a repo and a hero image. */
+  project: Project;
+}
+
+const { project } = Astro.props;
+const hero = project.hero!;
+const repo = await getRepo(project.repo!);
+const page = `/projects/${project.repo}/`;
+const demo = project.demo ?? repo.homepage;
+const links: Link[] = [
+  { label: "How it works", href: page },
+  { label: "GitHub", href: repo.url },
+  ...(demo ? [{ label: "Live demo", href: demo }] : []),
+];
+---
+
+<article class="build">
+  <a class="shot" href={page} tabindex="-1">
+    <Image src={hero.src} alt={hero.alt} widths={[640, 1200]} sizes="(max-width: 640px) 100vw, 576px" loading="lazy" />
+  </a>
+  <h3 class="line">
+    <a class="title" href={page} style={`view-transition-name: project-${project.repo}`}>{project.name}</a>
+    {
+      repo.release && (
+        <a class="version" href={repo.release.url} aria-label={`Latest release, ${repo.release.tag}`}>
+          {repo.release.tag}
+        </a>
+      )
+    }
+  </h3>
+  <p class="summary">{project.summary}</p>
+  <p class="links">
+    {links.map((link) => <a href={link.href}>{link.label}</a>)}
+  </p>
+</article>
+
+<style>
+  .build {
+    display: grid;
+  }
+
+  .shot {
+    display: block;
+    margin-bottom: 1rem;
+    border-radius: 10px;
+  }
+
+  .shot img {
+    display: block;
+    width: 100%;
+    height: auto;
+    border: 1px solid var(--rule);
+    border-radius: 10px;
+    background: var(--hover);
+    transition: border-color 200ms var(--ease);
+  }
+
+  .build:has(.title:hover) .shot img,
+  .shot:hover img {
+    border-color: var(--muted);
+  }
+
+  .line {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 1rem;
+    font-size: 1rem;
+    font-weight: 500;
+  }
+
+  .title {
+    text-decoration: none;
+  }
+
+  .title:hover {
+    text-decoration: underline;
+    text-decoration-color: currentColor;
+  }
+
+  .version {
+    flex: none;
+    color: var(--muted);
+    font-size: 0.9375rem;
+    font-weight: 400;
+    text-decoration: none;
+  }
+
+  .version:hover {
+    color: var(--fg);
+  }
+
+  .summary {
+    color: var(--muted);
+  }
+
+  .links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.25rem 1.25rem;
+    margin-top: 0.5rem;
+  }
+</style>

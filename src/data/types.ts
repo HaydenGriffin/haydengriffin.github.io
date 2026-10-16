@@ -31,6 +31,10 @@ export interface Project {
   clip?: Clip;
   /** A page that can run inside the site, played with the keyboard. */
   demo?: string;
+  /** The project's own hero image, copied into src/assets so the site never hotlinks it. */
+  hero?: { src: ImageMetadata; alt: string };
+  /** Set to false to keep a project out of the site until it is ready. */
+  published?: boolean;
 }
 
 export interface Role {
