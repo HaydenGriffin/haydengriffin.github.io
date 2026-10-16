@@ -1,6 +1,6 @@
 /**
  * Build-time GitHub data for project rows: description, language, last push,
- * links and the repo's own hero image (docs/images/hero.*). Every call fails soft,
+ * links, the latest release and the repo's own hero image (docs/images/hero.*). Every call fails soft,
  * so a rate limit or an offline build drops the extras instead of breaking the site.
  */
 const OWNER = "HaydenGriffin";
@@ -13,6 +13,7 @@ export interface RepoInfo {
   pushedAt?: Date;
   homepage?: string;
   hero?: string;
+  release?: { tag: string; url: string };
 }
 
 const cache = new Map<string, Promise<RepoInfo>>();
@@ -37,6 +38,7 @@ async function load(name: string): Promise<RepoInfo> {
   const url = `https://github.com/${OWNER}/${name}`;
   const repo = await api<{ description: string | null; language: string | null; pushed_at: string; homepage: string | null }>(`/repos/${OWNER}/${name}`);
   const images = await api<{ name: string; download_url: string }[]>(`/repos/${OWNER}/${name}/contents/docs/images`);
+  const release = await api<{ tag_name: string; html_url: string }>(`/repos/${OWNER}/${name}/releases/latest`);
   const hero = images?.find((file) => /^hero\.(png|jpe?g|webp)$/i.test(file.name))?.download_url;
   const homepage = repo?.homepage && !repo.homepage.startsWith(url) ? repo.homepage : undefined;
   return {
@@ -46,6 +48,7 @@ async function load(name: string): Promise<RepoInfo> {
     pushedAt: repo ? new Date(repo.pushed_at) : undefined,
     homepage,
     hero,
+    release: release && { tag: release.tag_name, url: release.html_url },
   };
 }
 
