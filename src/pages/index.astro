@@ -181,6 +181,11 @@ import Base from "../layouts/Base.astro";
     gap: 2.5rem 2rem;
   }
 
+  /* Three to a group: the first takes the full width, the other two share a row. */
+  .builds > :global(:first-child) {
+    grid-column: 1 / -1;
+  }
+
   .group + .note {
     margin-top: 2.5rem;
     max-width: 34rem;
