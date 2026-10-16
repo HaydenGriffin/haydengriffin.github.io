@@ -1,36 +1,56 @@
 ---
 import ProjectMedia from "../../components/ProjectMedia.astro";
-import { home } from "../../data/home";
+import { homePages } from "../../data/home";
 import { profile } from "../../data/profile";
-import type { Project } from "../../data/types";
+import type { Edition, Project } from "../../data/types";
 import { work } from "../../data/work";
 import Base from "../../layouts/Base.astro";
 import { getRepo, updatedAgo } from "../../lib/github";
 import { getReadmeHtml } from "../../lib/readme";
 
 export function getStaticPaths() {
-  return [...work, ...home].filter((project) => project.repo).map((project) => ({ params: { repo: project.repo! }, props: { project } }));
+  const pages: { project: Project; edition?: Edition }[] = [...work.map((project) => ({ project })), ...homePages];
+  return pages
+    .filter(({ project, edition }) => edition ?? project.repo)
+    .map(({ project, edition }) => ({ params: { repo: edition?.repo ?? project.repo! }, props: { project, edition } }));
 }
 
 interface Props {
   project: Project;
+  /** The platform this page is for, when the project ships to more than one. */
+  edition?: Edition;
 }
 
-const { project } = Astro.props;
+const { project: base, edition } = Astro.props;
+const project: Project = edition
+  ? { ...base, repo: edition.repo, demo: edition.demo, clip: edition.clip, media: edition.media, hero: edition.hero ?? base.hero }
+  : base;
 const repo = await getRepo(project.repo!);
 const readme = await getReadmeHtml(project.repo!);
 const facts = [repo.language, repo.pushedAt && `updated ${updatedAgo(repo.pushedAt)}`].filter(Boolean).join(" · ");
 ---
 
-<Base title={`${project.name} · ${profile.name}`} description={project.summary}>
+<Base title={`${edition ? `${project.name} for ${edition.platform}` : project.name} · ${profile.name}`} description={project.summary}>
   <main class="page">
     <a class="home" href="/">{profile.name}</a>
 
     <header class="head">
-      <h1 style={`view-transition-name: project-${project.repo}`}>{project.name}</h1>
+      <h1 style={`view-transition-name: project-${base.repo}`}>{project.name}</h1>
       <p class="summary">{project.summary}</p>
+      {
+        base.editions && (
+          <nav class="editions" aria-label="Platforms">
+            {base.editions.map((other) => (
+              <a href={`/projects/${other.repo}/`} aria-current={other.repo === project.repo ? "page" : undefined}>
+                {other.platform}
+              </a>
+            ))}
+          </nav>
+        )
+      }
       <p class="links">
         <a href={repo.url}>GitHub</a>
+        {repo.release && <a href={repo.release.url}>{repo.release.tag}</a>}
         {(project.demo ?? repo.homepage) && <a href={project.demo ?? repo.homepage}>Live demo</a>}
         {facts && <span class="muted">{facts}</span>}
       </p>
@@ -57,6 +77,7 @@ const facts = [repo.language, repo.pushedAt && `updated ${updatedAgo(repo.pushed
 <style>
   .page {
     display: grid;
+    grid-template-columns: minmax(0, 1fr);
     gap: 2rem;
     max-width: 44rem;
     margin: 0 auto;
@@ -84,6 +105,36 @@ const facts = [repo.language, repo.pushedAt && `updated ${updatedAgo(repo.pushed
     margin-top: 0.5rem;
     font-size: 1.125rem;
     color: var(--muted);
+  }
+
+  .editions {
+    display: inline-flex;
+    gap: 0.25rem;
+    margin-top: 1.25rem;
+    padding: 0.2rem;
+    border: 1px solid var(--rule);
+    border-radius: 999px;
+  }
+
+  .editions a {
+    padding: 0.2rem 0.85rem;
+    border-radius: 999px;
+    color: var(--muted);
+    font-size: 0.9375rem;
+    text-decoration: none;
+    transition:
+      color 150ms var(--ease),
+      background-color 150ms var(--ease);
+  }
+
+  .editions a:hover {
+    color: var(--fg);
+  }
+
+  .editions a[aria-current="page"] {
+    background: var(--hover);
+    color: var(--fg);
+    font-weight: 500;
   }
 
   .links {

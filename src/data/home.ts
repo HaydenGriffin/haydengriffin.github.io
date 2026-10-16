@@ -1,14 +1,44 @@
+import afterglowLgHero from "../assets/afterglow/lg-hero.webp";
+import afterglowPs5Hero from "../assets/afterglow/ps5-hero.webp";
+import afterglowPs5Views from "../assets/afterglow/ps5-views.webp";
 import afterglowHero from "../assets/home/afterglow.webp";
 import foodDiaryHero from "../assets/home/food-diary.webp";
 import houseWebosHero from "../assets/home/house-webos.webp";
 import lamplightHero from "../assets/home/lamplight.webp";
 import miraModeHero from "../assets/home/mira-mode.webp";
 import prismHero from "../assets/home/prism.webp";
-import type { Project, ProjectGroup } from "./types";
+import type { Edition, Project, ProjectGroup } from "./types";
 
 const projects: Project[] = [
   {
+    name: "Afterglow",
+    repo: "afterglow",
+    group: "tv",
+    summary:
+      "A Music Assistant player for LG TVs and the PS5: the artwork, word-by-word lyrics and the queue from the remote or a DualSense, with MilkDrop visuals drawn in time with the music.",
+    hero: { src: afterglowHero, alt: "The Afterglow logo over the app playing a song with its lyrics, beside the words LG webOS and PS5" },
+    clip: { name: "afterglow", alt: "Afterglow on an LG TV: synced lyrics beside the album art, then the full-screen album view, then a full-screen MilkDrop music visualiser", shape: "wide" },
+    editions: [
+      {
+        platform: "LG webOS",
+        repo: "afterglow",
+        demo: "https://haydengriffin.github.io/afterglow/",
+        clip: { name: "afterglow", alt: "Afterglow on an LG TV: synced lyrics beside the album art, then the full-screen album view, then a full-screen MilkDrop music visualiser", shape: "wide" },
+        hero: { src: afterglowLgHero, alt: "Afterglow on an LG C1: the artwork, the current lyric line and up next" },
+      },
+      {
+        platform: "PS5",
+        repo: "afterglow-ps5",
+        media: [
+          { src: afterglowPs5Hero, alt: "Afterglow on a PS5: the artwork, the current lyric line underlined as it is sung, and up next", shape: "wide" },
+          { src: afterglowPs5Views, alt: "Afterglow's PS5 views: Album, Visuals with one lyric line, Lyrics over visuals, and the Display settings", shape: "wide" },
+        ],
+      },
+    ],
+  },
+  {
     name: "PRISM",
+    platforms: ["Android TV"],
     repo: "prism",
     group: "tv",
     summary:
@@ -16,16 +46,8 @@ const projects: Project[] = [
     hero: { src: prismHero, alt: "PRISM on the Shield: continue on the LG, favourite LG apps and quick TV settings" },
   },
   {
-    name: "Afterglow",
-    repo: "afterglow",
-    group: "tv",
-    summary:
-      "A Music Assistant player for LG TVs: the artwork, word-by-word lyrics and the queue from the remote, with MilkDrop visuals drawn in time with the speakers. A PS5 version is on the way.",
-    hero: { src: afterglowHero, alt: "Afterglow on a TV: album artwork, the current lyric line and MilkDrop visuals behind it" },
-    demo: "https://haydengriffin.github.io/afterglow/",
-  },
-  {
     name: "House for webOS",
+    platforms: ["LG webOS"],
     repo: "house-webos",
     group: "tv",
     summary: "A Home Assistant panel for my LG TV, made for the remote, with a weekly recap of the house: steps, dinners, energy and who used the most hot water.",
@@ -35,6 +57,7 @@ const projects: Project[] = [
   },
   {
     name: "Lamplight",
+    platforms: ["Home Assistant"],
     repo: "lamplight",
     group: "home",
     summary: "A design system for Home Assistant wall tablets, and six cards built on it, from weather to timers. Its core is a small ES module other cards can build on.",
@@ -43,6 +66,7 @@ const projects: Project[] = [
   },
   {
     name: "Food Diary",
+    platforms: ["Home Assistant", "iPhone"],
     repo: "ha-food-diary",
     group: "home",
     summary: "A calorie and macro diary that runs in Home Assistant, with a native SwiftUI iPhone app, Apple Health sync, and planned meals that go straight into the diary.",
@@ -51,6 +75,7 @@ const projects: Project[] = [
   },
   {
     name: "Mira Mode",
+    platforms: ["Home Assistant"],
     repo: "ha-mira-mode",
     group: "home",
     summary: "A Home Assistant integration that controls a Mira Mode digital shower over Bluetooth LE, and counts the water and energy each shower uses.",
@@ -60,8 +85,13 @@ const projects: Project[] = [
 
 export const home = projects.filter((project) => project.published !== false);
 
+/** Every page a home build gets: one per edition for a project on more than one platform. */
+export const homePages: { project: Project; edition?: Edition }[] = home.flatMap((project) =>
+  project.editions ? project.editions.map((edition) => ({ project, edition })) : [{ project }],
+);
+
 const groupTitles: Record<ProjectGroup, string> = {
-  tv: "For the TV",
+  tv: "For TVs and consoles",
   home: "For the home",
 };
 

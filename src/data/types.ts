@@ -21,6 +21,16 @@ export interface Clip {
   position?: string;
 }
 
+/** One platform's build of a project that ships to more than one, each with its own repo and project page. */
+export interface Edition {
+  platform: string;
+  repo: string;
+  demo?: string;
+  clip?: Clip;
+  media?: Media[];
+  hero?: { src: ImageMetadata; alt: string };
+}
+
 /** The groups the open-source home builds are shown in. */
 export type ProjectGroup = "tv" | "home";
 
@@ -40,6 +50,10 @@ export interface Project {
   hero?: { src: ImageMetadata; alt: string };
   /** Which group a home build is shown in. */
   group?: ProjectGroup;
+  /** What it runs on, named beside the title. A project with editions names each edition's platform instead. */
+  platforms?: string[];
+  /** Builds for more than one platform. The first is the project's own repo and page. */
+  editions?: Edition[];
   /** Set to false to keep a project out of the site until it is ready. */
   published?: boolean;
 }
