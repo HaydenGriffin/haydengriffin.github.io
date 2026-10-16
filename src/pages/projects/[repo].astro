@@ -27,6 +27,8 @@ const project: Project = edition
   : base;
 const repo = await getRepo(project.repo!);
 const readme = await getReadmeHtml(project.repo!);
+// An edition's repository homepage can be this page; only link its explicit demo.
+const demo = project.demo ?? (edition ? undefined : repo.homepage);
 const facts = [repo.language, repo.pushedAt && `updated ${updatedAgo(repo.pushedAt)}`].filter(Boolean).join(" · ");
 ---
 
@@ -51,7 +53,7 @@ const facts = [repo.language, repo.pushedAt && `updated ${updatedAgo(repo.pushed
       <p class="links">
         <a href={repo.url}>GitHub</a>
         {repo.release && <a href={repo.release.url}>{repo.release.tag}</a>}
-        {(project.demo ?? repo.homepage) && <a href={project.demo ?? repo.homepage}>Live demo</a>}
+        {demo && <a href={demo}>Live demo</a>}
         {facts && <span class="muted">{facts}</span>}
       </p>
     </header>
