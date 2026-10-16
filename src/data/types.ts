@@ -50,6 +50,8 @@ export interface Project {
   hero?: { src: ImageMetadata; alt: string };
   /** Which group a home build is shown in. */
   group?: ProjectGroup;
+  /** What it runs on, named beside the title. A project with editions names each edition's platform instead. */
+  platforms?: string[];
   /** Builds for more than one platform. The first is the project's own repo and page. */
   editions?: Edition[];
   /** Set to false to keep a project out of the site until it is ready. */

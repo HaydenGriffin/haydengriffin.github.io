@@ -38,6 +38,7 @@ const projects: Project[] = [
   },
   {
     name: "PRISM",
+    platforms: ["Android TV"],
     repo: "prism",
     group: "tv",
     summary:
@@ -46,6 +47,7 @@ const projects: Project[] = [
   },
   {
     name: "House for webOS",
+    platforms: ["LG webOS"],
     repo: "house-webos",
     group: "tv",
     summary: "A Home Assistant panel for my LG TV, made for the remote, with a weekly recap of the house: steps, dinners, energy and who used the most hot water.",
@@ -55,6 +57,7 @@ const projects: Project[] = [
   },
   {
     name: "Lamplight",
+    platforms: ["Home Assistant"],
     repo: "lamplight",
     group: "home",
     summary: "A design system for Home Assistant wall tablets, and six cards built on it, from weather to timers. Its core is a small ES module other cards can build on.",
@@ -63,6 +66,7 @@ const projects: Project[] = [
   },
   {
     name: "Food Diary",
+    platforms: ["Home Assistant", "iPhone"],
     repo: "ha-food-diary",
     group: "home",
     summary: "A calorie and macro diary that runs in Home Assistant, with a native SwiftUI iPhone app, Apple Health sync, and planned meals that go straight into the diary.",
@@ -71,6 +75,7 @@ const projects: Project[] = [
   },
   {
     name: "Mira Mode",
+    platforms: ["Home Assistant"],
     repo: "ha-mira-mode",
     group: "home",
     summary: "A Home Assistant integration that controls a Mira Mode digital shower over Bluetooth LE, and counts the water and energy each shower uses.",
@@ -86,7 +91,7 @@ export const homePages: { project: Project; edition?: Edition }[] = home.flatMap
 );
 
 const groupTitles: Record<ProjectGroup, string> = {
-  tv: "For the TV",
+  tv: "For TVs and consoles",
   home: "For the home",
 };
 

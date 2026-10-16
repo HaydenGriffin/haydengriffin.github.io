@@ -3,7 +3,7 @@
  * A public project shown as a card in a two-column grid: its hero image, its latest release, what it is, and where to go next.
  * The image and title open the project page; the try-it demo and full clips live there.
  * On a desktop pointer, a project with a clip plays it over the image while the card is hovered or focused.
- * A project on more than one platform shows each edition's latest release and repo.
+ * Beside the title, what it runs on and the latest release; a project on more than one platform lists each edition.
  */
 import { Image } from "astro:assets";
 import type { Link, Project } from "../data/types";
@@ -23,11 +23,9 @@ const editions = await Promise.all(
   (project.editions ?? []).map(async (edition) => ({ ...edition, info: await getRepo(edition.repo) })),
 );
 const demo = project.demo ?? editions.find((edition) => edition.demo)?.demo ?? repo.homepage;
-const releases = editions.length
-  ? editions.flatMap(({ platform, info }) => (info.release ? [{ label: `${platform} ${info.release.tag}`, ...info.release }] : []))
-  : repo.release
-    ? [{ label: repo.release.tag, ...repo.release }]
-    : [];
+const runs = editions.length
+  ? editions.map(({ platform, info }) => ({ platforms: [platform], release: info.release }))
+  : [{ platforms: project.platforms ?? [], release: repo.release }];
 const links: Link[] = [
   { label: "How it works", href: page },
   ...(editions.length
@@ -66,18 +64,21 @@ const links: Link[] = [
   </a>
   <h4 class="line">
     <a class="title" href={page} style={`view-transition-name: project-${project.repo}`}>{project.name}</a>
-    {
-      releases.length > 0 && (
-        <span class="versions">
-          {releases.map((release) => (
-            <a class="version" href={release.url} aria-label={`Latest release, ${release.label}`}>
-              {release.label}
-            </a>
-          ))}
-        </span>
-      )
-    }
   </h4>
+  <p class="runs">
+    {
+      runs.map(({ platforms, release }) => (
+        <span class="run">
+          {platforms.length > 0 && <span class="platform">{platforms.join(" · ")}</span>}
+          {release && (
+            <a class="version" href={release.url} aria-label={`Latest release${platforms.length ? ` for ${platforms.join(" and ")}` : ""}, ${release.tag}`}>
+              {release.tag}
+            </a>
+          )}
+        </span>
+      ))
+    }
+  </p>
   <p class="summary">{project.summary}</p>
   <p class="links">
     {links.map((link) => <a href={link.href}>{link.label}</a>)}
@@ -148,10 +149,6 @@ const links: Link[] = [
 
   .line {
     margin: 0;
-    display: flex;
-    justify-content: space-between;
-    align-items: baseline;
-    gap: 1rem;
     font-size: 1rem;
     font-weight: 500;
   }
@@ -165,14 +162,25 @@ const links: Link[] = [
     text-decoration-color: currentColor;
   }
 
-  .versions {
+  .runs {
     display: flex;
-    flex: none;
-    gap: 0.75rem;
+    flex-wrap: wrap;
+    gap: 0.1rem 1rem;
+    margin-top: 0.2rem;
+    font-size: 0.875rem;
+  }
+
+  .run {
+    display: flex;
+    gap: 0.4rem;
+    white-space: nowrap;
+  }
+
+  .platform {
+    font-weight: 500;
   }
 
   .version {
-    flex: none;
     color: var(--muted);
     font-size: 0.875rem;
     font-weight: 400;
