@@ -13,10 +13,13 @@ function absolute(repo: string, path: string, kind: "src" | "href") {
     : `https://github.com/${OWNER}/${repo}/blob/HEAD/${clean}`;
 }
 
-/** Drops paragraphs that hold only images or image links (the hero and badges). */
+/** Drops paragraphs that hold only images or image links (the logo, the hero and badges). */
 function dropImageOnlyParagraphs(html: string) {
   return html.replace(/<p\b[^>]*>([\s\S]*?)<\/p>/g, (paragraph, inner: string) => {
-    const text = inner.replace(/<img\b[^>]*>/g, "").replace(/<\/?a\b[^>]*>/g, "").trim();
+    const text = inner
+      .replace(/<img\b[^>]*>/g, "")
+      .replace(/<\/?(?:a|picture|themed-picture|source)\b[^>]*>/g, "")
+      .trim();
     return text === "" && /<img\b/.test(inner) ? "" : paragraph;
   });
 }

@@ -3,6 +3,7 @@
  * A public project shown as a card in a two-column grid: its hero image, its latest release, what it is, and where to go next.
  * The image and title open the project page; the try-it demo and full clips live there.
  * On a desktop pointer, a project with a clip plays it over the image while the card is hovered or focused.
+ * A project on more than one platform shows each edition's latest release and repo.
  */
 import { Image } from "astro:assets";
 import type { Link, Project } from "../data/types";
@@ -18,10 +19,20 @@ const hero = project.hero!;
 const clip = project.clip;
 const repo = await getRepo(project.repo!);
 const page = `/projects/${project.repo}/`;
-const demo = project.demo ?? repo.homepage;
+const editions = await Promise.all(
+  (project.editions ?? []).map(async (edition) => ({ ...edition, info: await getRepo(edition.repo) })),
+);
+const demo = project.demo ?? editions.find((edition) => edition.demo)?.demo ?? repo.homepage;
+const releases = editions.length
+  ? editions.flatMap(({ platform, info }) => (info.release ? [{ label: `${platform} ${info.release.tag}`, ...info.release }] : []))
+  : repo.release
+    ? [{ label: repo.release.tag, ...repo.release }]
+    : [];
 const links: Link[] = [
   { label: "How it works", href: page },
-  { label: "GitHub", href: repo.url },
+  ...(editions.length
+    ? editions.map(({ platform, info }) => ({ label: `${platform} on GitHub`, href: info.url }))
+    : [{ label: "GitHub", href: repo.url }]),
   ...(demo ? [{ label: "Live demo", href: demo }] : []),
 ];
 ---
@@ -56,10 +67,14 @@ const links: Link[] = [
   <h4 class="line">
     <a class="title" href={page} style={`view-transition-name: project-${project.repo}`}>{project.name}</a>
     {
-      repo.release && (
-        <a class="version" href={repo.release.url} aria-label={`Latest release, ${repo.release.tag}`}>
-          {repo.release.tag}
-        </a>
+      releases.length > 0 && (
+        <span class="versions">
+          {releases.map((release) => (
+            <a class="version" href={release.url} aria-label={`Latest release, ${release.label}`}>
+              {release.label}
+            </a>
+          ))}
+        </span>
       )
     }
   </h4>
@@ -148,6 +163,12 @@ const links: Link[] = [
   .title:hover {
     text-decoration: underline;
     text-decoration-color: currentColor;
+  }
+
+  .versions {
+    display: flex;
+    flex: none;
+    gap: 0.75rem;
   }
 
   .version {
