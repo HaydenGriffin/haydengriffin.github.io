@@ -3,9 +3,17 @@ import foodDiaryHero from "../assets/home/food-diary.webp";
 import houseWebosHero from "../assets/home/house-webos.webp";
 import lamplightHero from "../assets/home/lamplight.webp";
 import miraModeHero from "../assets/home/mira-mode.webp";
+import prismHero from "../assets/home/prism.webp";
 import type { Project } from "./types";
 
 const projects: Project[] = [
+  {
+    name: "PRISM",
+    repo: "prism",
+    summary:
+      "One remote for an Android TV box and an LG TV: while an LG app is on screen, the Shield's remote drives the TV, with a launcher for LG apps and quick TV settings, through Home Assistant.",
+    hero: { src: prismHero, alt: "PRISM on the Shield: continue on the LG, favourite LG apps and quick TV settings" },
+  },
   {
     name: "House for webOS",
     repo: "house-webos",
@@ -41,12 +49,6 @@ const projects: Project[] = [
     repo: "ha-mira-mode",
     summary: "A Home Assistant integration that controls a Mira Mode digital shower over Bluetooth LE, and counts the water and energy each shower uses.",
     hero: { src: miraModeHero, alt: "The Mira Shower device page in Home Assistant, with shower, temperature and flow controls" },
-  },
-  {
-    // TODO: add repo: "prism" and a hero from its docs/images once the repo is public, then remove published: false.
-    name: "PRISM",
-    summary: "One remote for an NVIDIA Shield and an LG TV: while an LG app is on screen, the Shield's remote drives the TV. It is also a launcher for LG apps and settings.",
-    published: false,
   },
   {
     name: "Local voice control",
