@@ -1,6 +1,7 @@
 ---
 import { Image } from "astro:assets";
 import photo from "../assets/hayden.jpg";
+import Build from "../components/Build.astro";
 import CopyEmail from "../components/CopyEmail.astro";
 import List from "../components/List.astro";
 import ProjectRow from "../components/ProjectRow.astro";
@@ -11,6 +12,10 @@ import { home } from "../data/home";
 import { profile } from "../data/profile";
 import { work } from "../data/work";
 import Base from "../layouts/Base.astro";
+
+const isBuild = (project: (typeof home)[number]) => Boolean(project.repo && project.hero);
+const builds = home.filter(isBuild);
+const notes = home.filter((project) => !isBuild(project));
 ---
 
 <Base title={`${profile.name} · ${profile.role}`} description={profile.description}>
@@ -67,8 +72,11 @@ import Base from "../layouts/Base.astro";
         This is my hobby. I run a small homelab with Home Assistant, and I build integrations, apps and local AI tools that solve everyday
         problems around the house.
       </p>
+      <div class="builds">
+        {builds.map((project) => <Build project={project} />)}
+      </div>
       <List>
-        {home.map((project) => <ProjectRow project={project} />)}
+        {notes.map((project) => <ProjectRow project={project} />)}
       </List>
     </Section>
 
@@ -132,6 +140,12 @@ import Base from "../layouts/Base.astro";
   .lead {
     padding-block: 0.5rem;
     margin-bottom: 0.25rem;
+  }
+
+  .builds {
+    display: grid;
+    gap: 3.5rem;
+    margin-block: 1.5rem 3rem;
   }
 
   .note {
@@ -215,6 +229,10 @@ import Base from "../layouts/Base.astro";
 
     .bio {
       grid-column: 1 / -1;
+    }
+
+    .builds {
+      gap: 3rem;
     }
 
     .footer {
