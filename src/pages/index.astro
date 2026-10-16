@@ -8,14 +8,11 @@ import ProjectRow from "../components/ProjectRow.astro";
 import Row from "../components/Row.astro";
 import Section from "../components/Section.astro";
 import { experience } from "../data/experience";
-import { home } from "../data/home";
+import { alsoRunning, homeGroups } from "../data/home";
 import { profile } from "../data/profile";
 import { work } from "../data/work";
 import Base from "../layouts/Base.astro";
 
-const isBuild = (project: (typeof home)[number]) => Boolean(project.repo && project.hero);
-const builds = home.filter(isBuild);
-const notes = home.filter((project) => !isBuild(project));
 ---
 
 <Base title={`${profile.name} · ${profile.role}`} description={profile.description}>
@@ -32,6 +29,7 @@ const notes = home.filter((project) => !isBuild(project));
           fintech: escrow, payment APIs, onboarding and compliance.
         </p>
         <p>Before PayMidas I was a senior engineer at Jumptech, and before that I worked on IoT and fintech products.</p>
+        <p class="spare">In my spare time I build <a href="#projects">open-source apps</a> for TVs and Home Assistant.</p>
       </div>
     </header>
 
@@ -67,17 +65,35 @@ const notes = home.filter((project) => !isBuild(project));
       </List>
     </Section>
 
-    <Section id="home" title="At home">
+    <Section id="projects" title="At home">
       <p class="lead">
         This is my hobby. I run a small homelab with Home Assistant, and I build integrations, apps and local AI tools that solve everyday
         problems around the house. The projects below are open source. If one is useful to you, you can <a href={profile.support}>buy me a coffee</a>.
       </p>
-      <div class="builds">
-        {builds.map((project) => <Build project={project} />)}
-      </div>
-      <List>
-        {notes.map((project) => <ProjectRow project={project} />)}
-      </List>
+      {
+        homeGroups.map((group) => (
+          <section class="group" aria-labelledby={`group-${group.id}`}>
+            <h3 class="group-title" id={`group-${group.id}`}>
+              {group.title}
+            </h3>
+            <div class="builds">
+              {group.projects.map((project) => (
+                <Build project={project} />
+              ))}
+            </div>
+          </section>
+        ))
+      }
+      <p class="note muted">
+        Also running at home:{" "}
+        {alsoRunning.map((item, index) => (
+          <>
+            {index > 0 && " and "}
+            {item.name} ({item.note})
+          </>
+        ))}
+        .
+      </p>
     </Section>
 
     <Section id="contact" title="Contact">
@@ -138,15 +154,36 @@ const notes = home.filter((project) => !isBuild(project));
     line-height: 1.6;
   }
 
+  .spare {
+    color: var(--muted);
+  }
+
   .lead {
     padding-block: 0.5rem;
     margin-bottom: 0.25rem;
   }
 
+  .group {
+    margin-top: 2.5rem;
+  }
+
+  .group-title {
+    padding-bottom: 0.5rem;
+    margin-bottom: 1.25rem;
+    border-bottom: 1px solid var(--rule);
+    font-size: 0.9375rem;
+    font-weight: 500;
+  }
+
   .builds {
     display: grid;
-    gap: 3.5rem;
-    margin-block: 1.5rem 3rem;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 2.5rem 2rem;
+  }
+
+  .group + .note {
+    margin-top: 2.5rem;
+    max-width: 34rem;
   }
 
   .note {
@@ -240,7 +277,8 @@ const notes = home.filter((project) => !isBuild(project));
     }
 
     .builds {
-      gap: 3rem;
+      grid-template-columns: minmax(0, 1fr);
+      gap: 2.5rem;
     }
 
     .footer {

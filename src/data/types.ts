@@ -17,7 +17,12 @@ export interface Clip {
   name: string;
   alt: string;
   shape: "wide" | "phone";
+  /** Where a wide clip is anchored when it is cropped to a home card, as CSS object-position. Centred by default. */
+  position?: string;
 }
+
+/** The groups the open-source home builds are shown in. */
+export type ProjectGroup = "tv" | "home";
 
 export interface Project {
   name: string;
@@ -33,6 +38,8 @@ export interface Project {
   demo?: string;
   /** The project's own hero image, copied into src/assets so the site never hotlinks it. */
   hero?: { src: ImageMetadata; alt: string };
+  /** Which group a home build is shown in. */
+  group?: ProjectGroup;
   /** Set to false to keep a project out of the site until it is ready. */
   published?: boolean;
 }
