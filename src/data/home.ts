@@ -16,7 +16,7 @@ const projects: Project[] = [
     group: "tv",
     summary:
       "A Music Assistant player for LG TVs and the PS5: the artwork, word-by-word lyrics and the queue from the remote or a DualSense, with MilkDrop visuals drawn in time with the music.",
-    hero: { src: afterglowHero, alt: "The Afterglow logo, its o a sun setting on the horizon, over the app on an LG TV and on a PS5" },
+    hero: { src: afterglowHero, alt: "The Afterglow logo over the app playing a song with its lyrics, beside the words LG webOS and PS5" },
     clip: { name: "afterglow", alt: "Afterglow on an LG TV: synced lyrics beside the album art, then the full-screen album view, then a full-screen MilkDrop music visualiser", shape: "wide" },
     editions: [
       {
