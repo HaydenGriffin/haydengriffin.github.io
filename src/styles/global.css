@@ -48,6 +48,16 @@ body {
   text-rendering: optimizeLegibility;
 }
 
+[id] {
+  scroll-margin-top: 2rem;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  html {
+    scroll-behavior: smooth;
+  }
+}
+
 ::selection {
   background: var(--selection);
 }
