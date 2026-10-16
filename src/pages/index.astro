@@ -70,7 +70,7 @@ const notes = home.filter((project) => !isBuild(project));
     <Section id="home" title="At home">
       <p class="lead">
         This is my hobby. I run a small homelab with Home Assistant, and I build integrations, apps and local AI tools that solve everyday
-        problems around the house.
+        problems around the house. The projects below are open source. If one is useful to you, you can <a href={profile.support}>buy me a coffee</a>.
       </p>
       <div class="builds">
         {builds.map((project) => <Build project={project} />)}
@@ -93,6 +93,7 @@ const notes = home.filter((project) => !isBuild(project));
 
     <footer class="footer muted">
       <p>© {new Date().getFullYear()} Hayden Griffin</p>
+      <a href={profile.support}>Support my work</a>
     </footer>
   </main>
 </Base>
@@ -182,8 +183,15 @@ const notes = home.filter((project) => !isBuild(project));
   }
 
   .footer {
+    display: flex;
+    justify-content: space-between;
+    gap: 1rem;
     padding-left: 10rem;
     font-size: 0.875rem;
+  }
+
+  .footer a:hover {
+    color: var(--fg);
   }
 
   @media (prefers-reduced-motion: no-preference) {
