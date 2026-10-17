@@ -30,8 +30,8 @@ const projects: Project[] = [
         platform: "PS5",
         repo: "afterglow-ps5",
         media: [
-          { src: afterglowPs5Hero, alt: "Afterglow on a PS5: the artwork, the current lyric line underlined as it is sung, and up next", shape: "wide" },
-          { src: afterglowPs5Views, alt: "Afterglow's PS5 views: Album, Visuals with one lyric line, Lyrics over visuals, and the Display settings", shape: "wide" },
+          { src: afterglowPs5Hero, alt: "Afterglow on a PS5: the cover in a square, the current lyric line underlined as it is sung, and up next with its artists", shape: "wide" },
+          { src: afterglowPs5Views, alt: "Afterglow's PS5 views: Album, one lyric line over the visuals, the large lyric over the visuals, and the Display settings", shape: "wide" },
         ],
       },
     ],
