@@ -7,6 +7,8 @@ import houseWebosHero from "../assets/home/house-webos.webp";
 import lamplightHero from "../assets/home/lamplight.webp";
 import miraModeHero from "../assets/home/mira-mode.webp";
 import prismHero from "../assets/home/prism.webp";
+import prismPs5Hero from "../assets/prism/ps5-hero.webp";
+import prismPs5Views from "../assets/prism/ps5-views.webp";
 import type { Edition, Project, ProjectGroup } from "./types";
 
 const projects: Project[] = [
@@ -38,12 +40,25 @@ const projects: Project[] = [
   },
   {
     name: "PRISM",
-    platforms: ["Android TV"],
     repo: "prism",
     group: "tv",
     summary:
-      "One remote for an Android TV box and an LG TV: while an LG app is on screen, the Shield's remote drives the TV, with a launcher for LG apps and quick TV settings, through Home Assistant.",
+      "One remote for an LG TV, from an Android TV box or a PS5: while an LG app is on screen, the box's remote or a DualSense drives the TV, with a launcher for LG apps and quick TV settings, through Home Assistant.",
     hero: { src: prismHero, alt: "PRISM on the Shield: continue on the LG, favourite LG apps and quick TV settings" },
+    editions: [
+      {
+        platform: "Android TV",
+        repo: "prism",
+      },
+      {
+        platform: "PS5",
+        repo: "prism-ps5",
+        media: [
+          { src: prismPs5Hero, alt: "PRISM on a PS5: continue on the LG with ITVX, favourite LG apps with their own icons and recently used apps", shape: "wide" },
+          { src: prismPs5Views, alt: "PRISM's PS5 screens: all LG apps, the DualSense controls while BBC iPlayer is open, quick TV settings, and ordering favourites", shape: "wide" },
+        ],
+      },
+    ],
   },
   {
     name: "House for webOS",
