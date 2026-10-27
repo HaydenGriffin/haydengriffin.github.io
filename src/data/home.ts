@@ -54,8 +54,8 @@ const projects: Project[] = [
         platform: "PS5",
         repo: "prism-ps5",
         media: [
-          { src: prismPs5Hero, alt: "PRISM on a PS5: continue on the LG with ITVX, favourite LG apps with their own icons and recently used apps", shape: "wide" },
-          { src: prismPs5Views, alt: "PRISM's PS5 screens: all LG apps, the DualSense controls while BBC iPlayer is open, quick TV settings, and ordering favourites", shape: "wide" },
+          { src: prismPs5Hero, alt: "PRISM on a PS5, captured by the TV: LG Settings open over PRISM's remote screen, driven by the DualSense", shape: "wide" },
+          { src: prismPs5Views, alt: "PRISM on the TV: its launcher, and LG's Game Optimizer opened over it; then all LG apps and quick TV settings", shape: "wide" },
         ],
       },
     ],
