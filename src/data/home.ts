@@ -44,7 +44,7 @@ const projects: Project[] = [
     group: "tv",
     summary:
       "One remote for an LG TV, from an Android TV box or a PS5: while an LG app is on screen, the box's remote or a DualSense drives the TV, with a launcher for LG apps and quick TV settings, through Home Assistant.",
-    hero: { src: prismHero, alt: "PRISM on the Shield: continue on the LG, favourite LG apps and quick TV settings" },
+    hero: { src: prismHero, alt: "PRISM on the Shield, captured by the TV: LG Settings open over the PRISM launcher, driven by the Shield remote, beside quick TV settings and the LG apps row" },
     editions: [
       {
         platform: "Android TV",
