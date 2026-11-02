@@ -8,6 +8,7 @@ import lamplightHero from "../assets/home/lamplight.webp";
 import lamplightPs5Hero from "../assets/lamplight/ps5-hero.webp";
 import lamplightPs5Views from "../assets/lamplight/ps5-views.webp";
 import miraModeHero from "../assets/home/mira-mode.webp";
+import noZeroWeeksHero from "../assets/home/no-zero-weeks.webp";
 import prismHero from "../assets/home/prism.webp";
 import prismPs5Hero from "../assets/prism/ps5-hero.webp";
 import prismPs5Views from "../assets/prism/ps5-views.webp";
@@ -115,6 +116,24 @@ const projects: Project[] = [
     summary: "A Home Assistant integration that controls a Mira Mode digital shower over Bluetooth LE, and counts the water and energy each shower uses.",
     hero: { src: miraModeHero, alt: "The Mira Shower device page in Home Assistant, with shower, temperature and flow controls" },
   },
+  {
+    name: "No Zero Weeks",
+    platforms: ["Android", "Home Assistant"],
+    page: "no-zero-weeks",
+    group: "training",
+    summary:
+      "My training app, built around the week rather than the workout. Gym check-ins and watch workouts count on their own, the house plans each lift day, and the workout runs from the lock screen.",
+    stack: ["Kotlin", "Jetpack Compose", "Health Connect", "Glance", "WorkManager"],
+    hero: {
+      src: noZeroWeeksHero,
+      alt: "Three No Zero Weeks screens: the week drawn as a barbell, the day's workout from the house, and the exercise library",
+    },
+    clip: {
+      name: "no-zero-weeks",
+      alt: "No Zero Weeks on the phone: the week's barbell turned with a finger, the day's workout with its plates, a rack of past weeks, and an exercise's technique clip",
+      shape: "phone",
+    },
+  },
 ];
 
 export const home = projects.filter((project) => project.published !== false);
@@ -127,6 +146,7 @@ export const homePages: { project: Project; edition?: Edition }[] = home.flatMap
 const groupTitles: Record<ProjectGroup, string> = {
   tv: "For TVs and consoles",
   home: "For the home",
+  training: "For training",
 };
 
 /** The home builds in their groups, in the order they are listed above. */

@@ -7,12 +7,13 @@ import { work } from "../../data/work";
 import Base from "../../layouts/Base.astro";
 import { getRepo, updatedAgo } from "../../lib/github";
 import { getReadmeHtml } from "../../lib/readme";
+import { getWriteUp, pageName } from "../../lib/writeups";
 
 export function getStaticPaths() {
   const pages: { project: Project; edition?: Edition }[] = [...work.map((project) => ({ project })), ...homePages];
   return pages
-    .filter(({ project, edition }) => edition ?? project.repo)
-    .map(({ project, edition }) => ({ params: { repo: edition?.repo ?? project.repo! }, props: { project, edition } }));
+    .filter(({ project, edition }) => edition ?? pageName(project))
+    .map(({ project, edition }) => ({ params: { repo: edition?.repo ?? pageName(project)! }, props: { project, edition } }));
 }
 
 interface Props {
@@ -25,11 +26,15 @@ const { project: base, edition } = Astro.props;
 const project: Project = edition
   ? { ...base, repo: edition.repo, demo: edition.demo, clip: edition.clip, media: edition.media, hero: edition.hero ?? base.hero }
   : base;
-const repo = await getRepo(project.repo!);
-const readme = await getReadmeHtml(project.repo!);
+const repo = project.repo ? await getRepo(project.repo) : undefined;
+const readme = project.repo ? await getReadmeHtml(project.repo) : undefined;
+// A build whose code is private has its write-up in the site instead of a README.
+const WriteUp = project.repo ? undefined : getWriteUp(project.page!);
 // An edition's repository homepage can be this page; only link its explicit demo.
-const demo = project.demo ?? (edition ? undefined : repo.homepage);
-const facts = [repo.language, repo.pushedAt && `updated ${updatedAgo(repo.pushedAt)}`].filter(Boolean).join(" · ");
+const demo = project.demo ?? (edition ? undefined : repo?.homepage);
+const facts = repo
+  ? [repo.language, repo.pushedAt && `updated ${updatedAgo(repo.pushedAt)}`].filter(Boolean).join(" · ")
+  : ["Private code", project.stack?.join(", ")].filter(Boolean).join(" · ");
 ---
 
 <Base title={`${edition ? `${project.name} for ${edition.platform}` : project.name} · ${profile.name}`} description={project.summary}>
@@ -37,7 +42,7 @@ const facts = [repo.language, repo.pushedAt && `updated ${updatedAgo(repo.pushed
     <a class="home" href="/">{profile.name}</a>
 
     <header class="head">
-      <h1 style={`view-transition-name: project-${base.repo}`}>{project.name}</h1>
+      <h1 style={`view-transition-name: project-${pageName(base)}`}>{project.name}</h1>
       <p class="summary">{project.summary}</p>
       {
         base.editions && (
@@ -51,8 +56,8 @@ const facts = [repo.language, repo.pushedAt && `updated ${updatedAgo(repo.pushed
         )
       }
       <p class="links">
-        <a href={repo.url}>GitHub</a>
-        {repo.release && <a href={repo.release.url}>{repo.release.tag}</a>}
+        {repo && <a href={repo.url}>GitHub</a>}
+        {repo?.release && <a href={repo.release.url}>{repo.release.tag}</a>}
         {demo && <a href={demo}>Live demo</a>}
         {facts && <span class="muted">{facts}</span>}
       </p>
@@ -61,11 +66,15 @@ const facts = [repo.language, repo.pushedAt && `updated ${updatedAgo(repo.pushed
     <ProjectMedia project={project} repo={repo} />
 
     {
-      readme ? (
+      WriteUp ? (
+        <article class="readme">
+          <WriteUp />
+        </article>
+      ) : readme ? (
         <article class="readme" set:html={readme} />
       ) : (
         <p class="muted">
-          The write-up lives in the <a href={repo.url}>README on GitHub</a>.
+          The write-up lives in the <a href={repo!.url}>README on GitHub</a>.
         </p>
       )
     }
