@@ -5,6 +5,8 @@ import afterglowHero from "../assets/home/afterglow.webp";
 import foodDiaryHero from "../assets/home/food-diary.webp";
 import houseWebosHero from "../assets/home/house-webos.webp";
 import lamplightHero from "../assets/home/lamplight.webp";
+import lamplightPs5Hero from "../assets/lamplight/ps5-hero.webp";
+import lamplightPs5Views from "../assets/lamplight/ps5-views.webp";
 import miraModeHero from "../assets/home/mira-mode.webp";
 import prismHero from "../assets/home/prism.webp";
 import prismPs5Hero from "../assets/prism/ps5-hero.webp";
@@ -72,12 +74,29 @@ const projects: Project[] = [
   },
   {
     name: "Lamplight",
-    platforms: ["Home Assistant"],
     repo: "lamplight",
     group: "home",
-    summary: "A design system for Home Assistant wall tablets, and six cards built on it, from weather to timers. Its core is a small ES module other cards can build on.",
+    summary:
+      "A design system for Home Assistant wall tablets, and six cards built on it, from weather to timers; and the same pages on a TV from a PS5, with Home Assistant's notifications shown over games.",
     hero: { src: lamplightHero, alt: "Lamplight's agenda, timers and weather cards on wall tablets" },
     clip: { name: "lamplight", alt: "Tapping through the Lamplight timers and help cards on a demo home", shape: "wide", position: "0% 50%" },
+    editions: [
+      {
+        platform: "Home Assistant",
+        repo: "lamplight",
+        demo: "https://haydengriffin.github.io/lamplight/",
+        clip: { name: "lamplight", alt: "Tapping through the Lamplight timers and help cards on a demo home", shape: "wide", position: "0% 50%" },
+        hero: { src: lamplightHero, alt: "Lamplight's agenda, timers and weather cards on wall tablets" },
+      },
+      {
+        platform: "PS5",
+        repo: "lamplight-ps5",
+        media: [
+          { src: lamplightPs5Hero, alt: "Lamplight on a PS5: the clock, 14:05 large over a weather-tinted sky, with a chip for each page", shape: "wide" },
+          { src: lamplightPs5Views, alt: "Lamplight's PS5 pages: the Living room with music and lights glowing, the Agenda, Timers with Undo, and a finished timer's alert", shape: "wide" },
+        ],
+      },
+    ],
   },
   {
     name: "Food Diary",
