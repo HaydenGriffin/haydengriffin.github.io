@@ -31,13 +31,18 @@ export interface Edition {
   hero?: { src: ImageMetadata; alt: string };
 }
 
-/** The groups the open-source home builds are shown in. */
-export type ProjectGroup = "tv" | "home";
+/** The groups the home builds are shown in. */
+export type ProjectGroup = "tv" | "home" | "training";
 
 export interface Project {
   name: string;
   /** A public repo under github.com/HaydenGriffin. Its links, language, last update and hero image are pulled in at build time. */
   repo?: string;
+  /**
+   * A build whose code is private: the address of its project page, /projects/<page>/.
+   * The page's write-up is src/writeups/<page>.md, in place of a README.
+   */
+  page?: string;
   summary: string;
   details?: string;
   stack?: string[];

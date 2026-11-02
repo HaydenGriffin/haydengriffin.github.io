@@ -1,6 +1,7 @@
 ---
 /**
- * A public project shown as a card in a two-column grid: its hero image, its latest release, what it is, and where to go next.
+ * A home build shown as a card in a two-column grid: its hero image, its latest release, what it is, and where to go next.
+ * A build whose code is private has no GitHub link or release, and says so beside its platforms.
  * The image and title open the project page; the try-it demo and full clips live there.
  * On a desktop pointer, a project with a clip plays it over the image while the card is hovered or focused.
  * Beside the title, what it runs on and the latest release; a project on more than one platform lists each edition.
@@ -8,29 +9,33 @@
 import { Image } from "astro:assets";
 import type { Link, Project } from "../data/types";
 import { getRepo } from "../lib/github";
+import { pageName } from "../lib/writeups";
 
 interface Props {
-  /** A project with a repo and a hero image. */
+  /** A project with a repo or a page, and a hero image. */
   project: Project;
 }
 
 const { project } = Astro.props;
 const hero = project.hero!;
 const clip = project.clip;
-const repo = await getRepo(project.repo!);
-const page = `/projects/${project.repo}/`;
+const name = pageName(project)!;
+const repo = project.repo ? await getRepo(project.repo) : undefined;
+const page = `/projects/${name}/`;
 const editions = await Promise.all(
   (project.editions ?? []).map(async (edition) => ({ ...edition, info: await getRepo(edition.repo) })),
 );
-const demo = project.demo ?? editions.find((edition) => edition.demo)?.demo ?? repo.homepage;
+const demo = project.demo ?? editions.find((edition) => edition.demo)?.demo ?? repo?.homepage;
 const runs = editions.length
   ? editions.map(({ platform, info }) => ({ platforms: [platform], release: info.release }))
-  : [{ platforms: project.platforms ?? [], release: repo.release }];
+  : [{ platforms: project.platforms ?? [], release: repo?.release }];
 const links: Link[] = [
   { label: "How it works", href: page },
   ...(editions.length
     ? editions.map(({ platform, info }) => ({ label: `${platform} on GitHub`, href: info.url }))
-    : [{ label: "GitHub", href: repo.url }]),
+    : repo
+      ? [{ label: "GitHub", href: repo.url }]
+      : []),
   ...(demo ? [{ label: "Live demo", href: demo }] : []),
 ];
 ---
@@ -63,7 +68,7 @@ const links: Link[] = [
     }
   </a>
   <h4 class="line">
-    <a class="title" href={page} style={`view-transition-name: project-${project.repo}`}>{project.name}</a>
+    <a class="title" href={page} style={`view-transition-name: project-${name}`}>{project.name}</a>
   </h4>
   <p class="runs">
     {
@@ -75,6 +80,7 @@ const links: Link[] = [
               {release.tag}
             </a>
           )}
+          {!repo && <span class="private">private code</span>}
         </span>
       ))
     }
@@ -180,7 +186,8 @@ const links: Link[] = [
     font-weight: 500;
   }
 
-  .version {
+  .version,
+  .private {
     color: var(--muted);
     font-size: 0.875rem;
     font-weight: 400;
