@@ -1,0 +1,149 @@
+---
+/**
+ * The home builds in one grid, under a "Runs on" line naming every platform they run on.
+ * Pointing at a platform, or focusing it, picks out the builds that run on it; clicking it keeps them picked out.
+ */
+import { homePlatforms } from "../data/home";
+import type { Project } from "../data/types";
+import Build from "./Build.astro";
+
+interface Props {
+  projects: Project[];
+}
+
+const { projects } = Astro.props;
+---
+
+<div class="runs-on" data-runs-on>
+  <span class="label">Runs on</span>
+  {
+    homePlatforms.map((platform, index) => (
+      <>
+        {index > 0 && (
+          <span class="dot" aria-hidden="true">
+            ·
+          </span>
+        )}
+        <button type="button" data-platform={platform.slug} aria-pressed="false">
+          {platform.name}
+        </button>
+      </>
+    ))
+  }
+</div>
+<p class="status" aria-live="polite" data-status></p>
+
+<div class="builds" data-builds>
+  {projects.map((project) => <Build project={project} />)}
+</div>
+
+<style>
+  .runs-on {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: 0.15rem 0.4rem;
+    margin-top: 1.1rem;
+    padding-bottom: 1.25rem;
+    border-bottom: 1px solid var(--rule);
+    color: var(--muted);
+    font-size: 0.875rem;
+  }
+
+  .label {
+    margin-right: 0.2rem;
+  }
+
+  .runs-on button {
+    padding: 0;
+    border: 0;
+    background: none;
+    color: var(--fg);
+    text-decoration: underline;
+    text-decoration-color: var(--rule);
+    text-decoration-thickness: 1px;
+    text-underline-offset: 0.25em;
+    transition:
+      color 200ms var(--ease),
+      text-decoration-color 200ms var(--ease);
+  }
+
+  .runs-on:has(.picked) button:not(.picked) {
+    color: var(--muted);
+  }
+
+  .runs-on button.picked,
+  .runs-on button[aria-pressed="true"] {
+    text-decoration-color: currentColor;
+  }
+
+  .status {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip-path: inset(50%);
+    white-space: nowrap;
+  }
+
+  .builds {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 2.25rem 1.75rem;
+    margin-top: 1.75rem;
+  }
+
+  @media (max-width: 640px) {
+    .builds {
+      grid-template-columns: minmax(0, 1fr);
+      gap: 2.5rem;
+    }
+  }
+</style>
+
+<script>
+  const runsOn = document.querySelector<HTMLElement>("[data-runs-on]");
+  const status = document.querySelector<HTMLElement>("[data-status]");
+
+  if (runsOn && status) {
+    const buttons = [...runsOn.querySelectorAll<HTMLButtonElement>("button[data-platform]")];
+    const builds = [...document.querySelectorAll<HTMLElement>("[data-builds] > .build")];
+    let pinned: string | undefined;
+
+    // Picks out the builds that run on a platform, or none, and names it in each card that does.
+    const pick = (platform?: string) => {
+      for (const button of buttons) button.classList.toggle("picked", button.dataset.platform === platform);
+      for (const build of builds) {
+        const runs = platform !== undefined && build.dataset.platforms!.split(" ").includes(platform);
+        build.classList.toggle("dimmed", platform !== undefined && !runs);
+        for (const name of build.querySelectorAll<HTMLElement>("[data-platform]")) {
+          name.classList.toggle("picked", name.dataset.platform === platform);
+        }
+      }
+    };
+
+    const pin = (platform?: string) => {
+      pinned = platform;
+      for (const button of buttons) button.setAttribute("aria-pressed", String(button.dataset.platform === pinned));
+      pick(pinned);
+      const button = buttons.find((item) => item.dataset.platform === pinned);
+      const count = builds.filter((build) => !build.classList.contains("dimmed")).length;
+      status.textContent = button ? `${count} of ${builds.length} projects run on ${button.textContent!.trim()}` : "Showing all projects";
+    };
+
+    for (const button of buttons) {
+      const platform = button.dataset.platform!;
+      button.addEventListener("pointerenter", () => pick(platform));
+      button.addEventListener("pointerleave", () => pick(pinned));
+      button.addEventListener("focus", () => {
+        if (button.matches(":focus-visible")) pick(platform);
+      });
+      button.addEventListener("blur", () => pick(pinned));
+      button.addEventListener("click", () => pin(pinned === platform ? undefined : platform));
+    }
+
+    document.addEventListener("keydown", (event) => {
+      if (event.key === "Escape" && pinned) pin(undefined);
+    });
+  }
+</script>

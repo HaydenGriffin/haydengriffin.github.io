@@ -1,58 +1,71 @@
 ---
+import { Image } from "astro:assets";
 import ProjectMedia from "../../components/ProjectMedia.astro";
-import { homePages } from "../../data/home";
+import { homePages, nextBuild, platformSlug } from "../../data/home";
 import { profile } from "../../data/profile";
-import type { Edition, Project } from "../../data/types";
-import { work } from "../../data/work";
+import type { Platform, Project } from "../../data/types";
 import Base from "../../layouts/Base.astro";
 import { getRepo, updatedAgo } from "../../lib/github";
 import { getReadmeHtml } from "../../lib/readme";
 import { getWriteUp, pageName } from "../../lib/writeups";
 
 export function getStaticPaths() {
-  const pages: { project: Project; edition?: Edition }[] = [...work.map((project) => ({ project })), ...homePages];
-  return pages
-    .filter(({ project, edition }) => edition ?? pageName(project))
-    .map(({ project, edition }) => ({ params: { repo: edition?.repo ?? pageName(project)! }, props: { project, edition } }));
+  return homePages.map(({ project, platform }) => ({ params: { repo: platform?.repo ?? pageName(project)! }, props: { project, platform } }));
 }
 
 interface Props {
   project: Project;
-  /** The platform this page is for, when the project ships to more than one. */
-  edition?: Edition;
+  /** The platform this page is for, when that platform's build has its own repo. */
+  platform?: Platform;
 }
 
-const { project: base, edition } = Astro.props;
-const project: Project = edition
-  ? { ...base, repo: edition.repo, demo: edition.demo, clip: edition.clip, media: edition.media, hero: edition.hero ?? base.hero }
-  : base;
+const { project: base, platform } = Astro.props;
+const name = pageName(base)!;
+const project: Project = platform ? { ...base, repo: platform.repo, demo: platform.demo, clip: platform.clip, media: platform.media } : base;
 const repo = project.repo ? await getRepo(project.repo) : undefined;
 const readme = project.repo ? await getReadmeHtml(project.repo) : undefined;
 // A build whose code is private has its write-up in the site instead of a README.
 const WriteUp = project.repo ? undefined : getWriteUp(project.page!);
-// An edition's repository homepage can be this page; only link its explicit demo.
-const demo = project.demo ?? (edition ? undefined : repo?.homepage);
+const demo = project.demo ?? repo?.homepage;
 const facts = repo
   ? [repo.language, repo.pushedAt && `updated ${updatedAgo(repo.pushedAt)}`].filter(Boolean).join(" · ")
   : ["Private code", project.stack?.join(", ")].filter(Boolean).join(" · ");
+
+// A project with a platform built in its own repo has a page per repo, and a switch between them.
+const platforms = base.platforms ?? [];
+const ownPlatforms = platforms.filter((item) => !item.repo).map((item) => item.name);
+const switches = platforms.some((item) => item.repo)
+  ? [
+      { label: ownPlatforms.join(" · ") || base.name, href: `/projects/${name}/`, current: !platform },
+      ...platforms.filter((item) => item.repo).map((item) => ({ label: item.name, href: `/projects/${item.repo}/`, current: item === platform })),
+    ]
+  : [];
+const current = switches.find((item) => item.current);
+const next = nextBuild(base);
+const nextName = pageName(next)!;
 ---
 
-<Base title={`${edition ? `${project.name} for ${edition.platform}` : project.name} · ${profile.name}`} description={project.summary}>
+<Base title={`${current ? `${project.name} for ${current.label}` : project.name} · ${profile.name}`} description={project.summary}>
   <main class="page">
     <a class="home" href="/">{profile.name}</a>
 
     <header class="head">
-      <h1 style={`view-transition-name: project-${pageName(base)}`}>{project.name}</h1>
+      <h1 style={`view-transition-name: project-${name}`}>{project.name}</h1>
       <p class="summary">{project.summary}</p>
       {
-        base.editions && (
-          <nav class="editions" aria-label="Platforms">
-            {base.editions.map((other) => (
-              <a href={`/projects/${other.repo}/`} aria-current={other.repo === project.repo ? "page" : undefined}>
-                {other.platform}
+        switches.length > 0 ? (
+          <nav class="switch" aria-label="Platforms">
+            {switches.map((item) => (
+              <a href={item.href} aria-current={item.current ? "page" : undefined}>
+                {item.current && <span class="pill" style="view-transition-name: platform-pill" />}
+                <span class="label" style={`view-transition-name: platform-${platformSlug(item.label)}`}>
+                  {item.label}
+                </span>
               </a>
             ))}
           </nav>
+        ) : (
+          platforms.length > 0 && <p class="platforms">{platforms.map((item) => item.name).join(" · ")}</p>
         )
       }
       <p class="links">
@@ -63,7 +76,7 @@ const facts = repo
       </p>
     </header>
 
-    <ProjectMedia project={project} repo={repo} />
+    <ProjectMedia project={project} repo={repo} transitionName={`shot-${name}`} />
 
     {
       WriteUp ? (
@@ -79,8 +92,26 @@ const facts = repo
       )
     }
 
-    <footer class="footer muted">
-      <a href="/">Back to {profile.name}</a>
+    <footer class="footer">
+      <div class="footer-head">
+        <p class="muted">Next project</p>
+        <a class="all" href="/#projects">All projects</a>
+      </div>
+      <a class="next" href={`/projects/${nextName}/`}>
+        {
+          next.hero && (
+            <span class="next-shot" style={`view-transition-name: shot-${nextName}; view-transition-class: shot`}>
+              <Image src={next.hero.src} alt="" widths={[320, 640]} sizes="10rem" loading="lazy" />
+            </span>
+          )
+        }
+        <span class="next-text">
+          <span class="next-name" style={`view-transition-name: project-${nextName}`}>
+            {next.name}
+          </span>
+          <span class="next-summary">{next.summary}</span>
+        </span>
+      </a>
     </footer>
   </main>
 </Base>
@@ -105,7 +136,9 @@ const facts = repo
     color: var(--fg);
   }
 
+  /* Only as wide as the name, so it grows cleanly out of the card's title on the way in. */
   h1 {
+    width: fit-content;
     font-size: 1.75rem;
     font-weight: 600;
     line-height: 1.2;
@@ -118,7 +151,13 @@ const facts = repo
     color: var(--muted);
   }
 
-  .editions {
+  .platforms {
+    margin-top: 0.75rem;
+    color: var(--muted);
+    font-size: 0.9375rem;
+  }
+
+  .switch {
     display: inline-flex;
     gap: 0.25rem;
     margin-top: 1.25rem;
@@ -127,25 +166,37 @@ const facts = repo
     border-radius: 999px;
   }
 
-  .editions a {
+  /* The current platform's pill sits behind its label; moving between platforms slides it across. */
+  .switch a {
+    position: relative;
+    isolation: isolate;
     padding: 0.2rem 0.85rem;
     border-radius: 999px;
     color: var(--muted);
     font-size: 0.9375rem;
     text-decoration: none;
-    transition:
-      color 150ms var(--ease),
-      background-color 150ms var(--ease);
+    transition: color 150ms var(--ease);
   }
 
-  .editions a:hover {
+  .switch a:hover,
+  .switch a[aria-current="page"] {
     color: var(--fg);
   }
 
-  .editions a[aria-current="page"] {
-    background: var(--hover);
-    color: var(--fg);
+  .switch a[aria-current="page"] {
     font-weight: 500;
+  }
+
+  .pill {
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    border-radius: inherit;
+    background: var(--hover);
+  }
+
+  .label {
+    display: inline-block;
   }
 
   .links {
@@ -269,7 +320,86 @@ const facts = repo
   }
 
   .footer {
-    margin-top: 2rem;
+    margin-top: 2.5rem;
+    padding-top: 1.25rem;
+    border-top: 1px solid var(--rule);
     font-size: 0.9375rem;
+  }
+
+  .footer-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 1rem;
+    margin-bottom: 0.9rem;
+  }
+
+  .all {
+    color: var(--muted);
+  }
+
+  .all:hover {
+    color: var(--fg);
+  }
+
+  .next {
+    display: grid;
+    grid-template-columns: 10rem minmax(0, 1fr);
+    align-items: start;
+    gap: 1.25rem;
+    text-decoration: none;
+  }
+
+  .next-shot {
+    display: block;
+    aspect-ratio: 16 / 9;
+    overflow: hidden;
+    border: 1px solid var(--rule);
+    border-radius: 8px;
+    background: var(--hover);
+    transition: border-color 200ms var(--ease);
+  }
+
+  .next:hover .next-shot {
+    border-color: var(--muted);
+  }
+
+  .next-shot img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: 50% 0;
+  }
+
+  .next-text {
+    display: grid;
+    gap: 0.2rem;
+  }
+
+  .next-name {
+    justify-self: start;
+    font-size: 1rem;
+    font-weight: 500;
+    text-decoration: underline;
+    text-decoration-color: var(--rule);
+    text-underline-offset: 0.25em;
+    transition: text-decoration-color 150ms var(--ease);
+  }
+
+  .next:hover .next-name {
+    text-decoration-color: currentColor;
+  }
+
+  .next-summary {
+    color: var(--muted);
+    line-height: 1.55;
+  }
+
+  @media (max-width: 640px) {
+    .next {
+      grid-template-columns: 7.5rem minmax(0, 1fr);
+      gap: 1rem;
+    }
   }
 </style>

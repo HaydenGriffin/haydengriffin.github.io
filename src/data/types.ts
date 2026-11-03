@@ -21,18 +21,18 @@ export interface Clip {
   position?: string;
 }
 
-/** One platform's build of a project that ships to more than one, each with its own repo and project page. */
-export interface Edition {
-  platform: string;
-  repo: string;
+/**
+ * One platform a home build runs on.
+ * A platform built in its own repo also gets its own page, /projects/<repo>/, showing its own demo, clip or screenshots.
+ */
+export interface Platform {
+  name: string;
+  /** The repo this platform's build lives in, when it is not the project's own. */
+  repo?: string;
   demo?: string;
   clip?: Clip;
   media?: Media[];
-  hero?: { src: ImageMetadata; alt: string };
 }
-
-/** The groups the home builds are shown in. */
-export type ProjectGroup = "tv" | "home" | "training";
 
 export interface Project {
   name: string;
@@ -53,12 +53,10 @@ export interface Project {
   demo?: string;
   /** The project's own hero image, copied into src/assets so the site never hotlinks it. */
   hero?: { src: ImageMetadata; alt: string };
-  /** Which group a home build is shown in. */
-  group?: ProjectGroup;
-  /** What it runs on, named beside the title. A project with editions names each edition's platform instead. */
-  platforms?: string[];
-  /** Builds for more than one platform. The first is the project's own repo and page. */
-  editions?: Edition[];
+  /** What a home build runs on, in the order they are named on its card. */
+  platforms?: Platform[];
+  /** Shown across the full width at the top of the home builds. */
+  featured?: boolean;
   /** Set to false to keep a project out of the site until it is ready. */
   published?: boolean;
 }

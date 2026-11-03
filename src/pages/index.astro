@@ -1,14 +1,14 @@
 ---
 import { Image } from "astro:assets";
 import photo from "../assets/hayden.jpg";
-import Build from "../components/Build.astro";
+import BuildGrid from "../components/BuildGrid.astro";
 import CopyEmail from "../components/CopyEmail.astro";
 import List from "../components/List.astro";
 import ProjectRow from "../components/ProjectRow.astro";
 import Row from "../components/Row.astro";
 import Section from "../components/Section.astro";
 import { experience } from "../data/experience";
-import { alsoRunning, homeGroups } from "../data/home";
+import { alsoRunning, home } from "../data/home";
 import { profile } from "../data/profile";
 import { work } from "../data/work";
 import Base from "../layouts/Base.astro";
@@ -29,15 +29,33 @@ import Base from "../layouts/Base.astro";
           fintech: escrow, payment APIs, onboarding and compliance.
         </p>
         <p>Before PayMidas I was a senior engineer at Jumptech, and before that I worked on IoT and fintech products.</p>
-        <p class="spare">In my spare time I build <a href="#projects">open-source apps</a> for TVs, the PS5 and Home Assistant.</p>
+        <p class="spare">In my spare time I build <a href="#projects">apps for my own house</a>: for the TV, the PS5, wall tablets and my phone.</p>
       </div>
     </header>
 
-    <Section id="work" title="At PayMidas">
+    <Section id="work" title="Work">
       <List>
         {work.map((project) => <ProjectRow project={project} />)}
       </List>
       <p class="note muted">Most of this code is private. Happy to walk through it.</p>
+    </Section>
+
+    <Section id="projects" title="Projects">
+      <p class="lead">
+        I run a small homelab with Home Assistant, and these are the apps I've built around it. All open source apart from my training app. If
+        one is useful to you, you can <a href={profile.support}>buy me a coffee</a>.
+      </p>
+      <BuildGrid projects={home} />
+      <p class="note muted also">
+        Also running at home:{" "}
+        {alsoRunning.map((item, index) => (
+          <>
+            {index > 0 && " and "}
+            {item.name} ({item.note})
+          </>
+        ))}
+        .
+      </p>
     </Section>
 
     <Section id="experience" title="Experience">
@@ -63,37 +81,6 @@ import Base from "../layouts/Base.astro";
           )
         }
       </List>
-    </Section>
-
-    <Section id="projects" title="At home">
-      <p class="lead">
-        This is my hobby. I run a small homelab with Home Assistant, and I build integrations, apps and local AI tools that solve everyday
-        problems around the house. The projects below are open source, apart from my training app. If one is useful to you, you can <a href={profile.support}>buy me a coffee</a>.
-      </p>
-      {
-        homeGroups.map((group) => (
-          <section class="group" aria-labelledby={`group-${group.id}`}>
-            <h3 class="group-title" id={`group-${group.id}`}>
-              {group.title}
-            </h3>
-            <div class="builds">
-              {group.projects.map((project) => (
-                <Build project={project} />
-              ))}
-            </div>
-          </section>
-        ))
-      }
-      <p class="note muted">
-        Also running at home:{" "}
-        {alsoRunning.map((item, index) => (
-          <>
-            {index > 0 && " and "}
-            {item.name} ({item.note})
-          </>
-        ))}
-        .
-      </p>
     </Section>
 
     <Section id="contact" title="Contact">
@@ -163,31 +150,8 @@ import Base from "../layouts/Base.astro";
     margin-bottom: 0.25rem;
   }
 
-  .group {
-    margin-top: 2.5rem;
-  }
-
-  .group-title {
-    padding-bottom: 0.5rem;
-    margin-bottom: 1.25rem;
-    border-bottom: 1px solid var(--rule);
-    font-size: 0.9375rem;
-    font-weight: 500;
-  }
-
-  .builds {
-    display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 2.5rem 2rem;
-  }
-
-  /* Three to a group: the first takes the full width, the other two share a row. */
-  .builds > :global(:first-child) {
-    grid-column: 1 / -1;
-  }
-
-  .group + .note {
-    margin-top: 2.5rem;
+  .note.also {
+    margin-top: 2.75rem;
     max-width: 34rem;
   }
 
@@ -279,11 +243,6 @@ import Base from "../layouts/Base.astro";
 
     .bio {
       grid-column: 1 / -1;
-    }
-
-    .builds {
-      grid-template-columns: minmax(0, 1fr);
-      gap: 2.5rem;
     }
 
     .footer {
