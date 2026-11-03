@@ -111,6 +111,19 @@ button {
   navigation: auto;
 }
 
+::view-transition-group(*) {
+  animation-duration: 400ms;
+  animation-timing-function: var(--ease);
+}
+
+/* A project's picture grows from its card into its page (and back) keeping the card's crop, so it never stretches. */
+::view-transition-old(.shot),
+::view-transition-new(.shot) {
+  height: 100%;
+  object-fit: cover;
+  object-position: 50% 0;
+}
+
 @media (prefers-reduced-motion: reduce) {
   @view-transition {
     navigation: none;

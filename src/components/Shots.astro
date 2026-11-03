@@ -4,15 +4,17 @@ import type { Media } from "../data/types";
 
 interface Props {
   media: Media[];
+  /** Given to the first screenshot when it is wide, so it can grow out of the project's home card. */
+  transitionName?: string;
 }
 
-const { media } = Astro.props;
+const { media, transitionName } = Astro.props;
 const phones = media.every((item) => item.shape === "phone");
 ---
 
 <div class:list={["shots", { phones }]}>
   {
-    media.map((item) => (
+    media.map((item, index) => (
       <Image
         src={item.src}
         alt={item.alt}
@@ -20,6 +22,7 @@ const phones = media.every((item) => item.shape === "phone");
         sizes={phones ? "(max-width: 640px) 45vw, 200px" : "(max-width: 640px) 100vw, 560px"}
         loading="lazy"
         class:list={["shot", item.shape]}
+        style={transitionName && index === 0 && item.shape === "wide" ? `view-transition-name: ${transitionName}; view-transition-class: shot` : undefined}
       />
     ))
   }

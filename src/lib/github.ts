@@ -5,6 +5,8 @@
  */
 const OWNER = "HaydenGriffin";
 const API = "https://api.github.com";
+/** A repo whose homepage is its page on this site has no demo of its own. */
+const SITE_PAGES = "https://haydengriffin.github.io/projects/";
 
 export interface RepoInfo {
   url: string;
@@ -40,7 +42,7 @@ async function load(name: string): Promise<RepoInfo> {
   const images = await api<{ name: string; download_url: string }[]>(`/repos/${OWNER}/${name}/contents/docs/images`);
   const release = await api<{ tag_name: string; html_url: string }>(`/repos/${OWNER}/${name}/releases/latest`);
   const hero = images?.find((file) => /^hero\.(png|jpe?g|webp)$/i.test(file.name))?.download_url;
-  const homepage = repo?.homepage && !repo.homepage.startsWith(url) ? repo.homepage : undefined;
+  const homepage = repo?.homepage && !repo.homepage.startsWith(url) && !repo.homepage.startsWith(SITE_PAGES) ? repo.homepage : undefined;
   return {
     url,
     description: repo?.description ?? undefined,

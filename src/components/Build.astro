@@ -1,13 +1,13 @@
 ---
 /**
- * A home build shown as a card in a two-column grid: its hero image, its latest release, what it is, and where to go next.
- * A build whose code is private has no GitHub link or release, and says so beside its platforms.
- * The image and title open the project page; the try-it demo and full clips live there.
- * On a desktop pointer, a project with a clip plays it over the image while the card is hovered or focused.
- * Beside the title, what it runs on and the latest release; a project on more than one platform lists each edition.
+ * A home build shown as a card: its hero image, its name, what it runs on and what it is.
+ * The image and the name open the project page, where the releases, the code and each platform's build live.
+ * Beside the name is the one thing worth reaching straight from the card: a live demo, or a note that the code is private.
+ * On a desktop pointer a card's clip plays over its image while the card is hovered or focused.
  */
 import { Image } from "astro:assets";
-import type { Link, Project } from "../data/types";
+import { platformSlug } from "../data/home";
+import type { Project } from "../data/types";
 import { getRepo } from "../lib/github";
 import { pageName } from "../lib/writeups";
 
@@ -22,32 +22,23 @@ const clip = project.clip;
 const name = pageName(project)!;
 const repo = project.repo ? await getRepo(project.repo) : undefined;
 const page = `/projects/${name}/`;
-const editions = await Promise.all(
-  (project.editions ?? []).map(async (edition) => ({ ...edition, info: await getRepo(edition.repo) })),
-);
-const demo = project.demo ?? editions.find((edition) => edition.demo)?.demo ?? repo?.homepage;
-const runs = editions.length
-  ? editions.map(({ platform, info }) => ({ platforms: [platform], release: info.release }))
-  : [{ platforms: project.platforms ?? [], release: repo?.release }];
-const links: Link[] = [
-  { label: "How it works", href: page },
-  ...(editions.length
-    ? editions.map(({ platform, info }) => ({ label: `${platform} on GitHub`, href: info.url }))
-    : repo
-      ? [{ label: "GitHub", href: repo.url }]
-      : []),
-  ...(demo ? [{ label: "Live demo", href: demo }] : []),
-];
+const demo = project.demo ?? repo?.homepage;
+const platforms = (project.platforms ?? []).map((platform) => ({ name: platform.name, slug: platformSlug(platform.name) }));
+const featured = Boolean(project.featured);
 ---
 
-<article class="build" data-preview={clip ? "" : undefined}>
-  <a class="shot" href={page} tabindex="-1">
+<article
+  class:list={["build", { featured }]}
+  data-platforms={platforms.map((platform) => platform.slug).join(" ")}
+  data-preview={clip ? "" : undefined}
+>
+  <a class="shot" href={page} tabindex="-1" style={`view-transition-name: shot-${name}; view-transition-class: shot`}>
     <Image
       src={hero.src}
       alt={hero.alt}
-      widths={[400, 560, 800, 1100]}
-      sizes="(max-width: 640px) calc(100vw - 3rem), 248px"
-      loading="lazy"
+      widths={featured ? [560, 800, 1100, 1600] : [400, 560, 800, 1100]}
+      sizes={featured ? "(max-width: 640px) calc(100vw - 3rem), 528px" : "(max-width: 640px) calc(100vw - 3rem), 250px"}
+      loading={featured ? "eager" : "lazy"}
     />
     {
       clip && (
@@ -67,41 +58,52 @@ const links: Link[] = [
       )
     }
   </a>
-  <h4 class="line">
-    <a class="title" href={page} style={`view-transition-name: project-${name}`}>{project.name}</a>
-  </h4>
-  <p class="runs">
-    {
-      runs.map(({ platforms, release }) => (
-        <span class="run">
-          {platforms.length > 0 && <span class="platform">{platforms.join(" · ")}</span>}
-          {release && (
-            <a class="version" href={release.url} aria-label={`Latest release${platforms.length ? ` for ${platforms.join(" and ")}` : ""}, ${release.tag}`}>
-              {release.tag}
-            </a>
-          )}
-          {!repo && <span class="private">private code</span>}
-        </span>
-      ))
-    }
-  </p>
+  <div class="line">
+    <h3 class="name">
+      <a class="title" href={page} style={`view-transition-name: project-${name}`}>{project.name}</a>
+    </h3>
+    {demo ? <a class="aside" href={demo}>Live demo</a> : !repo && <span class="aside muted">Private code</span>}
+  </div>
+  {
+    platforms.length > 0 && (
+      <p class="platforms">
+        {platforms.map((platform, index) => (
+          <>
+            {index > 0 && " · "}
+            <span data-platform={platform.slug}>{platform.name}</span>
+          </>
+        ))}
+      </p>
+    )
+  }
   <p class="summary">{project.summary}</p>
-  <p class="links">
-    {links.map((link) => <a href={link.href}>{link.label}</a>)}
-  </p>
 </article>
 
 <style>
   .build {
     display: grid;
     align-content: start;
+    transition: opacity 300ms var(--ease);
+  }
+
+  .featured {
+    grid-column: 1 / -1;
+  }
+
+  .featured .summary {
+    max-width: 30rem;
+  }
+
+  /* Picked out by a platform in the "Runs on" line: the builds that do not run on it step back. */
+  .build.dimmed {
+    opacity: 0.28;
   }
 
   .shot {
     position: relative;
     display: block;
     aspect-ratio: 16 / 9;
-    margin-bottom: 0.875rem;
+    margin-bottom: 0.8rem;
     overflow: hidden;
     border: 1px solid var(--rule);
     border-radius: 10px;
@@ -143,7 +145,7 @@ const links: Link[] = [
 
   .build.playing .preview {
     opacity: 1;
-    transition-duration: 300ms;
+    transition-duration: 400ms;
   }
 
   /* Touch screens and reduced motion get the still image only; with preload="none" the clip never downloads. */
@@ -154,9 +156,16 @@ const links: Link[] = [
   }
 
   .line {
-    margin: 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 1rem;
+  }
+
+  .name {
     font-size: 1rem;
     font-weight: 500;
+    line-height: 1.4;
   }
 
   .title {
@@ -168,49 +177,31 @@ const links: Link[] = [
     text-decoration-color: currentColor;
   }
 
-  .runs {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.1rem 1rem;
-    margin-top: 0.2rem;
+  .aside {
+    flex: none;
+    font-size: 0.9375rem;
+  }
+
+  .platforms {
+    margin-top: 0.1rem;
+    color: var(--muted);
     font-size: 0.875rem;
   }
 
-  .run {
-    display: flex;
-    gap: 0.4rem;
-    white-space: nowrap;
+  .platforms span {
+    transition: color 200ms var(--ease);
   }
 
-  .platform {
+  .platforms span.picked {
+    color: var(--fg);
     font-weight: 500;
   }
 
-  .version,
-  .private {
-    color: var(--muted);
-    font-size: 0.875rem;
-    font-weight: 400;
-    text-decoration: none;
-  }
-
-  .version:hover {
-    color: var(--fg);
-  }
-
   .summary {
-    margin-top: 0.25rem;
+    margin-top: 0.35rem;
     color: var(--muted);
     font-size: 0.9375rem;
     line-height: 1.55;
-  }
-
-  .links {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.25rem 1.1rem;
-    margin-top: 0.5rem;
-    font-size: 0.9375rem;
   }
 </style>
 
@@ -237,6 +228,7 @@ const links: Link[] = [
       if (wanted) card.classList.add("playing");
       else video.pause();
     });
+
     card.addEventListener("pointerenter", start);
     card.addEventListener("pointerleave", () => {
       if (!card.querySelector(":focus-visible")) stop();

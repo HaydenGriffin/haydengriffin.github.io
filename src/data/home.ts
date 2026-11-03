@@ -1,4 +1,3 @@
-import afterglowLgHero from "../assets/afterglow/lg-hero.webp";
 import afterglowPs5Hero from "../assets/afterglow/ps5-hero.webp";
 import afterglowPs5Views from "../assets/afterglow/ps5-views.webp";
 import afterglowHero from "../assets/home/afterglow.webp";
@@ -12,27 +11,22 @@ import noZeroWeeksHero from "../assets/home/no-zero-weeks.webp";
 import prismHero from "../assets/home/prism.webp";
 import prismPs5Hero from "../assets/prism/ps5-hero.webp";
 import prismPs5Views from "../assets/prism/ps5-views.webp";
-import type { Edition, Project, ProjectGroup } from "./types";
+import type { Platform, Project } from "./types";
 
+/** The home builds, in the order they are shown: the featured one first, then in pairs that share a row. */
 const projects: Project[] = [
   {
     name: "Afterglow",
     repo: "afterglow",
-    group: "tv",
-    summary:
-      "A Music Assistant player for LG TVs and the PS5: the artwork, word-by-word lyrics and the queue from the remote or a DualSense, with MilkDrop visuals drawn in time with the music.",
+    featured: true,
+    summary: "A Music Assistant player with word-by-word lyrics, the queue, and MilkDrop visuals drawn in time with the music.",
+    demo: "https://haydengriffin.github.io/afterglow/",
     hero: { src: afterglowHero, alt: "The Afterglow logo over the app playing a song with its lyrics, beside the words LG webOS and PS5" },
     clip: { name: "afterglow", alt: "Afterglow on an LG TV: synced lyrics beside the album art, then the full-screen album view, then a full-screen MilkDrop music visualiser", shape: "wide" },
-    editions: [
+    platforms: [
+      { name: "LG webOS" },
       {
-        platform: "LG webOS",
-        repo: "afterglow",
-        demo: "https://haydengriffin.github.io/afterglow/",
-        clip: { name: "afterglow", alt: "Afterglow on an LG TV: synced lyrics beside the album art, then the full-screen album view, then a full-screen MilkDrop music visualiser", shape: "wide" },
-        hero: { src: afterglowLgHero, alt: "Afterglow on an LG C1: the artwork, the current lyric line and up next" },
-      },
-      {
-        platform: "PS5",
+        name: "PS5",
         repo: "afterglow-ps5",
         media: [
           { src: afterglowPs5Hero, alt: "Afterglow on a PS5: the cover in a square, the current lyric line underlined as it is sung, and up next with its artists", shape: "wide" },
@@ -42,19 +36,33 @@ const projects: Project[] = [
     ],
   },
   {
+    name: "Lamplight",
+    repo: "lamplight",
+    summary: "A design system for Home Assistant wall tablets, six cards built on it, and the same pages on the TV from a PS5.",
+    demo: "https://haydengriffin.github.io/lamplight/",
+    hero: { src: lamplightHero, alt: "Lamplight's agenda, timers and weather cards on wall tablets" },
+    clip: { name: "lamplight", alt: "Tapping through the Lamplight timers and help cards on a demo home", shape: "wide", position: "0% 50%" },
+    platforms: [
+      { name: "Home Assistant" },
+      {
+        name: "PS5",
+        repo: "lamplight-ps5",
+        media: [
+          { src: lamplightPs5Hero, alt: "Lamplight on a PS5: the clock, 14:05 large over a weather-tinted sky, with a chip for each page", shape: "wide" },
+          { src: lamplightPs5Views, alt: "Lamplight's PS5 pages: the Living room with music and lights glowing, the Agenda, Timers with Undo, and a finished timer's alert", shape: "wide" },
+        ],
+      },
+    ],
+  },
+  {
     name: "PRISM",
     repo: "prism",
-    group: "tv",
-    summary:
-      "One remote for an LG TV, from an Android TV box or a PS5: while an LG app is on screen, the box's remote or a DualSense drives the TV, with a launcher for LG apps and quick TV settings, through Home Assistant.",
+    summary: "Lets an Android TV remote or a DualSense drive the LG TV while an LG app is on screen, through Home Assistant.",
     hero: { src: prismHero, alt: "PRISM on the Shield, captured by the TV: LG Settings open over the PRISM launcher, driven by the Shield remote, beside quick TV settings and the LG apps row" },
-    editions: [
+    platforms: [
+      { name: "Android TV" },
       {
-        platform: "Android TV",
-        repo: "prism",
-      },
-      {
-        platform: "PS5",
+        name: "PS5",
         repo: "prism-ps5",
         media: [
           { src: prismPs5Hero, alt: "PRISM on a PS5, captured by the TV: LG Settings open over PRISM's remote screen, driven by the DualSense", shape: "wide" },
@@ -65,64 +73,32 @@ const projects: Project[] = [
   },
   {
     name: "House for webOS",
-    platforms: ["LG webOS"],
     repo: "house-webos",
-    group: "tv",
-    summary: "A Home Assistant panel for my LG TV, made for the remote, with a weekly recap of the house: steps, dinners, energy and who used the most hot water.",
+    summary: "A Home Assistant panel made for the TV remote, with a weekly recap of steps, dinners, energy and hot water.",
+    demo: "https://haydengriffin.github.io/house-webos/app/index.html?demo",
     hero: { src: houseWebosHero, alt: "The House panel on a TV: light tiles, TV inputs, the home speakers and who is in which room" },
     clip: { name: "tv", alt: "Using House for webOS with a remote: switching lights, starting movie time, then the weekly recap", shape: "wide" },
-    demo: "https://haydengriffin.github.io/house-webos/app/index.html?demo",
-  },
-  {
-    name: "Lamplight",
-    repo: "lamplight",
-    group: "home",
-    summary:
-      "A design system for Home Assistant wall tablets, and six cards built on it, from weather to timers; and the same pages on a TV from a PS5, with Home Assistant's notifications shown over games.",
-    hero: { src: lamplightHero, alt: "Lamplight's agenda, timers and weather cards on wall tablets" },
-    clip: { name: "lamplight", alt: "Tapping through the Lamplight timers and help cards on a demo home", shape: "wide", position: "0% 50%" },
-    editions: [
-      {
-        platform: "Home Assistant",
-        repo: "lamplight",
-        demo: "https://haydengriffin.github.io/lamplight/",
-        clip: { name: "lamplight", alt: "Tapping through the Lamplight timers and help cards on a demo home", shape: "wide", position: "0% 50%" },
-        hero: { src: lamplightHero, alt: "Lamplight's agenda, timers and weather cards on wall tablets" },
-      },
-      {
-        platform: "PS5",
-        repo: "lamplight-ps5",
-        media: [
-          { src: lamplightPs5Hero, alt: "Lamplight on a PS5: the clock, 14:05 large over a weather-tinted sky, with a chip for each page", shape: "wide" },
-          { src: lamplightPs5Views, alt: "Lamplight's PS5 pages: the Living room with music and lights glowing, the Agenda, Timers with Undo, and a finished timer's alert", shape: "wide" },
-        ],
-      },
-    ],
-  },
-  {
-    name: "Food Diary",
-    platforms: ["Home Assistant", "iPhone"],
-    repo: "ha-food-diary",
-    group: "home",
-    summary: "A calorie and macro diary that runs in Home Assistant, with a native SwiftUI iPhone app, Apple Health sync, and planned meals that go straight into the diary.",
-    hero: { src: foodDiaryHero, alt: "Three iPhone screens from Food Diary: checking a meal, today's calories and macros, and a week on target" },
-    clip: { name: "food", alt: "Logging two eggs on toast to dinner in the Food iPhone app, then seeing it on the Today screen", shape: "phone" },
+    platforms: [{ name: "LG webOS" }],
   },
   {
     name: "Mira Mode",
-    platforms: ["Home Assistant"],
     repo: "ha-mira-mode",
-    group: "home",
-    summary: "A Home Assistant integration that controls a Mira Mode digital shower over Bluetooth LE, and counts the water and energy each shower uses.",
+    summary: "Controls a Mira Mode digital shower over Bluetooth LE, and counts the water and energy each shower uses.",
     hero: { src: miraModeHero, alt: "The Mira Shower device page in Home Assistant, with shower, temperature and flow controls" },
+    platforms: [{ name: "Home Assistant" }],
+  },
+  {
+    name: "Food Diary",
+    repo: "ha-food-diary",
+    summary: "A calorie and macro diary in Home Assistant, with a native iPhone app, Apple Health sync and planned meals.",
+    hero: { src: foodDiaryHero, alt: "Three iPhone screens from Food Diary: checking a meal, today's calories and macros, and a week on target" },
+    clip: { name: "food", alt: "Logging two eggs on toast to dinner in the Food iPhone app, then seeing it on the Today screen", shape: "phone" },
+    platforms: [{ name: "Home Assistant" }, { name: "iPhone" }],
   },
   {
     name: "No Zero Weeks",
-    platforms: ["Android", "Home Assistant"],
     page: "no-zero-weeks",
-    group: "training",
-    summary:
-      "My training app, built around the week rather than the workout. Gym check-ins and watch workouts count on their own, the house plans each lift day, and the workout runs from the lock screen.",
+    summary: "My training app, built around the week rather than the workout. The house plans each lift day, and the workout runs from the lock screen.",
     stack: ["Kotlin", "Jetpack Compose", "Health Connect", "Glance", "WorkManager"],
     hero: {
       src: noZeroWeeksHero,
@@ -133,28 +109,37 @@ const projects: Project[] = [
       alt: "No Zero Weeks on the phone: the week's barbell turned with a finger, the day's workout with its plates, a rack of past weeks, and an exercise's technique clip",
       shape: "phone",
     },
+    platforms: [{ name: "Android" }, { name: "Home Assistant" }],
   },
 ];
 
 export const home = projects.filter((project) => project.published !== false);
 
-/** Every page a home build gets: one per edition for a project on more than one platform. */
-export const homePages: { project: Project; edition?: Edition }[] = home.flatMap((project) =>
-  project.editions ? project.editions.map((edition) => ({ project, edition })) : [{ project }],
-);
+/** A platform's name as it appears in a data attribute: "LG webOS" is "lg-webos". */
+export function platformSlug(name: string): string {
+  return name.toLowerCase().replace(/[^a-z0-9]+/g, "-");
+}
 
-const groupTitles: Record<ProjectGroup, string> = {
-  tv: "For TVs and consoles",
-  home: "For the home",
-  training: "For training",
-};
+/** Every page a home build gets: its own, and one for each platform built in its own repo. */
+export const homePages: { project: Project; platform?: Platform }[] = home.flatMap((project) => [
+  { project },
+  ...(project.platforms ?? []).filter((platform) => platform.repo).map((platform) => ({ project, platform })),
+]);
 
-/** The home builds in their groups, in the order they are listed above. */
-export const homeGroups = (Object.keys(groupTitles) as ProjectGroup[]).map((group) => ({
-  id: group,
-  title: groupTitles[group],
-  projects: home.filter((project) => project.group === group),
-}));
+/** Every platform the home builds run on, the most common first. */
+export const homePlatforms: { name: string; slug: string }[] = Object.entries(
+  Object.groupBy(
+    home.flatMap((project) => project.platforms ?? []),
+    (platform) => platform.name,
+  ),
+)
+  .sort(([, a], [, b]) => b!.length - a!.length)
+  .map(([name]) => ({ name, slug: platformSlug(name) }));
+
+/** The build after this one, going round to the first after the last. */
+export function nextBuild(project: Project): Project {
+  return home[(home.indexOf(project) + 1) % home.length]!;
+}
 
 /** Things that run at home but are not open source, named in one line under the builds. */
 export const alsoRunning = [
