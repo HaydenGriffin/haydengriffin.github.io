@@ -1,7 +1,8 @@
 /**
  * A repo's README as HTML for its project page, rendered by GitHub's API at build time.
  * The intro's hero image and badges, and the README's own title, are dropped because the
- * page shows those itself. Relative links and images are pointed back at GitHub.
+ * page shows those itself. Mermaid diagrams are dropped too: GitHub draws them in its own frame, and here they would
+ * be raw code. Relative links and images are pointed back at GitHub.
  */
 const OWNER = "HaydenGriffin";
 
@@ -49,6 +50,7 @@ export async function getReadmeHtml(repo: string): Promise<string | undefined> {
       '<$1 id="$3">$2</$1>',
     )
     .replace(/<h1 id="[^"]*">[\s\S]*?<\/h1>/, "")
+    .replace(/<section\b[^>]*data-type="mermaid"[^>]*>[\s\S]*?<\/section>/g, "")
     .replace(/\s(?:dir|align)="[^"]*"/g, "")
     .replace(/\s(src|href)="([^"]+)"/g, (_, kind: "src" | "href", path: string) => ` ${kind}="${absolute(repo, path, kind)}"`)
     .replace(/<img\b(?![^>]*\bloading=)/g, '<img loading="lazy"');
