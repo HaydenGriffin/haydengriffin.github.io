@@ -3,11 +3,13 @@
  * A home build shown as a card: its hero image, its name, what it runs on and what it is.
  * The image and the name open the project page, where the releases, the code and each platform's build live.
  * Beside the name is the one thing worth reaching straight from the card: a live demo, or a note that the code is private.
- * On a desktop pointer a card's clip plays over its image while the card is hovered or focused.
+ * On a desktop pointer, resting on a card's image opens a larger player over the card (see PreviewPlayer):
+ * its clip, or when it has none, a slideshow of its screenshots and each platform's.
  */
-import { Image } from "astro:assets";
+import { getImage, Image } from "astro:assets";
 import { platformSlug } from "../data/home";
 import type { Project } from "../data/types";
+import { clipSize } from "../lib/clips";
 import { getRepo } from "../lib/github";
 import { pageName } from "../lib/writeups";
 
@@ -25,12 +27,20 @@ const page = `/projects/${name}/`;
 const demo = project.demo ?? repo?.homepage;
 const platforms = (project.platforms ?? []).map((platform) => ({ name: platform.name, slug: platformSlug(platform.name) }));
 const featured = Boolean(project.featured);
+const size = clip && (await clipSize(clip.name));
+const pictures = clip ? [] : [...(project.media ?? []), ...(project.platforms ?? []).flatMap((platform) => platform.media ?? [])];
+const slides = await Promise.all(pictures.map(async (picture) => (await getImage({ src: picture.src, width: Math.min(1440, picture.src.width) })).src));
 ---
 
 <article
   class:list={["build", { featured }]}
   data-platforms={platforms.map((platform) => platform.slug).join(" ")}
-  data-preview={clip ? "" : undefined}
+  data-clip={clip?.name}
+  data-clip-shape={clip?.shape}
+  data-clip-width={size?.width}
+  data-clip-height={size?.height}
+  data-slides={slides.length > 0 ? JSON.stringify(slides) : undefined}
+  data-page={page}
 >
   <a class="shot" href={page} tabindex="-1" style={`view-transition-name: shot-${name}; view-transition-class: shot`}>
     <Image
@@ -40,23 +50,6 @@ const featured = Boolean(project.featured);
       sizes={featured ? "(max-width: 640px) calc(100vw - 3rem), 528px" : "(max-width: 640px) calc(100vw - 3rem), 250px"}
       loading={featured ? "eager" : "lazy"}
     />
-    {
-      clip && (
-        <video
-          class:list={["preview", clip.shape]}
-          style={clip.position ? `object-position: ${clip.position}` : undefined}
-          muted
-          loop
-          playsinline
-          preload="none"
-          aria-hidden="true"
-          tabindex="-1"
-        >
-          <source src={`/clips/${clip.name}.webm`} type="video/webm" />
-          <source src={`/clips/${clip.name}.mp4`} type="video/mp4" />
-        </video>
-      )
-    }
   </a>
   <div class="line">
     <h3 class="name">
@@ -116,43 +109,13 @@ const featured = Boolean(project.featured);
     border-color: var(--muted);
   }
 
-  .shot img,
-  .preview {
+  .shot img {
     position: absolute;
     inset: 0;
     width: 100%;
     height: 100%;
-  }
-
-  .shot img {
     object-fit: cover;
     object-position: 50% 0;
-  }
-
-  /* The clip sits on the image, hidden until its first frame plays, so the image is its poster and nothing moves. */
-  .preview {
-    object-fit: cover;
-    opacity: 0;
-    transition: opacity 200ms var(--ease);
-  }
-
-  /* A phone clip is shown whole; the image behind it, blurred, fills the sides. */
-  .preview.phone {
-    object-fit: contain;
-    background: color-mix(in srgb, var(--bg) 35%, transparent);
-    backdrop-filter: blur(14px);
-  }
-
-  .build.playing .preview {
-    opacity: 1;
-    transition-duration: 400ms;
-  }
-
-  /* Touch screens and reduced motion get the still image only; with preload="none" the clip never downloads. */
-  @media (hover: none), (pointer: coarse), (prefers-reduced-motion: reduce) {
-    .preview {
-      display: none;
-    }
   }
 
   .line {
@@ -205,37 +168,3 @@ const featured = Boolean(project.featured);
   }
 </style>
 
-<script>
-  // Hover or keyboard focus on a card plays its clip over the image; leaving stops it.
-  const canPreview = window.matchMedia("(hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference)");
-
-  document.querySelectorAll<HTMLElement>("[data-preview]").forEach((card) => {
-    const video = card.querySelector<HTMLVideoElement>("video.preview")!;
-    let wanted = false;
-
-    const start = () => {
-      if (!canPreview.matches) return;
-      wanted = true;
-      video.play().catch(() => {});
-    };
-    const stop = () => {
-      wanted = false;
-      card.classList.remove("playing");
-      video.pause();
-    };
-
-    video.addEventListener("playing", () => {
-      if (wanted) card.classList.add("playing");
-      else video.pause();
-    });
-
-    card.addEventListener("pointerenter", start);
-    card.addEventListener("pointerleave", () => {
-      if (!card.querySelector(":focus-visible")) stop();
-    });
-    card.addEventListener("focusin", start);
-    card.addEventListener("focusout", (event) => {
-      if (!card.contains(event.relatedTarget as Node | null)) stop();
-    });
-  });
-</script>

@@ -6,6 +6,7 @@
 import { homePlatforms } from "../data/home";
 import type { Project } from "../data/types";
 import Build from "./Build.astro";
+import PreviewPlayer from "./PreviewPlayer.astro";
 
 interface Props {
   projects: Project[];
@@ -36,6 +37,7 @@ const { projects } = Astro.props;
 <div class="builds" data-builds>
   {projects.map((project) => <Build project={project} />)}
 </div>
+<PreviewPlayer />
 
 <style>
   .runs-on {
