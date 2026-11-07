@@ -4,7 +4,9 @@ import afterglowHero from "../assets/home/afterglow.webp";
 import foodDiaryHero from "../assets/home/food-diary.webp";
 import houseWebosHero from "../assets/home/house-webos.webp";
 import lamplightHero from "../assets/home/lamplight.webp";
+import lamplightPs5Controls from "../assets/lamplight/ps5-controls.webp";
 import lamplightPs5Hero from "../assets/lamplight/ps5-hero.webp";
+import lamplightPs5Moments from "../assets/lamplight/ps5-moments.webp";
 import lamplightPs5Views from "../assets/lamplight/ps5-views.webp";
 import miraModeHero from "../assets/home/mira-mode.webp";
 import noZeroWeeksHero from "../assets/home/no-zero-weeks.webp";
@@ -54,9 +56,16 @@ const projects: Project[] = [
       {
         name: "PS5",
         repo: "lamplight-ps5",
+        clip: {
+          name: "lamplight-ps5",
+          alt: "Lamplight on a PS5, a button press at a time: the clock, the Living room, a light's sheet with its sliders and scenes, a radiator's chart, Now Playing and Speakers, the notices, Weather, Agenda and Timers, House controls, the doorbell's camera, the slideshow, a question to the assistant, and the resting clock under a night sky",
+          shape: "wide",
+        },
         media: [
           { src: lamplightPs5Hero, alt: "Lamplight on a PS5: the clock, 14:05 large over a weather-tinted sky, with a chip for each page", shape: "wide" },
-          { src: lamplightPs5Views, alt: "Lamplight's PS5 pages: the Living room with music and lights glowing, the Agenda, Timers with Undo, and a finished timer's alert", shape: "wide" },
+          { src: lamplightPs5Controls, alt: "Lamplight's PS5 control sheets: a light's scenes, brightness, warmth and colours; a radiator's last 24 hours and its warm-ups; House controls with Everything off and the house's modes; and Speakers with a sleep timer and each room's volume", shape: "wide" },
+          { src: lamplightPs5Views, alt: "Lamplight's PS5 pages: the Living room with music and lights glowing, Now Playing with the cover, the Agenda, and Timers with Undo", shape: "wide" },
+          { src: lamplightPs5Moments, alt: "Lamplight on a PS5: the slideshow with the clock over a photo, the resting clock under stars and a half moon, the doorbell's camera filling the screen, and a question asked by holding R2", shape: "wide" },
         ],
       },
     ],

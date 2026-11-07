@@ -5,7 +5,7 @@ import type { RepoInfo } from "../lib/github";
 import ClipVideo from "./ClipVideo.astro";
 import Shots from "./Shots.astro";
 
-/** The best thing to look at for a project: a live demo you can try, a clip, screenshots, or its hero image. */
+/** The best thing to look at for a project: a live demo you can try, a clip and any screenshots, screenshots, or its hero image. */
 interface Props {
   project: Project;
   repo?: RepoInfo;
@@ -48,9 +48,12 @@ const stageStyle = [morph, poster].filter(Boolean).join("; ") || undefined;
       </p>
     </div>
   ) : project.clip ? (
-    <div class="media" style={project.clip.shape === "wide" ? morph : undefined}>
-      <ClipVideo clip={project.clip} />
-    </div>
+    <>
+      <div class="media" style={project.clip.shape === "wide" ? morph : undefined}>
+        <ClipVideo clip={project.clip} />
+      </div>
+      {project.media && <Shots media={project.media} />}
+    </>
   ) : project.media ? (
     <Shots media={project.media} transitionName={transitionName} />
   ) : project.hero ? (
