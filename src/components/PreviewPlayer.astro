@@ -1,0 +1,258 @@
+---
+/**
+ * A player that opens over a home card while its image is pointed at. A card with a clip plays it whole and at its own
+ * shape: a phone clip as a tall screen, a wide one across the page. A card without one steps through its screenshots.
+ * It grows out of the card, and clicking it opens the project.
+ * Desktop pointers only: touch screens and reduced motion keep the still image, and the same pictures are on the project page.
+ */
+---
+
+<a class="player" popover="manual" aria-hidden="true" tabindex="-1" data-player>
+  <video muted loop playsinline preload="none"></video>
+  <div class="slides" data-slide-frame></div>
+  <div class="dots" data-dots></div>
+</a>
+
+<style>
+  .player {
+    position: fixed;
+    inset: auto;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    border: 0;
+    border-radius: 12px;
+    background: #111;
+    box-shadow:
+      0 0 0 1px var(--rule),
+      0 24px 64px -16px color-mix(in srgb, #000 45%, transparent),
+      0 8px 20px -8px color-mix(in srgb, #000 25%, transparent);
+    opacity: 1;
+    transform: none;
+    transition:
+      opacity 180ms var(--ease),
+      transform 260ms var(--ease),
+      overlay 260ms allow-discrete,
+      display 260ms allow-discrete;
+  }
+
+  .player.phone {
+    border-radius: 18px;
+  }
+
+  .player:not(:popover-open) {
+    opacity: 0;
+    transform: scale(0.94);
+  }
+
+  @starting-style {
+    .player:popover-open {
+      opacity: 0;
+      transform: scale(0.94);
+    }
+  }
+
+  .player video,
+  .slides {
+    display: block;
+    width: 100%;
+    height: 100%;
+  }
+
+  .player video {
+    object-fit: cover;
+  }
+
+  .player.showing-slides video,
+  .player:not(.showing-slides) .slides,
+  .player:not(.showing-slides) .dots {
+    display: none;
+  }
+
+  .slides {
+    position: relative;
+  }
+
+  .slides :global(img) {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    opacity: 0;
+    transition: opacity 600ms var(--ease);
+  }
+
+  .slides :global(img.current) {
+    opacity: 1;
+  }
+
+  .dots {
+    position: absolute;
+    bottom: 10px;
+    left: 50%;
+    display: flex;
+    gap: 6px;
+    padding: 5px 7px;
+    border-radius: 999px;
+    background: color-mix(in srgb, #000 40%, transparent);
+    transform: translateX(-50%);
+  }
+
+  .dots :global(span) {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: #fff;
+    opacity: 0.4;
+    transition: opacity 300ms var(--ease);
+  }
+
+  .dots :global(span.current) {
+    opacity: 1;
+  }
+</style>
+
+<script>
+  const canPreview = window.matchMedia("(hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference)");
+  const player = document.querySelector<HTMLAnchorElement>("[data-player]");
+
+  /** How long a pointer rests on a card's image before its player opens, and the grace for crossing between the two. */
+  const OPEN_DELAY = 280;
+  const CLOSE_DELAY = 120;
+  /** Within this long of a player closing, the next one opens without the delay. */
+  const WARM = 400;
+  /** How long each screenshot is shown. */
+  const SLIDE = 2600;
+  const MARGIN = 16;
+  /** Screenshots are shown in a 16:9 frame, each whole. */
+  const SLIDE_FRAME = { width: 1600, height: 900 };
+
+  if (player) {
+    const video = player.querySelector("video")!;
+    const slides = player.querySelector<HTMLElement>("[data-slide-frame]")!;
+    const dots = player.querySelector<HTMLElement>("[data-dots]")!;
+    let current: HTMLElement | undefined;
+    let openTimer: number | undefined;
+    let closeTimer: number | undefined;
+    let slideTimer: number | undefined;
+    let closedAt = 0;
+
+    const clamp = (value: number, low: number, high: number) => Math.min(Math.max(value, low), high);
+
+    /** As large as fits: wide pictures up to 720px across, tall ones up to 560px high, centred on the card's image. */
+    const place = (card: HTMLElement, shape: { width: number; height: number }) => {
+      const shot = card.querySelector(".shot")!.getBoundingClientRect();
+      const scale = Math.min(Math.min(720, innerWidth - MARGIN * 2) / shape.width, Math.min(560, innerHeight - MARGIN * 2) / shape.height);
+      const width = Math.round(shape.width * scale);
+      const height = Math.round(shape.height * scale);
+      const centreX = shot.left + shot.width / 2;
+      const centreY = shot.top + shot.height / 2;
+      const left = clamp(centreX - width / 2, MARGIN, innerWidth - MARGIN - width);
+      const top = clamp(centreY - height / 2, MARGIN, innerHeight - MARGIN - height);
+      Object.assign(player.style, {
+        left: `${left}px`,
+        top: `${top}px`,
+        width: `${width}px`,
+        height: `${height}px`,
+        transformOrigin: `${centreX - left}px ${centreY - top}px`,
+      });
+    };
+
+    const shapeOf = (card: HTMLElement) =>
+      card.dataset.clip ? { width: Number(card.dataset.clipWidth), height: Number(card.dataset.clipHeight) } : SLIDE_FRAME;
+
+    const playClip = (card: HTMLElement) => {
+      const name = card.dataset.clip!;
+      video.poster = `/clips/${name}-poster.jpg`;
+      video.replaceChildren(
+        ...(["webm", "mp4"] as const).map((type) => Object.assign(document.createElement("source"), { src: `/clips/${name}.${type}`, type: `video/${type}` })),
+      );
+      video.load();
+      video.play().catch(() => {});
+    };
+
+    const show = (index: number) => {
+      [...slides.children].forEach((slide, i) => slide.classList.toggle("current", i === index));
+      [...dots.children].forEach((dot, i) => dot.classList.toggle("current", i === index));
+    };
+
+    const playSlides = (card: HTMLElement) => {
+      const sources: string[] = JSON.parse(card.dataset.slides!);
+      slides.replaceChildren(...sources.map((src) => Object.assign(document.createElement("img"), { src, alt: "", decoding: "async" })));
+      dots.replaceChildren(...(sources.length > 1 ? sources.map(() => document.createElement("span")) : []));
+      let index = 0;
+      show(index);
+      if (sources.length > 1) {
+        slideTimer = window.setInterval(() => show((index = (index + 1) % sources.length)), SLIDE);
+      }
+    };
+
+    const load = (card: HTMLElement) => {
+      clearInterval(slideTimer);
+      video.pause();
+      const hasClip = Boolean(card.dataset.clip);
+      player.classList.toggle("showing-slides", !hasClip);
+      player.classList.toggle("phone", card.dataset.clipShape === "phone");
+      player.href = card.dataset.page!;
+      if (hasClip) playClip(card);
+      else playSlides(card);
+    };
+
+    const open = (card: HTMLElement) => {
+      clearTimeout(closeTimer);
+      if (current !== card) {
+        current = card;
+        load(card);
+      }
+      place(card, shapeOf(card));
+      if (!player.matches(":popover-open")) player.showPopover();
+    };
+
+    const close = () => {
+      clearTimeout(openTimer);
+      clearTimeout(closeTimer);
+      if (!current) return;
+      current = undefined;
+      closedAt = performance.now();
+      clearInterval(slideTimer);
+      video.pause();
+      player.hidePopover();
+    };
+
+    const closeSoon = () => {
+      clearTimeout(openTimer);
+      clearTimeout(closeTimer);
+      closeTimer = window.setTimeout(close, CLOSE_DELAY);
+    };
+
+    document.querySelectorAll<HTMLElement>("[data-clip], [data-slides]").forEach((card) => {
+      const shot = card.querySelector<HTMLElement>(".shot");
+      if (!shot) return;
+      shot.addEventListener("pointerenter", () => {
+        if (!canPreview.matches) return;
+        clearTimeout(closeTimer);
+        clearTimeout(openTimer);
+        const warm = current !== undefined || performance.now() - closedAt < WARM;
+        openTimer = window.setTimeout(() => open(card), warm ? 0 : OPEN_DELAY);
+      });
+      shot.addEventListener("pointerleave", (event) => {
+        if (!player.contains(event.relatedTarget as Node | null)) closeSoon();
+      });
+    });
+
+    player.addEventListener("pointerenter", () => clearTimeout(closeTimer));
+    player.addEventListener("pointerleave", closeSoon);
+    // Closed at once on the way to the project, so the page's own transition grows out of the card underneath.
+    player.addEventListener("click", () => {
+      player.style.transition = "none";
+      close();
+    });
+    addEventListener("scroll", close, { passive: true });
+    addEventListener("resize", close);
+    addEventListener("pageshow", () => player.style.removeProperty("transition"));
+    document.addEventListener("keydown", (event) => {
+      if (event.key === "Escape") close();
+    });
+  }
+</script>

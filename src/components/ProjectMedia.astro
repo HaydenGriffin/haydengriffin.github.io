@@ -5,7 +5,7 @@ import type { RepoInfo } from "../lib/github";
 import ClipVideo from "./ClipVideo.astro";
 import Shots from "./Shots.astro";
 
-/** The best thing to look at for a project: a live demo you can try, a clip, screenshots, or its hero image. */
+/** The best thing to look at for a project: a live demo you can try, a clip and any screenshots, screenshots, or its hero image. */
 interface Props {
   project: Project;
   repo?: RepoInfo;
@@ -18,12 +18,15 @@ interface Props {
 
 const { project, repo, transitionName } = Astro.props;
 const morph = transitionName ? `view-transition-name: ${transitionName}; view-transition-class: shot` : undefined;
+/** Behind a demo's clip, so a clip narrower or wider than the 16:9 stage is framed by a blur of its own first frame. */
+const poster = project.clip && `--poster: url(/clips/${project.clip.name}-poster.jpg)`;
+const stageStyle = [morph, poster].filter(Boolean).join("; ") || undefined;
 ---
 
 {
   project.demo ? (
     <div class="demo" data-demo={project.demo} data-title={`${project.name} demo`}>
-      <div class="stage" data-stage style={morph}>
+      <div class:list={["stage", { framed: project.clip }]} data-stage style={stageStyle}>
         {project.clip ? (
           <ClipVideo clip={project.clip} />
         ) : project.hero ? (
@@ -45,9 +48,12 @@ const morph = transitionName ? `view-transition-name: ${transitionName}; view-tr
       </p>
     </div>
   ) : project.clip ? (
-    <div class="media" style={project.clip.shape === "wide" ? morph : undefined}>
-      <ClipVideo clip={project.clip} />
-    </div>
+    <>
+      <div class="media" style={project.clip.shape === "wide" ? morph : undefined}>
+        <ClipVideo clip={project.clip} />
+      </div>
+      {project.media && <Shots media={project.media} />}
+    </>
   ) : project.media ? (
     <Shots media={project.media} transitionName={transitionName} />
   ) : project.hero ? (
@@ -93,6 +99,30 @@ const morph = transitionName ? `view-transition-name: ${transitionName}; view-tr
 
   .stage :global(.clip) {
     height: 100%;
+  }
+
+  .stage.framed {
+    border: 1px solid var(--rule);
+    background: #111;
+  }
+
+  .stage.framed::before {
+    content: "";
+    position: absolute;
+    inset: -2rem;
+    background: var(--poster) center / cover;
+    filter: blur(28px) brightness(0.7);
+  }
+
+  .stage.framed :global(.clip) {
+    position: relative;
+    border: 0;
+    border-radius: 0;
+    background: transparent;
+  }
+
+  .stage.live::before {
+    content: none;
   }
 
   .stage :global(iframe) {

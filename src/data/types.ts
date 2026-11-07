@@ -12,13 +12,11 @@ export interface Media {
   shape: "wide" | "phone";
 }
 
-/** A short silent loop in public/clips: <name>.mp4, <name>.webm and <name>-poster.jpg. */
+/** A short silent loop in public/clips: <name>.mp4, <name>.webm and <name>-poster.jpg, its first frame at full size. */
 export interface Clip {
   name: string;
   alt: string;
   shape: "wide" | "phone";
-  /** Where a wide clip is anchored when it is cropped to a home card, as CSS object-position. Centred by default. */
-  position?: string;
 }
 
 /**
