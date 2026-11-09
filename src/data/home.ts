@@ -13,13 +13,6 @@ import noZeroWeeksHero from "../assets/home/no-zero-weeks.webp";
 import prismHero from "../assets/home/prism.webp";
 import prismPs5Hero from "../assets/prism/ps5-hero.webp";
 import prismPs5Views from "../assets/prism/ps5-views.webp";
-import ps5AutojbHero from "../assets/home/ps5-autojb.webp";
-import ps5AutojbAutoload from "../assets/ps5-autojb/ps5-autoload.webp";
-import ps5AutojbHaCard from "../assets/ps5-autojb/ha-card.webp";
-import ps5AutojbHaDevice from "../assets/ps5-autojb/ha-device.webp";
-import ps5AutojbMedia from "../assets/ps5-autojb/ps5-media.webp";
-import ps5AutojbRestart from "../assets/ps5-autojb/ps5-restart.webp";
-import ps5AutojbRecovery from "../assets/ps5-autojb/recovery-timeline.webp";
 import type { Platform, Project } from "./types";
 
 /** The home builds, in the order they are shown: the featured one first, then in pairs that share a row. */
@@ -126,32 +119,6 @@ const projects: Project[] = [
       shape: "phone",
     },
     platforms: [{ name: "Android" }, { name: "Home Assistant" }],
-  },
-  {
-    name: "ps5-autojb",
-    repo: "ps5-autojb",
-    summary: "Keeps a jailbroken PS5 ready with nobody at it: opens the jailbreak by name over Remote Play, and brings the console back after a crash.",
-    hero: {
-      src: ps5AutojbHero,
-      alt: "ps5-autojb beside the PS5 Media row with Y2JB - Gaming selected, and the PS5 jailbreak ready notification on an Android phone",
-    },
-    media: [
-      { src: ps5AutojbMedia, alt: "The PS5 Media row with Y2JB - Gaming selected, its title read from the screen", shape: "wide" },
-      { src: ps5AutojbAutoload, alt: "Y2JB's autoload log over Payload Manager once the jailbreak is done", shape: "wide" },
-      { src: ps5AutojbRestart, alt: "The PS5 Power menu with Restart PS5 selected, read twice before it is pressed", shape: "wide" },
-      { src: ps5AutojbHaCard, alt: "The ps5-autojb card in Home Assistant: Jailbreak ready, Console, Automatic, Run jailbreak, Boot Linux, Turn off PS5 and the last result", shape: "wide" },
-      {
-        src: ps5AutojbHaDevice,
-        alt: "The PS5 auto-jailbreak device page in Home Assistant, with its controls, sensors, diagnostics, related automations and activity",
-        shape: "wide",
-      },
-      {
-        src: ps5AutojbRecovery,
-        alt: "The PS5's power over ten minutes as a crash is recovered: a kernel panic to 0 W, an ignored Bluetooth wake, a plug cycle, a second wake, the TV pressing X and Remote Play opening",
-        shape: "wide",
-      },
-    ],
-    platforms: [{ name: "PS5" }, { name: "Home Assistant" }],
   },
 ];
 
